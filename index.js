@@ -569,7 +569,7 @@ function message(event) {
                     try {
                         var post_req = http.request(optionsPost, function (res) {
                             res.on('data', function (chunk) {
-                                console.log(chunk);
+                                console.log("圖片上傳結果：" + chunk);
                             });
                         });
 
