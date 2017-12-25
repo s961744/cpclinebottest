@@ -559,10 +559,14 @@ function message(event) {
                     //})
 
                     // save file to Server
+                    var now = new Date().toISOString().
+                        replace(/T/, ' ').replace(/\..+/, '').replace(/-/, '').replace(/:/,'')
+                    var random = Math.floor(Math.random() * 9999) + 1;
+                    var FileName = now + random + ".png";
                     var optionsPost = {
                         host: '116.50.39.201',  
                         port: 7102,
-                        path: '/LineRESTful/resources/LineRESTfulTest/postImage/test/20171225.png',
+                        path: '/LineRESTful/resources/LineRESTfulTest/postImage/' + FileName,
                         method: 'POST',
                         encoding: null
                     };
