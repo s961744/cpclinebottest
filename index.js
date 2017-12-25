@@ -562,14 +562,14 @@ function message(event) {
                     var optionsPost = {
                         host: '116.50.39.201',  
                         port: 7102,
-                        path: '/LineRESTful/resources/LineRESTfulTest/postImage/test/20171225',
+                        path: '/LineRESTful/resources/LineRESTfulTest/postImage/test/20171225.png',
                         method: 'POST',
                         encoding: null
                     };
                     try {
                         var post_req = http.request(optionsPost, function (res) {
                             res.on('data', function (chunk) {
-                                console.log("圖片已上傳:/home/mis/Line/img/" + chunk);
+                                console.log(chunk);
                             });
                         });
 
