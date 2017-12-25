@@ -275,7 +275,7 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
                         }
                         break;
                 }
-                if (data == '[]') {
+                if (data === '[]') {
                     console.log('No messages need to be sent.');
                 }
                 else {
@@ -361,8 +361,8 @@ function message(event) {
     //client.pushMessage(event.source.userId, { type: 'text', text: displayName +'您好,\n這是Line機器人測試'}).then(function() {
 
     // 收到文字訊息時
-    if (event.message.type == 'text') {
-        if (event.message.text.toUpperCase().startsWith("V") && (event.message.text.length == 5)) {
+    if (event.message.type === 'text') {
+        if (event.message.text.toUpperCase().startsWith("V") && (event.message.text.length === 5)) {
             var msg = { type: 'text', text: '已收到您輸入的驗證碼!\n請將表單送出，\n並等待權限審核流程完成，\n謝謝!' };
             // 收到驗證碼reply
             return  client.replyMessage(event.replyToken, msg).then(function () {
@@ -402,8 +402,8 @@ function message(event) {
                 console.log(error);
             });
         }
-        else if (event.message.text == '!admin') {
-            if (event.source.userId == process.env.AdminLineUserId)
+        else if (event.message.text === '!admin') {
+            if (event.source.userId === process.env.AdminLineUserId)
             {
                 msg = {
                     "type": "template",
@@ -490,7 +490,7 @@ function message(event) {
                 console.log(event.source.userId + " 試圖進入管理員選單");
             }
         }
-        else if (event.message.text == '!stop') {
+        else if (event.message.text === '!stop') {
             job.cancel();
             client.pushMessage(event.source.userId, { type: 'text', text: '停止發訊息排程' });
         }
@@ -508,8 +508,8 @@ function message(event) {
     }
 
     // 收到圖片訊息時
-    if (event.message.type == 'image') {
-        var msg = { type: 'text', text: "您傳了一張圖片!" };
+    if (event.message.type === 'image') {
+        msg = { type: 'text', text: "您傳了一張圖片!" };
         var chunks = [];
         var size = 0;
         var data = [];
@@ -583,7 +583,7 @@ function message(event) {
 
                     }
                     catch (e) {
-                        return console.log("http request fail:" + JSON.stringify(optionsPost));
+                        return console.log("http request fail:" + JSON.stringify(optionsPost) + "," + e);
                     }
                 })
             })
@@ -598,11 +598,11 @@ function message(event) {
     }
 
     // 收到影片訊息時
-    if (event.message.type == 'video') {
-        var msg = { type: 'text', text: "您傳了一個影片!" };
-        var chunks = [];
-        var size = 0;
-        var data = [];
+    if (event.message.type === 'video') {
+        msg = { type: 'text', text: "您傳了一個影片!" };
+        chunks = [];
+        size = 0;
+        data = [];
 
         return client.replyMessage(event.replyToken, msg).then(function () {
             client.getMessageContent(event.message.id).then((stream) => {
@@ -668,8 +668,8 @@ function message(event) {
     }
 
     // 收到貼圖訊息時
-    if (event.message.type == 'sticker') {
-        var msg = {
+    if (event.message.type === 'sticker') {
+        msg = {
             "type": "sticker",
             "packageId": "1",
             "stickerId": "13"
@@ -689,7 +689,7 @@ function message(event) {
 function postback(event) {
     console.log("postback event=" + JSON.stringify(event));
     var msg = "";
-    if (event.postback.data == "action=test2")
+    if (event.postback.data === "action=test2")
     {
         msg = {
             type: 'template',
@@ -715,7 +715,7 @@ function postback(event) {
         }
         client.pushMessage(event.source.userId, msg);
     }
-    else if (event.postback.data == "action=test1")
+    else if (event.postback.data === "action=test1")
     {
         msg = {
             type: 'template',
@@ -748,7 +748,7 @@ function postback(event) {
         }
         client.pushMessage(event.source.userId, msg);
     }
-    else if (event.postback.data == "action=test3") {
+    else if (event.postback.data === "action=test3") {
         msg = {
             "type": "template",
             "altText": "this is a carousel template",
@@ -808,22 +808,22 @@ function postback(event) {
         }
         client.replyMessage(event.replyToken, msg);
     }
-    else if (event.postback.data == "action=test4") {
+    else if (event.postback.data === "action=test4") {
 
     }
-    else if (event.postback.data == "action=test5") {
+    else if (event.postback.data === "action=test5") {
 
     }
-    else if (event.postback.data == "action=test6") {
+    else if (event.postback.data === "action=test6") {
 
     }
-    else if (event.postback.data == "datestring") {
+    else if (event.postback.data === "datestring") {
         msg = {
             type: 'text', text: '您所挑選的日期為:' + event.postback.params.date
         };
         client.pushMessage(event.source.userId, msg);
     }
-    else if (event.postback.data == "getRichMenuList")
+    else if (event.postback.data === "getRichMenuList")
     {
         // 取得Rich Menu List
         client.getRichMenuList().then(function (arrRichMenuList)
@@ -842,8 +842,7 @@ function postback(event) {
             console.log("getRichMenuList error:" + e);
         });
     }
-    else if (event.postback.data == "sendFollow") {
-        var msg = "";
+    else if (event.postback.data === "sendFollow") {
         msg = {
             type: 'template',
             altText: '加入好友訊息',
@@ -868,14 +867,14 @@ function postback(event) {
         client.multicast([""], msg);
         console.log(JSON.stringify(msg));
     }
-    else if (event.postback.data == "notnow") {
-        var msg = { type: 'text', text: '再請您請抽空加入好友\n若有問題請洽資訊處(#1409)\n謝謝' };
+    else if (event.postback.data === "notnow") {
+        msg = { type: 'text', text: '再請您請抽空加入好友\n若有問題請洽資訊處(#1409)\n謝謝' };
         client.pushMessage(event.source.userId, msg);
         console.log(JSON.stringify(msg));
     }
-    else if (event.postback.data == "sendImageTest") {
+    else if (event.postback.data === "sendImageTest") {
         var filepath = path.join(__dirname, "test.jpg");
-        var msg = { type: 'image', originalContentUrl: filepath, previewImageUrl: filepath };
+        msg = { type: 'image', originalContentUrl: filepath, previewImageUrl: filepath };
         client.pushMessage(event.source.userId, msg);
         console.log(JSON.stringify(msg));
     }
