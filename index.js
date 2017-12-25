@@ -563,6 +563,7 @@ function message(event) {
                         replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '').trim();
                     var random = Math.floor(Math.random() * 9999) + 1;
                     var FileName = now + random + ".png";
+                    console.log(FileName);
                     var optionsPost = {
                         host: '116.50.39.201',  
                         port: 7102,
