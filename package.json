@@ -1,0 +1,23 @@
+{
+  "name": "cpclinebottest",
+  "version": "0.0.0",
+  "description": "Line",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "author": {
+    "name": "A0012272"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^5.0.1",
+    "aws-sdk": "^2.162.0",
+    "express": "^4.16.2",
+    "moment": "^2.19.3",
+    "node-schedule": "^1.2.5",
+    "request": "^2.83.0"
+  },
+  "engines": {
+    "node": "8.2.1"
+  }
+}
