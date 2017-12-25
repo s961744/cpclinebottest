@@ -560,7 +560,7 @@ function message(event) {
 
                     // save file to Server
                     var now = new Date().toISOString().
-                        replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '').trim();
+                        replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '').replace(/\s+/g, "");
                     var random = Math.floor(Math.random() * 9999) + 1;
                     var FileName = now + random + ".png";
                     console.log(FileName);
