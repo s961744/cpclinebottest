@@ -276,7 +276,7 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
                         break;
                 }
                 if (data === '[]') {
-                    console.log('No messages need to be sent.');
+                    console.log("No messages need to be sent.");
                 }
                 else {
                     console.log(data);
