@@ -567,7 +567,7 @@ function message(event) {
                     var optionsPost = {
                         host: '116.50.39.201',  
                         port: 7102,
-                        path: '/LineRESTful/resources/LineRESTfulTest/postImage/LineImg/' + FileName,
+                        path: '/LineRESTful/resources/LineRESTfulTest/postFile/LineImg/' + FileName,
                         method: 'POST',
                         encoding: null
                     };
