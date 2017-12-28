@@ -579,13 +579,14 @@ function message(event) {
                                     var ReturnMsg = row.ReturnMsg;
                                     var Directory = row.Directory;
                                     console.log("圖片上傳結果：" + ReturnMsg + ",路徑：" + Directory);
+                                });
                             });
+
+                            // post the data
+                            post_req.write(data);
+                            post_req.end();
+
                         });
-
-                        // post the data
-                        post_req.write(data);
-                        post_req.end();
-
                     }
                     catch (e) {
                         return console.log("http request fail:" + JSON.stringify(optionsPost) + "," + e);
