@@ -574,19 +574,14 @@ function message(event) {
                     try {
                         var post_req = http.request(optionsPost, function (res) {
                             res.on('data', function (chunk) {
-                                var jdata = JSON.parse(chunk);
-                                jdata.forEach(function (row) {
-                                    var ReturnMsg = row.ReturnMsg;
-                                    var Directory = row.Directory;
-                                    console.log("圖片上傳結果：" + ReturnMsg + ",路徑：" + Directory);
-                                });
+                                console.log("圖片上傳結果：" + chunk);
                             });
-
-                            // post the data
-                            post_req.write(data);
-                            post_req.end();
-
                         });
+
+                        // post the data
+                        post_req.write(data);
+                        post_req.end();
+
                     }
                     catch (e) {
                         return console.log("http request fail:" + JSON.stringify(optionsPost) + "," + e);
