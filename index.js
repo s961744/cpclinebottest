@@ -242,7 +242,7 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
     var optionsGet = {
         host: '116.50.39.201',
         port: 7102,
-        path: '/LineRESTful/resources/LineRESTfulTest' + paraGet,
+        path: '/WechatRESTful/resources/WechatRESTfulTest',
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     };
