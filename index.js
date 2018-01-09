@@ -574,13 +574,13 @@ function message(event) {
                     try {
                         var post_req = http.request(optionsPost, function (res) {
                             res.on('data', function (chunk) {
-                                var jdata = JSON.parse(chunk);
-                                jdata.forEach(function (row) {
-                                    var ReturnMsg = row.ReturnMsg;
-                                    var Directory = row.Directory;
-                                    console.log(ReturnMsg);
-                                    console.log(Directory);
-                                });
+                                //var jdata = JSON.parse(chunk);
+                                //jdata.forEach(function (row) {
+                                //    var ReturnMsg = row.ReturnMsg;
+                                //    var Directory = row.Directory;
+                                //    console.log(ReturnMsg);
+                                //    console.log(Directory);
+                                //});
                                 console.log("圖片上傳結果：" + chunk);
                             });
                         });
@@ -692,7 +692,7 @@ function message(event) {
     }
     //})
 
-    // 收到圖片訊息時
+    // 收到檔案時
     if (event.message.type === 'file') {
         msg = { type: 'text', text: "檔案上傳!" };
         var chunks = [];
@@ -743,13 +743,13 @@ function message(event) {
                     try {
                         var post_req = http.request(optionsPost, function (res) {
                             res.on('data', function (chunk) {
-                                var jdata = JSON.parse(chunk);
-                                jdata.forEach(function (row) {
-                                    var ReturnMsg = row.ReturnMsg;
-                                    var Directory = row.Directory;
-                                    console.log(ReturnMsg);
-                                    console.log(Directory);
-                                });
+                                //var jdata = JSON.parse(chunk);
+                                //jdata.forEach(function (row) {
+                                //    var ReturnMsg = row.ReturnMsg;
+                                //    var Directory = row.Directory;
+                                //    console.log(ReturnMsg);
+                                //    console.log(Directory);
+                                //});
                                 console.log("上傳結果：" + chunk);
                             });
                         });
