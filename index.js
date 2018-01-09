@@ -574,6 +574,13 @@ function message(event) {
                     try {
                         var post_req = http.request(optionsPost, function (res) {
                             res.on('data', function (chunk) {
+                                var jdata = JSON.parse(chunk);
+                                jdata.forEach(function (row) {
+                                    var ReturnMsg = row.ReturnMsg;
+                                    var Directory = row.Directory;
+                                    console.log(ReturnMsg);
+                                    console.log(Directory);
+                                });
                                 console.log("圖片上傳結果：" + chunk);
                             });
                         });
@@ -684,6 +691,88 @@ function message(event) {
         });
     }
     //})
+
+    // 收到圖片訊息時
+    if (event.message.type === 'file') {
+        msg = { type: 'text', text: "檔案上傳!" };
+        var chunks = [];
+        var size = 0;
+        var data = [];
+
+        return client.replyMessage(event.replyToken, msg).then(function () {
+            client.getMessageContent(event.message.id).then((stream) => {
+
+                // 取得content(byte[])
+                stream.on('data', (chunk) => {
+                    chunks.push(chunk);
+                    size += chunk.length;
+                })
+                stream.on('error', (err) => {
+                    // error handling
+                })
+                stream.on('end', (err) => {
+
+                    switch (chunks.length) {
+                        case 0: data = new Buffer(0);
+                            break;
+                        case 1: data = chunks[0];
+                            break;
+                        default:
+                            data = new Buffer(size);
+                            for (var i = 0, pos = 0, l = chunks.length; i < l; i++) {
+                                var chunk = chunks[i];
+                                chunk.copy(data, pos);
+                                pos += chunk.length;
+                            }
+                            break;
+                    }
+
+                    // save file to Server
+                    var now = new Date().toISOString().
+                        replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '').replace(/\s+/g, "");
+                    var random = Math.floor(Math.random() * 9999) + 1;
+                    var FileName = "node-v8.9.4.tar.gz";
+                    console.log(FileName);
+                    var optionsPost = {
+                        host: '116.50.39.201',
+                        port: 7102,
+                        path: '/LineRESTful/resources/LineRESTfulTest/postFile/LineFile/' + FileName,
+                        method: 'POST',
+                        encoding: null
+                    };
+                    try {
+                        var post_req = http.request(optionsPost, function (res) {
+                            res.on('data', function (chunk) {
+                                var jdata = JSON.parse(chunk);
+                                jdata.forEach(function (row) {
+                                    var ReturnMsg = row.ReturnMsg;
+                                    var Directory = row.Directory;
+                                    console.log(ReturnMsg);
+                                    console.log(Directory);
+                                });
+                                console.log("上傳結果：" + chunk);
+                            });
+                        });
+
+                        // post the data
+                        post_req.write(data);
+                        post_req.end();
+
+                    }
+                    catch (e) {
+                        return console.log("http request fail:" + JSON.stringify(optionsPost) + "," + e);
+                    }
+                })
+            })
+
+            // success 
+            console.log(event.message);
+
+        }).catch(function (error) {
+            // error 
+            console.log(error);
+        });
+    }
 }
 
 // postback event
