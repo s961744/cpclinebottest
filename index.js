@@ -275,7 +275,7 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
                         }
                         break;
                 }
-                if (data === '[]') {
+                if (data.length < 3) {
                     console.log("No messages need to be sent.");
                 }
                 else {
@@ -582,6 +582,7 @@ function message(event) {
                                 //    console.log(Directory);
                                 //});
                                 console.log("圖片上傳結果：" + chunk);
+                                client.pushMessage(event.source.userId, { type: 'text', text: '圖片上傳成功!' });
                             });
                         });
 
