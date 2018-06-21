@@ -414,7 +414,7 @@ function message(event) {
                 "actions": [
                     {
                         "type": "message",
-                        "text": "群組申請",
+                        "text": "群組管理",
                         "area": {
                             "x": 0,
                             "y": 0,
