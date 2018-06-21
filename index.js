@@ -402,6 +402,60 @@ function message(event) {
                 console.log(error);
             });
         }
+        else if (event.message.text === '群組管理') {
+            msg = {
+                "type": "imagemap",
+                "baseUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/test4.png",
+                "altText": "This is an imagemap",
+                "baseSize": {
+                    "height": 1040,
+                    "width": 1040
+                },
+                "actions": [
+                    {
+                        "type": "message",
+                        "text": "群組申請",
+                        "area": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 520,
+                            "height": 520
+                        }
+                    },
+                    {
+                        "type": "message",
+                        "text": "群組成員查詢",
+                        "area": {
+                            "x": 520,
+                            "y": 0,
+                            "width": 1040,
+                            "height": 520
+                        }
+                    },
+                    {
+                        "type": "message",
+                        "text": "群組ID",
+                        "area": {
+                            "x": 0,
+                            "y": 520,
+                            "width": 520,
+                            "height": 1040
+                        }
+                    },
+                    {
+                        "type": "message",
+                        "text": "取消群組",
+                        "area": {
+                            "x": 520,
+                            "y": 520,
+                            "width": 1040,
+                            "height": 1040
+                        }
+                    }
+                ]
+            }
+            client.replyMessage(event.replyToken, msg);
+        }
         else if (event.message.text === '!admin') {
             if (event.source.userId === process.env.AdminLineUserId)
             {
@@ -732,7 +786,7 @@ function message(event) {
                     var now = new Date().toISOString().
                         replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '').replace(/\s+/g, "");
                     var random = Math.floor(Math.random() * 9999) + 1;
-                    var FileName = "node-v8.9.4.tar.gz";
+                    var FileName = now + random + '.png';
                     console.log(FileName);
                     var optionsPost = {
                         host: '116.50.39.201',
