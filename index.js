@@ -405,7 +405,7 @@ function message(event) {
         else if (event.message.text === '群組管理') {
             msg = {
                 "type": "imagemap",
-                "baseUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/test4.png",
+                "baseUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/test4",
                 "altText": "This is an imagemap",
                 "baseSize": {
                     "height": 1040,
