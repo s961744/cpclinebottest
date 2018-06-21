@@ -456,6 +456,17 @@ function message(event) {
             }
             client.replyMessage(event.replyToken, msg);
         }
+        else if (event.message.text == '群組成員查詢') {
+            client.getGroupMemberIds(event.source.groupId)
+                .then((ids) => {
+                    var allId;
+                    ids.forEach((id) => allId += id + ',');
+                    client.pushMessage(event.source.groupId, { type: 'text', text: allId });
+                })
+                .catch((err) => {
+                    // error handling
+                });
+        }
         else if (event.message.text === '!admin') {
             if (event.source.userId === process.env.AdminLineUserId)
             {
