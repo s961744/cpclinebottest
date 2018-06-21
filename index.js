@@ -463,10 +463,11 @@ function message(event) {
                     var allId;
                     ids.forEach((id) => allId += id + ',');
                     console.log(allId);
+                    client.replyMessage(event.replyToken, { type: 'text', text: allId });
                     client.pushMessage(event.source.groupId, { type: 'text', text: allId });
                 })
                 .catch((err) => {
-                    // error handling
+                    console.log(err);
                 });
         }
         else if (event.message.text === '!admin') {
