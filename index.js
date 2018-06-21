@@ -414,7 +414,7 @@ function message(event) {
                 "actions": [
                     {
                         "type": "message",
-                        "text": "群組管理",
+                        "text": "群組申請",
                         "area": {
                             "x": 0,
                             "y": 0,
@@ -456,7 +456,7 @@ function message(event) {
             }
             client.replyMessage(event.replyToken, msg);
         }
-        else if (event.message.text == '群組成員查詢') {
+        else if (event.message.text === '群組成員查詢') {
             client.getGroupMemberIds(event.source.groupId)
                 .then((ids) => {
                     console.log(event.source.groupId);
