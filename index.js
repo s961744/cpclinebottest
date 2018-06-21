@@ -459,8 +459,10 @@ function message(event) {
         else if (event.message.text == '群組成員查詢') {
             client.getGroupMemberIds(event.source.groupId)
                 .then((ids) => {
+                    console.log(event.source.groupId);
                     var allId;
                     ids.forEach((id) => allId += id + ',');
+                    console.log(allId);
                     client.pushMessage(event.source.groupId, { type: 'text', text: allId });
                 })
                 .catch((err) => {
