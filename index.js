@@ -457,6 +457,7 @@ function message(event) {
             client.replyMessage(event.replyToken, msg);
         }
         else if (event.message.text === '群組成員查詢') {
+            console.log(event.source.groupId);
             client.getGroupMemberIds(event.source.groupId)
                 .then((ids) => {
                     console.log(event.source.groupId);
