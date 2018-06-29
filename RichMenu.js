@@ -1,6 +1,7 @@
 ﻿'use strict' // 嚴謹模式
 
 const
+    line = require('@line/bot-sdk'),
     http = require("http");
 
 // create LINE SDK config from env variables
