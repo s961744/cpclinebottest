@@ -1,13 +1,15 @@
 'use strict';
-const express = require('express');
-const line = require('@line/bot-sdk');
-const schedule = require('node-schedule');
-const http = require("http");
-const fs = require('fs');
-const path = require('path');
-const cp = require('child_process');
-const AWS = require('aws-sdk');
-const moment = require('moment');
+const
+    express = require('express'),
+    line = require('@line/bot-sdk'),
+    schedule = require('node-schedule'),
+    http = require("http"),
+    fs = require('fs'),
+    path = require('path'),
+    cp = require('child_process'),
+    AWS = require('aws-sdk'),
+    moment = require('moment'),
+    rm = require('./RichMenu');
 
 AWS.config.region = 'chinpoon';
 var s3 = new AWS.S3({ region: 'ap-northeast-1' });
@@ -48,192 +50,6 @@ var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
 });
-
-//****************************以下Rich Menu相關方法不可刪除，還會用到****************************//
-
-// 建立Rich Menu Object(3格)
-var RMenu3 = {
-    "size": {
-        "width": 2500,
-        "height": 843
-    },
-    "selected": false,
-    "name": "TEST_3",
-    "chatBarText": "選單測試",
-    "areas": [
-        {
-            "bounds": {
-                "x": 0,
-                "y": 0,
-                "width": 833,
-                "height": 843
-            },
-            "action": {
-                "type": "postback",
-                "data": "!admin",
-                "text": "!admin"
-            }
-        },
-        {
-            "bounds": {
-                "x": 834,
-                "y": 0,
-                "width": 833,
-                "height": 843
-            },
-            "action": {
-                "type": "postback",
-                "data": "action=test2"
-            }
-        },
-        {
-            "bounds": {
-                "x": 1668,
-                "y": 0,
-                "width": 833,
-                "height": 843
-            },
-            "action": {
-                "type": "postback",
-                "data": "action=test3"
-            }
-        }
-    ]
-}
-
-// 建立Rich Menu Object(6格)
-var RMenu6 = {
-    "size": {
-        "width": 2500,
-        "height": 1686
-    },
-    "selected": false,
-    "name": "TEST_6",
-    "chatBarText": "選單測試",
-    "areas": [
-        {
-            "bounds": {
-                "x": 0,
-                "y": 0,
-                "width": 833,
-                "height": 843
-            },
-            "action": {
-                "type": "postback",
-                "data": "action=test1"
-            }
-        },
-        {
-            "bounds": {
-                "x": 834,
-                "y": 0,
-                "width": 833,
-                "height": 843
-            },
-            "action": {
-                "type": "postback",
-                "data": "action=test2"
-            }
-        },
-        {
-            "bounds": {
-                "x": 1668,
-                "y": 0,
-                "width": 833,
-                "height": 843
-            },
-            "action": {
-                "type": "postback",
-                "data": "action=test3"
-            }
-        },
-        {
-            "bounds": {
-                "x": 0,
-                "y": 844,
-                "width": 833,
-                "height": 843
-            },
-            "action": {
-                "type": "postback",
-                "data": "action=test4"
-            }
-        },
-        {
-            "bounds": {
-                "x": 834,
-                "y": 844,
-                "width": 833,
-                "height": 843
-            },
-            "action": {
-                "type": "postback",
-                "data": "action=test5"
-            }
-        },
-        {
-            "bounds": {
-                "x": 1668,
-                "y": 844,
-                "width": 833,
-                "height": 843
-            },
-            "action": {
-                "type": "postback",
-                "data": "action=test6"
-            }
-        }
-    ]
-}
-
-// 建立Rich Menu (上限10個)
-//client.createRichMenu(RMenu3).then(function (RichMenuID) {
-//    console.log("Rich Menu created:" + JSON.stringify(RichMenuID));
-//}).catch(function (e) {
-//    console.log("createRichMenu error:" + e);
-//});
-
-// 刪除RichMenu
-//var deleteRichMenuId = "richmenu-74238990b4985dfb260debb006116b6e";
-//client.deleteRichMenu(deleteRichMenuId).then(function () {
-//    console.log("Rich Menu deleted:" + deleteRichMenuId);
-//}).catch(function (e) {
-//    console.log("deleteRichMenu error:" + e);
-//});
-
-var RichMenuId = "richmenu-19a8c423f8e9a8bd55a6ac24754cb02c";
-
-// 綁定RichMenu圖片
-//const filepath = path.join(__dirname, "test3.png");
-//const buffer = fs.readFileSync(filepath);
-//client.setRichMenuImage(RichMenuId, buffer).then(function () {
-//    console.log("setRichMenuImage seccess:" + RichMenuId);
-//}).catch(function (e) {
-//    console.log("setRichMenuImage error:" + e);
-//});
-
-// 取得Rich Menu List
-//client.getRichMenuList().then(function (arr)
-//{
-//    console.log("RichMenuLists=" + JSON.stringify(arr))
-//}).catch(function (e) {
-//    console.log("getRichMenuList error:" + e);
-//});
-
-
-var RichMenuUserId = process.env.AdminLineUserId;
-
-// 綁定RichMenuId給RichMenuUserId
-//client.linkRichMenuToUser(RichMenuUserId, RichMenuId).then(function () {
-//    console.log("linkRichMenuToUser seccess");
-//    client.getRichMenuIdOfUser(RichMenuUserId).then(function (RichMenuId) {
-//        console.log(RichMenuUserId + ".RichMenuID=" + RichMenuId);
-//    }).catch(function (e) {
-//        console.log("getRichMenuIdOfUser(" + RichMenuUserId + ")error:" + e);
-//    });
-//}).catch(function (e) {
-//    console.log("linkRichMenuToUser(" + RichMenuUserId + ")error:" + e);
-//});
 
 // 排程 1次/30sec (每分鐘的5秒及35秒)
 var job = schedule.scheduleJob('5,35 * * * * *', function () {
@@ -406,7 +222,7 @@ function message(event) {
             msg = {
                 "type": "imagemap",
                 "baseUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/test4",
-                "altText": "This is an imagemap",
+                "altText": "群組管理選單",
                 "baseSize": {
                     "height": 1040,
                     "width": 1040
@@ -470,6 +286,16 @@ function message(event) {
                 .catch((err) => {
                     console.log(err);
                 });
+        }
+        else if (event.message.text.toUpperCase.startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
+            if (event.message.text.toUpperCase.startsWith('RM_DESC')) {
+                var msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
+                client.replyMessage(event.replyToken, msg);
+            }
+            else if (event.message.text.toUpperCase.startsWith('RM_CR')) {
+                var rmo = event.message.text.substring(6);
+                rm.createRichMenu(rmo);
+            } 
         }
         else if (event.message.text === '!admin') {
             if (event.source.userId === process.env.AdminLineUserId)
@@ -636,7 +462,7 @@ function message(event) {
                     var optionsPost = {
                         host: '116.50.39.201',  
                         port: 7102,
-                        path: '/LineRESTful/resources/LineRESTfulTest/postFile/LineImg/' + FileName,
+                        path: '/FileRESTful/resources/FileRESTful/postFile/LineFile/' + FileName,
                         method: 'POST',
                         encoding: null
                     };
@@ -806,7 +632,7 @@ function message(event) {
                     var optionsPost = {
                         host: '116.50.39.201',
                         port: 7102,
-                        path: '/LineRESTful/resources/LineRESTfulTest/postFile/LineFile/' + FileName,
+                        path: '/FileRESTful/resources/FileRESTful/postFile/LineFile/' + FileName,
                         method: 'POST',
                         encoding: null
                     };
