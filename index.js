@@ -296,7 +296,7 @@ function message(event) {
                 //var rmo = event.message.text.substring(6);
                 rm.createRichMenu().then((richMenuID) => {
                     rm.setRichMenuImage().then(() => {
-                        rm.linkRichMenuToUser(richMenuID);
+                        rm.linkRichMenuToUser(process.env.AdminLineUserId, richMenuID);
                     })
                 });
                 
