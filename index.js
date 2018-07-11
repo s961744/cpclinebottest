@@ -9,7 +9,8 @@ const
     cp = require('child_process'),
     AWS = require('aws-sdk'),
     moment = require('moment'),
-    rm = require('./RichMenu');
+    rm = require('./js/richMenu'),
+    jsonProcess = require('./js/jsonProcess');
 
 AWS.config.region = 'chinpoon';
 var s3 = new AWS.S3({ region: 'ap-northeast-1' });
@@ -219,73 +220,149 @@ function message(event) {
             });
         }
         else if (event.message.text === '群組管理') {
-            msg = {
-                "type": "imagemap",
-                "baseUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/test4",
-                "altText": "群組管理選單",
-                "baseSize": {
-                    "height": 1040,
-                    "width": 1040
-                },
-                "actions": [
-                    {
-                        "type": "message",
-                        "text": "群組申請",
-                        "area": {
-                            "x": 0,
-                            "y": 0,
-                            "width": 520,
-                            "height": 520
+            //var msg = {
+            //    "type": "imagemap",
+            //    "baseUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/test4",
+            //    "altText": "This is an imagemap",
+            //    "baseSize": {
+            //        "height": 1040,
+            //        "width": 1040
+            //    },
+            //    "actions": [
+            //        {
+            //            "type": "message",
+            //            "text": "群組申請",
+            //            "area": {
+            //                "x": 0,
+            //                "y": 0,
+            //                "width": 520,
+            //                "height": 520
+            //            }
+            //        },
+            //        {
+            //            "type": "message",
+            //            "text": "群組成員查詢",
+            //            "area": {
+            //                "x": 520,
+            //                "y": 0,
+            //                "width": 1040,
+            //                "height": 520
+            //            }
+            //        },
+            //        {
+            //            "type": "message",
+            //            "text": "群組ID",
+            //            "area": {
+            //                "x": 0,
+            //                "y": 520,
+            //                "width": 520,
+            //                "height": 1040
+            //            }
+            //        },
+            //        {
+            //            "type": "message",
+            //            "text": "取消群組",
+            //            "area": {
+            //                "x": 520,
+            //                "y": 520,
+            //                "width": 1040,
+            //                "height": 1040
+            //            }
+            //        }
+            //    ]
+            //}
+            var msg = {
+                type: 'template',
+                altText: '群組管理選單',
+                template: {
+                    type: 'buttons',
+                    thumbnailImageUrl: 'https://s3-ap-northeast-1.amazonaws.com/chinpoon/groupMenuV3.png',
+                    title: '群組管理選單',
+                    text: '僅限群組管理員使用',
+                    actions: [
+                        {
+                            type: 'postback',
+                            label: '代號設定',
+                            data: 'action=groupSet&groupId=' + event.source.groupId,
+                            text: '群組代號設定'
+                        },
+                        {
+                            type: 'postback',
+                            label: '人員清單',
+                            data: 'action=groupMember&groupId=' + event.source.groupId,
+                            text: '群組成員清單'
+                        },
+                        {
+                            type: 'postback',
+                            label: '人員比對',
+                            data: 'action=groupMemberCompare&groupId=' + event.source.groupId,
+                            text: '群組人員比對'
+                        },
+                        {
+                            type: 'postback',
+                            label: '功能解除',
+                            data: 'action=groupBreak&groupId=' + event.source.groupId,
+                            text: '群組功能解除'
                         }
-                    },
-                    {
-                        "type": "message",
-                        "text": "群組成員查詢",
-                        "area": {
-                            "x": 520,
-                            "y": 0,
-                            "width": 1040,
-                            "height": 520
-                        }
-                    },
-                    {
-                        "type": "message",
-                        "text": "群組ID",
-                        "area": {
-                            "x": 0,
-                            "y": 520,
-                            "width": 520,
-                            "height": 1040
-                        }
-                    },
-                    {
-                        "type": "message",
-                        "text": "取消群組",
-                        "area": {
-                            "x": 520,
-                            "y": 520,
-                            "width": 1040,
-                            "height": 1040
-                        }
-                    }
-                ]
+                    ]
+                }
             }
             client.replyMessage(event.replyToken, msg);
         }
-        else if (event.message.text === '群組成員查詢') {
+        else if (event.message.text === '群組代號設定') {
+            var msg = { type: 'text', text: '請輸入於EB申請取得的群組代號\n(ex:GP001)' };
+            client.replyMessage(event.replyToken, msg);
+        }
+        else if (event.message.text === '群組成員清單') {
             console.log(event.source.groupId);
             client.getGroupMemberIds(event.source.groupId)
                 .then((ids) => {
                     console.log(event.source.groupId);
-                    var allId;
-                    ids.forEach((id) => allId += id + ',');
+                    var allId = "";
+                    ids.forEach((id) => {
+                        if (id != 'undefined') {
+                            allId += '\n' + id
+                        }
+                    });
                     console.log(allId);
-                    client.replyMessage(event.replyToken, { type: 'text', text: allId });
-                    client.pushMessage(event.source.groupId, { type: 'text', text: allId });
+                    client.replyMessage(event.replyToken, { type: 'text', text: '群組人員(待轉為工號+姓名)：' + allId });
                 })
                 .catch((err) => {
                     console.log(err);
                 });
+        }
+        else if (event.message.text === '群組人員比對') {
+            var msg = { type: 'text', text: '與EB系統中維護之成員比對吻合' };
+            client.replyMessage(event.replyToken, msg);
+        }
+        else if (event.message.text === '群組功能解除') {
+            var msg = '';
+            if (event.source.userId == process.env.AdminLineUserId) {
+                msg = {
+                    type: 'template',
+                    altText: '群組功能解除確認',
+                    template: {
+                        type: 'confirm',
+                        text: '注意：敬鵬LineBot將離開群組，\n是否確定解除?',
+                        actions: [
+                            {
+                                type: 'postback',
+                                label: '確定',
+                                data: 'action=groupLeaveConfirm&groupId=' + event.source.groupId
+                            },
+                            {
+                                type: 'postback',
+                                label: '取消',
+                                data: 'action=groupLeaveCancel&groupId=' + event.source.groupId
+                            }
+                        ]
+                    }
+                }
+            }
+            else {
+                msg = { type: 'text', text: '此功能僅限群組管理員操作\n管理員：' + process.env.AdminLineUserId };
+            }
+            client.replyMessage(event.replyToken, msg);
         }
         else if (event.message.text.toUpperCase().startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
             if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
@@ -836,41 +913,20 @@ function postback(event) {
             console.log("getRichMenuList error:" + e);
         });
     }
-    else if (event.postback.data === "sendFollow") {
-        msg = {
-            type: 'template',
-            altText: '加入好友訊息',
-            template: {
-                type: 'confirm',
-                text: '敬鵬Line正式帳號上線了!!\n直接加入好友不需重新申請權限',
-                actions: [
-                    {
-                        type: 'uri',
-                        label: '加入好友',
-                        uri: 'line://ti/p/@bmr3446l'
-
-                    },
-                    {
-                        type: 'postback',
-                        label: '暫時不要',
-                        data: 'notnow'
-                    }
-                ]
-            }
-        }
-        client.multicast([""], msg);
-        console.log(JSON.stringify(msg));
-    }
-    else if (event.postback.data === "notnow") {
-        msg = { type: 'text', text: '再請您請抽空加入好友\n若有問題請洽資訊處(#1409)\n謝謝' };
-        client.pushMessage(event.source.userId, msg);
-        console.log(JSON.stringify(msg));
-    }
     else if (event.postback.data === "sendImageTest") {
-        var filepath = path.join(__dirname, "test.jpg");
+        var filepath = path.join("img", "test.jpg");
         msg = { type: 'image', originalContentUrl: filepath, previewImageUrl: filepath };
         client.pushMessage(event.source.userId, msg);
         console.log(JSON.stringify(msg));
+    }
+    else if (event.postback.data === "RM_DESC") {
+        msg = jsonProcess.getJsonFileData("msgText");
+        //msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
+        client.pushMessage(event.source.userId, msg);
+    }
+    else if (event.postback.data === "部門管理") {
+        msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
+        client.pushMessage(event.source.userId, msg);
     }
 }
 
