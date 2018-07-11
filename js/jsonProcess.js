@@ -8,7 +8,7 @@ const
 exports.getJsonFileData = function(fileName) {
     var fs = require('fs');
     var obj;
-    fs.readFile('js/' + fileName, 'utf8', function (err, data) {
+    fs.readFile('json/' + fileName, 'utf8', function (err, data) {
         if (err) throw err;
         obj = JSON.parse(data);
     });
