@@ -293,8 +293,13 @@ function message(event) {
                 client.replyMessage(event.replyToken, msg);
             }
             else if (event.message.text.toUpperCase.startsWith('RM_CR')) {
-                var rmo = event.message.text.substring(6);
-                rm.createRichMenu(rmo);
+                //var rmo = event.message.text.substring(6);
+                rm.createRichMenu().then((richMenuID) => {
+                    rm.setRichMenuImage().then(() => {
+                        rm.linkRichMenuToUser(richMenuID);
+                    })
+                });
+                
             } 
         }
         else if (event.message.text === '!admin') {

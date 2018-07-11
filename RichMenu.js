@@ -244,10 +244,11 @@ var RMenu6 = {
  * 建立RichMenu
  * @param {String} richMenuName RichMenu名稱
  */
-exports.createRichMenu = function (rmo) {
-    var rmoArray = rmo.split("|", 2);
+exports.createRichMenu = function () {
+    //var rmoArray = rmo.split("|", 2);
     client.createRichMenu(RMenuCPC).then(function (richMenuID) {
         console.log("Rich Menu created:" + JSON.stringify(richMenuID));
+        return richMenuID;
     }).catch(function (e) {
         console.log("createRichMenu error:" + e);
     });
@@ -264,13 +265,15 @@ exports.createRichMenu = function (rmo) {
 //var RichMenuId = "richmenu-19a8c423f8e9a8bd55a6ac24754cb02c";
 
 // 綁定RichMenu圖片
-//const filepath = path.join(__dirname, "RMenuCPC.png");
-//const buffer = fs.readFileSync(filepath);
-//client.setRichMenuImage(RichMenuId, buffer).then(function () {
-//    console.log("setRichMenuImage seccess:" + RichMenuId);
-//}).catch(function (e) {
-//    console.log("setRichMenuImage error:" + e);
-//});
+exports.setRichMenuImage = function (richMenuId) {
+    const filepath = path.join(__dirname, "RMenuCPC.png");
+    const buffer = fs.readFileSync(filepath);
+    client.setRichMenuImage(richMenuId, buffer).then(function () {
+        console.log("setRichMenuImage seccess:" + richMenuId);
+    }).catch(function (e) {
+        console.log("setRichMenuImage error:" + e);
+    });
+}
 
 // 取得Rich Menu List
 //client.getRichMenuList().then(function (arr)
@@ -280,17 +283,16 @@ exports.createRichMenu = function (rmo) {
 //    console.log("getRichMenuList error:" + e);
 //});
 
-
-var RichMenuUserId = process.env.AdminLineUserId;
-
-// 綁定RichMenuId給RichMenuUserId
-//client.linkRichMenuToUser(RichMenuUserId, RichMenuId).then(function () {
-//    console.log("linkRichMenuToUser seccess");
-//    client.getRichMenuIdOfUser(RichMenuUserId).then(function (RichMenuId) {
-//        console.log(RichMenuUserId + ".RichMenuID=" + RichMenuId);
-//    }).catch(function (e) {
-//        console.log("getRichMenuIdOfUser(" + RichMenuUserId + ")error:" + e);
-//    });
-//}).catch(function (e) {
-//    console.log("linkRichMenuToUser(" + RichMenuUserId + ")error:" + e);
-//});
+// 綁定RichMenuId給UserId
+exports.linkRichMenuToUser = function (userId, richMenuId) {
+    client.linkRichMenuToUser(userId, richMenuId).then(function () {
+        console.log("linkRichMenuToUser seccess");
+        client.getRichMenuIdOfUser(userId).then(function (richMenuId) {
+            console.log(userId + ".RichMenuID=" + richMenuId);
+        }).catch(function (e) {
+            console.log("getRichMenuIdOfUser(" + userId + ")error:" + e);
+        });
+    }).catch(function (e) {
+        console.log("linkRichMenuToUser(" + userId + ")error:" + e);
+    });
+}
