@@ -2,7 +2,7 @@
 
 const
     line = require('@line/bot-sdk'),
-    http = require("http");
+    path = require('path');
 
 // create LINE SDK config from env variables
 const config = {
