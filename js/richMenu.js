@@ -268,7 +268,7 @@ exports.createRichMenu = function () {
 // 綁定RichMenu圖片
 exports.setRichMenuImage = function (richMenuId) {
     return new Promise(function (resolve, reject) {
-        const filepath = path.join("img", "RMenuCPC.png");
+        const filepath = path.join("./img", "RMenuCPC.png");
         const buffer = fs.readFileSync(filepath);
         client.setRichMenuImage(richMenuId, buffer).then(function () {
             console.log("setRichMenuImage seccess:" + richMenuId);
