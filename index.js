@@ -297,10 +297,13 @@ function message(event) {
                 rm.createRichMenu().then((richMenuID) => {
                     rm.setRichMenuImage().then(() => {
                         rm.linkRichMenuToUser(process.env.AdminLineUserId, richMenuID);
-                    })
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                }).catch((err) => {
+                    console.log(err);
                 });
-                
-            } 
+            }
         }
         else if (event.message.text === '!admin') {
             if (event.source.userId === process.env.AdminLineUserId)
