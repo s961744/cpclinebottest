@@ -287,12 +287,12 @@ function message(event) {
                     console.log(err);
                 });
         }
-        else if (event.message.text.toUpperCase.startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
-            if (event.message.text.toUpperCase.startsWith('RM_DESC')) {
+        else if (event.message.text.toUpperCase().startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
+            if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
                 var msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
                 client.replyMessage(event.replyToken, msg);
             }
-            else if (event.message.text.toUpperCase.startsWith('RM_CR')) {
+            else if (event.message.text.toUpperCase().startsWith('RM_CR')) {
                 //var rmo = event.message.text.substring(6);
                 rm.createRichMenu().then((richMenuID) => {
                     rm.setRichMenuImage().then(() => {
