@@ -295,7 +295,7 @@ function message(event) {
             else if (event.message.text.toUpperCase().startsWith('RM_CR')) {
                 //var rmo = event.message.text.substring(6);
                 rm.createRichMenu().then((richMenuID) => {
-                    rm.setRichMenuImage().then(() => {
+                    rm.setRichMenuImage(richMenuID).then((richMenuID) => {
                         rm.linkRichMenuToUser(process.env.AdminLineUserId, richMenuID);
                     }).catch((err) => {
                         console.log(err);
