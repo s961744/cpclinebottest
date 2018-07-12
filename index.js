@@ -920,8 +920,7 @@ function postback(event) {
         console.log(JSON.stringify(msg));
     }
     else if (event.postback.data === "RM_DESC") {
-        jsonProcess.getJsonFileData("msgText").then(function (msg) {
-            console.log("msg=" + JSON.stringify(msg));
+        jsonProcess.getMsgFromJsonFile("msgText","rm_desc").then(function (msg) {
             client.pushMessage(event.source.userId, msg);
         });
     }

@@ -12,7 +12,6 @@ exports.getJsonFileData = function (fileName) {
         fs.readFile('json/' + fileName + '.json', 'utf8', function (err, data) {
             if (err) reject(err);
             obj = JSON.parse(data);
-            console.log("obj=" + JSON.stringify(obj));
             resolve(obj);
         });
     });
