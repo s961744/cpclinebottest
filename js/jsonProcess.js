@@ -12,5 +12,6 @@ exports.getJsonFileData = function(fileName) {
         if (err) throw err;
         console.log(JSON.stringify(data));
         obj = JSON.parse(data);
+        return obj;
     });
 }
