@@ -921,7 +921,7 @@ function postback(event) {
     }
     else if (event.postback.data === "RM_DESC") {
         msg = jsonProcess.getJsonFileData("msgText");
-        console.log(JSON.stringify(msg));
+        console.log("msg=" + JSON.stringify(msg));
         //msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
         client.pushMessage(event.source.userId, msg);
     }
