@@ -7,11 +7,11 @@ const
 exports.getMsgFromJsonFile = function (fileName, msgName) {
     return new Promise(function (resolve, reject) {
         var objsArray = [];
-        objsArray = jsonProcess.getJsonFileArrayData(fileName);
+        objsArray = JSON.parse(jsonProcess.getJsonFileArrayData(fileName));
         var obj = objsArray.filter(function (msg) {
             return msg.msgName == msgName;
         });
-        resolve(obj.msg);
+        Promise.resolve(obj.msg);
     }).catch(function (e) {
         console.log("getMsgFromJsonFile error:" + e);
         reject(e);
