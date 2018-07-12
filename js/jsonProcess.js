@@ -13,7 +13,7 @@ exports.getJsonFileArrayData = function (fileName) {
             if (err) reject(err);
             arr = JSON.parse(data);
             console.log("arr=" + JSON.stringify(arr));
-            resolve(arr);
+            resolve(data);
         });
     });
 }
