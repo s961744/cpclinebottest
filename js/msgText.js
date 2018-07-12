@@ -7,12 +7,14 @@ const
 exports.getMsgFromJsonFile = function (fileName, msgName) {
     return new Promise(function (resolve, reject) {
         var objsArray = [];
-        objsArray = JSON.parse(jsonProcess.getJsonFileArrayData(fileName));
-        console.log(JSON.stringify(objsArray));
-        var obj = objsArray.filter(function (msg) {
-            return msg.msgName == msgName;
+        jsonProcess.getJsonFileArrayData(fileName).then(function (data) {
+            objsArray = JSON.parse(data)
+            console.log(JSON.stringify(objsArray));
+            var obj = objsArray.filter(function (msg) {
+                return msg.msgName == msgName;
+            });
+            Promise.resolve(obj.msg);
         });
-        Promise.resolve(obj.msg);
     }).catch(function (e) {
         console.log("getMsgFromJsonFile error:" + e);
         reject(e);
