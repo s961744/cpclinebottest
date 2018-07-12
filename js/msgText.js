@@ -14,7 +14,8 @@ exports.getMsgFromJsonFile = function (fileName, msgName) {
             var obj = objsArray.filter(function (msg) {
                 return msg.msgName == msgName;
             });
-            Promise.resolve(obj.msg);
+            console.log("obj=" + JSON.stringify(obj));
+            resolve(obj.msg);
         });
     }).catch(function (e) {
         console.log("getMsgFromJsonFile error:" + e);
