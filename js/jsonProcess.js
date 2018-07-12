@@ -5,13 +5,13 @@ const
     path = require('path');
 
 //get json file data
-exports.getJsonFileData = function (fileName) {
+exports.getJsonFileArrayData = function (fileName) {
     return new Promise(function (resolve, reject) {
         var fs = require('fs');
-        var obj;
+        var arr = [];
         fs.readFile('json/' + fileName + '.json', 'utf8', function (err, data) {
             if (err) reject(err);
-            obj = JSON.parse(data);
+            arr = JSON.parse(data);
             resolve(obj);
         });
     });
