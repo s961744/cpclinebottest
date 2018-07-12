@@ -1,7 +1,7 @@
 ﻿'use strict' // 嚴謹模式
 
 const
-    jsonProcess = require('./js/jsonProcess');
+    jsonProcess = require('./jsonProcess');
 
 //get json file data
 exports.getMsgFromJsonFile = function (fileName, msgName) {
