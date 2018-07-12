@@ -8,6 +8,7 @@ exports.getMsgFromJsonFile = function (fileName, msgName) {
     return new Promise(function (resolve, reject) {
         var objsArray = [];
         objsArray = JSON.parse(jsonProcess.getJsonFileArrayData(fileName));
+        console.log(JSON.stringify(objsArray));
         var obj = objsArray.filter(function (msg) {
             return msg.msgName == msgName;
         });
