@@ -10,7 +10,7 @@ const
     AWS = require('aws-sdk'),
     moment = require('moment'),
     rm = require('./js/richMenu'),
-    jsonProcess = require('./js/jsonProcess');
+    msgText = require('./js/msgText');
 
 AWS.config.region = 'chinpoon';
 var s3 = new AWS.S3({ region: 'ap-northeast-1' });
@@ -920,7 +920,7 @@ function postback(event) {
         console.log(JSON.stringify(msg));
     }
     else if (event.postback.data === "RM_DESC") {
-        jsonProcess.getMsgFromJsonFile("msgText","rm_desc").then(function (msg) {
+        msgText.getMsgFromJsonFile("msgText","rm_desc").then(function (msg) {
             client.pushMessage(event.source.userId, msg);
         });
     }
