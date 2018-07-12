@@ -926,7 +926,7 @@ function postback(event) {
         client.pushMessage(event.source.userId, msg);
     }
     else if (event.postback.data === "部門管理") {
-        msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
+        msg = { "type": "text", "text": "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
         console.log(JSON.stringify(msg));
         client.pushMessage(event.source.userId, msg);
     }
