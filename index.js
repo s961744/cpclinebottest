@@ -920,10 +920,10 @@ function postback(event) {
         console.log(JSON.stringify(msg));
     }
     else if (event.postback.data === "RM_DESC") {
-        msg = jsonProcess.getJsonFileData("msgText");
-        console.log("msg=" + JSON.stringify(msg));
-        //msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
-        client.pushMessage(event.source.userId, msg);
+        jsonProcess.getJsonFileData("msgText").then(function (msg) {
+            console.log("msg=" + JSON.stringify(msg));
+            client.pushMessage(event.source.userId, msg);
+        });
     }
     else if (event.postback.data === "部門管理") {
         msg = { "type": "text", "text": "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
