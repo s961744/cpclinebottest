@@ -12,7 +12,7 @@ exports.getJsonFileArrayData = function (fileName) {
         fs.readFile('json/' + fileName + '.json', 'utf8', function (err, data) {
             if (err) reject(err);
             arr = JSON.parse(data);
-            resolve(obj);
+            resolve(arr);
         });
     });
 }

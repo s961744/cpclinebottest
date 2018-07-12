@@ -7,7 +7,7 @@ const
 exports.getMsgFromJsonFile = function (fileName, msgName) {
     return new Promise(function (resolve, reject) {
         var objsArray = [];
-        objsArray = jsonProcess.getJsonFileData(fileName);
+        objsArray = jsonProcess.getJsonFileArrayData(fileName);
         var obj = objsArray.filter(function (msg) {
             return msg.msgName == msgName;
         });
