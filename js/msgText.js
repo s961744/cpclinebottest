@@ -9,7 +9,7 @@ exports.getMsgFromJsonFile = function (fileName, msgName) {
         var objsArray = [];
         jsonProcess.getJsonFileArrayData(fileName).then(function (data) {
             objsArray = JSON.parse(data)
-            console.log(JSON.stringify(objsArray));
+            console.log("objsArray=" + JSON.stringify(objsArray));
             var obj = objsArray.filter(function (msg) {
                 return msg.msgName == msgName;
             });
