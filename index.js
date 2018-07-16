@@ -760,7 +760,7 @@ function message(event) {
 }
 
 // postback event
-function postback(event) {
+function postbacktest(event) {
     console.log("postback event=" + JSON.stringify(event));
     var msg = "";
     if (event.postback.data === "action=test2")
