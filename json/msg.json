@@ -40,6 +40,42 @@
     }
   },
   {
+    "msgName": "gmTest",
+    "msgType": "gm",
+    "msg": {
+      "type": "template",
+      "altText": "群組管理選單",
+      "template": {
+        "type": "buttons",
+        "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/groupMenuV3.png",
+        "title": "群組管理選單",
+        "text": "僅限群組管理員使用",
+        "actions": [
+          {
+            "type": "postback",
+            "label": "代號設定",
+            "data": ""
+          },
+          {
+            "type": "postback",
+            "label": "人員清單",
+            "data": ""
+          },
+          {
+            "type": "postback",
+            "label": "人員比對",
+            "data": ""
+          },
+          {
+            "type": "postback",
+            "label": "敬鵬LineBot功能解除",
+            "data": ""
+          }
+        ]
+      }
+    }
+  },
+  {
     "msgName": "gm",
     "msgType": "gm",
     "msg": {

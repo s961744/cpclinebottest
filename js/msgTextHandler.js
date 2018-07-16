@@ -40,6 +40,12 @@ exports.msgTextHandle = function (event) {
             msg.replyMessage(event.replyToken, msgData);
         });
     }
+    // 群組管理功能選單測試
+    else if (event.message.text === 'gmTest') {
+        msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
+            msg.replyMessage(event.replyToken, msgData);
+        });
+    }
     // RichMenu管理功能選單
     else if (event.message.text === 'rm') {
         msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
