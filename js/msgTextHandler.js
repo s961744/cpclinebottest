@@ -47,104 +47,104 @@ exports.msgTextHandle = function (event) {
         });
     }
     else if (event.message.text.toUpperCase().startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
-        if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
-            var msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
-            client.replyMessage(event.replyToken, msg);
-        }
+        //if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
+        //    var msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
+        //    client.replyMessage(event.replyToken, msg);
+        //}
         // 建立RichMenu
-        else if (event.message.text.toUpperCase().startsWith('RM_CR')) {
-            var rmName = event.message.text.substring(6);
-            rm.createRichMenu(rmName).then((richMenuID) => {
-                rm.setRichMenuImage(richMenuID).then((richMenuID) => {
-                    rm.linkRichMenuToUser(process.env.AdminLineUserId, richMenuID);
-                }).catch((err) => {
-                    console.log(err);
-                });
-            }).catch((err) => {
-                console.log(err);
-            });
-        }
+        //else if (event.message.text.toUpperCase().startsWith('RM_CR')) {
+        //    var rmName = event.message.text.substring(6);
+        //    rm.createRichMenu(rmName).then((richMenuID) => {
+        //        rm.setRichMenuImage(richMenuID).then((richMenuID) => {
+        //            rm.linkRichMenuToUser(process.env.AdminLineUserId, richMenuID);
+        //        }).catch((err) => {
+        //            console.log(err);
+        //        });
+        //    }).catch((err) => {
+        //        console.log(err);
+        //    });
+        //}
     }
     else if (event.message.text === '!admin') {
         if (event.source.userId === process.env.AdminLineUserId) {
-            msg = {
-                "type": "template",
-                "altText": "進入管理員選單",
-                "template": {
-                    "type": "carousel",
-                    "columns": [
-                        {
-                            "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/+sedum.png",
-                            "title": "管理員選單1",
-                            "text": "好友管理",
-                            "actions": [
-                                {
-                                    type: 'uri',
-                                    label: '加入好友',
-                                    uri: 'line://ti/p/@bmr3446l'
-                                },
-                                {
-                                    type: 'postback',
-                                    label: '發送加入好友訊息',
-                                    data: 'sendFollow'
-                                },
-                                {
-                                    type: 'postback',
-                                    label: '開發中',
-                                    data: '開發中'
-                                }
-                            ]
-                        },
-                        {
-                            "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/cat.jpg",
-                            "title": "管理員選單2",
-                            "text": "功能測試",
-                            "actions": [
-                                {
-                                    type: 'uri',
-                                    label: '拍照',
-                                    uri: 'line://nv/camera/'
-                                },
-                                {
-                                    type: 'postback',
-                                    label: '發送圖片',
-                                    data: 'sendImageTest'
-                                },
-                                {
-                                    type: 'uri',
-                                    label: '開發中',
-                                    uri: 'https://www.google.com.tw/'
-                                }
-                            ]
-                        },
-                        {
-                            "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/difficult.png",
-                            "title": "管理員選單3",
-                            "text": "開發中",
-                            "actions": [
-                                {
-                                    type: 'postback',
-                                    label: '開發中',
-                                    data: 'action=buy&itemid=123',
-                                    text: '這是代發訊息3'
-                                },
-                                {
-                                    type: 'datetimepicker',
-                                    label: '開發中',
-                                    data: 'datestring',
-                                    mode: 'date'
-                                },
-                                {
-                                    type: 'uri',
-                                    label: '開發中',
-                                    uri: 'https://www.google.com.tw/'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-            client.replyMessage(event.replyToken, msg);
+            //msg = {
+            //    "type": "template",
+            //    "altText": "進入管理員選單",
+            //    "template": {
+            //        "type": "carousel",
+            //        "columns": [
+            //            {
+            //                "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/+sedum.png",
+            //                "title": "管理員選單1",
+            //                "text": "好友管理",
+            //                "actions": [
+            //                    {
+            //                        type: 'uri',
+            //                        label: '加入好友',
+            //                        uri: 'line://ti/p/@bmr3446l'
+            //                    },
+            //                    {
+            //                        type: 'postback',
+            //                        label: '發送加入好友訊息',
+            //                        data: 'sendFollow'
+            //                    },
+            //                    {
+            //                        type: 'postback',
+            //                        label: '開發中',
+            //                        data: '開發中'
+            //                    }
+            //                ]
+            //            },
+            //            {
+            //                "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/cat.jpg",
+            //                "title": "管理員選單2",
+            //                "text": "功能測試",
+            //                "actions": [
+            //                    {
+            //                        type: 'uri',
+            //                        label: '拍照',
+            //                        uri: 'line://nv/camera/'
+            //                    },
+            //                    {
+            //                        type: 'postback',
+            //                        label: '發送圖片',
+            //                        data: 'sendImageTest'
+            //                    },
+            //                    {
+            //                        type: 'uri',
+            //                        label: '開發中',
+            //                        uri: 'https://www.google.com.tw/'
+            //                    }
+            //                ]
+            //            },
+            //            {
+            //                "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/difficult.png",
+            //                "title": "管理員選單3",
+            //                "text": "開發中",
+            //                "actions": [
+            //                    {
+            //                        type: 'postback',
+            //                        label: '開發中',
+            //                        data: 'action=buy&itemid=123',
+            //                        text: '這是代發訊息3'
+            //                    },
+            //                    {
+            //                        type: 'datetimepicker',
+            //                        label: '開發中',
+            //                        data: 'datestring',
+            //                        mode: 'date'
+            //                    },
+            //                    {
+            //                        type: 'uri',
+            //                        label: '開發中',
+            //                        uri: 'https://www.google.com.tw/'
+            //                    }
+            //                ]
+            //            }
+            //        ]
+            //    }
+            //}
+            //client.replyMessage(event.replyToken, msg);
         }
         else {
             client.pushMessage(event.source.userId, { type: 'text', text: '無法獲得管理選單，原因：非管理員' });
