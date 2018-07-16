@@ -54,22 +54,22 @@
           {
             "type": "postback",
             "label": "代號設定",
-            "data": "test"
+            "data": "{'responseType':'msg','msgName':'gmCodeSetting'}"
           },
           {
             "type": "postback",
             "label": "人員清單",
-            "data": "test"
+            "data": "{'responseType':'msg','msgName':'gmCodeSetting'}"
           },
           {
             "type": "postback",
             "label": "人員比對",
-            "data": "test"
+            "data": "{'responseType':'msg','msgName':'gmCodeSetting'}"
           },
           {
             "type": "postback",
             "label": "敬鵬LineBot功能解除",
-            "data": "test"
+            "data": "{'responseType':'msg','msgName':'gmCodeSetting'}"
           }
         ]
       }
@@ -90,34 +90,22 @@
           {
             "type": "postback",
             "label": "代號設定",
-            "data": {
-              "responseType": "msg",
-              "msgName": "gmCodeSetting"
-            }
+            "data": "responseType=msg&msgName=gmCodeSetting"
           },
           {
             "type": "postback",
             "label": "人員清單",
-            "data": {
-              "responseType": "gm",
-              "msgName": "gmMemberList"
-            }
+            "data": "responseType=gm&gmName=gmMemberList"
           },
           {
             "type": "postback",
             "label": "人員比對",
-            "data": {
-              "responseType": "gm",
-              "msgName": "gmMemberCheck"
-            }
+            "data": "responseType=gm&gmName=gmMemberCheck"
           },
           {
             "type": "postback",
             "label": "敬鵬LineBot功能解除",
-            "data": {
-              "responseType": "msg",
-              "msgName": "gmBreak"
-            }
+            "data": "responseType=msg&msgName=gmBreak"
           }
         ]
       }
@@ -160,18 +148,12 @@
           {
             "type": "postback",
             "label": "確定",
-            "data": {
-              "responseType": "gm",
-              "responseName": "gmBreakConfirm"
-            }
+            "data": "responseType=gm&gmName=gmBreakConfirm"
           },
           {
             "type": "postback",
             "label": "取消",
-            "data": {
-              "responseType": "gm",
-              "responseName": "gmBreakCancel"
-            }
+            "data": "responseType=gm&gmName=gmBreakCancel"
           }
         ]
       }
