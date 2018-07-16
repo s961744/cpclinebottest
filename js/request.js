@@ -3,7 +3,8 @@
 const
     urltil = require('url'),
     http = require('http'),
-    https = require('https');
+    https = require('https'),
+    jsonProcess = require('./jsonProcess');
 
 /**
 * 處理http GET
