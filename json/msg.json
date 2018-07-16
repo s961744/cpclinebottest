@@ -54,22 +54,22 @@
           {
             "type": "postback",
             "label": "代號設定",
-            "data": ""
+            "data": "test"
           },
           {
             "type": "postback",
             "label": "人員清單",
-            "data": ""
+            "data": "test"
           },
           {
             "type": "postback",
             "label": "人員比對",
-            "data": ""
+            "data": "test"
           },
           {
             "type": "postback",
             "label": "敬鵬LineBot功能解除",
-            "data": ""
+            "data": "test"
           }
         ]
       }
