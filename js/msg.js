@@ -1,18 +1,10 @@
 ﻿'use strict' //strict mode
 
 const
-    line = require('@line/bot-sdk'),
     jsonProcess = require('./jsonProcess'),
-    msgTextHandler = require('./msgTextHandler');
+    msgTextHandler = require('./msgTextHandler'),
+    msgImageHandler = require('./msgImageHandler');
 
-//create LINE SDK config from env variables
-const config = {
-    channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-    channelSecret: process.env.CHANNEL_SECRET,
-};
-
-//create LINE SDK client
-const client = new line.Client(config);
 
 //訊息處理
 exports.messageHandle = function (event) {
@@ -21,18 +13,13 @@ exports.messageHandle = function (event) {
             msgTextHandler.msgTextHandle(event);
             break;
         case "image":
+            msgImageHandler.msgImageHandle(event);
+            break;
+        case "video":
+            break;
+        case "file":
             break;
     }
-}
-
-//回應訊息
-exports.replyMessage = function (replyToken, msg) {
-    client.replyMessage(replyToken, msg);
-}
-
-//發送訊息
-exports.pushMessage = function (lineId, msg) {
-    client.pushMessage(lineId, msg);
 }
 
 //依msgName從json檔案取得訊息

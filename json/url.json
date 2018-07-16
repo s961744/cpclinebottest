@@ -6,5 +6,9 @@
   {
     "urlName": "lineRESTfulTest",
     "url": "http://116.50.39.201:7102/LineRESTful/resources/LineRESTfulTest"
+  },
+  {
+    "urlName": "fileRESTful",
+    "url": "http://116.50.39.201:7102/FileRESTful/resources/FileRESTful/postFile"
   }
 ]

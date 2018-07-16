@@ -206,5 +206,21 @@
         ]
       }
     }
+  },
+  {
+    "msgName": "imgMsgReply",
+    "msgType": "img",
+    "msg": {
+      "type": "text",
+      "text": "您傳送了一張圖片"
+    }
+  },
+  {
+    "msgName": "imgUploadSuccess",
+    "msgType": "img",
+    "msg": {
+      "type": "text",
+      "text": "圖片上傳成功!"
+    }
   }
 ]

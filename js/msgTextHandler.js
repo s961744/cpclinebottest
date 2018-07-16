@@ -1,6 +1,7 @@
 ﻿'use strict' //strict mode
 
 const
+    lineBotSdk = ('./lineBotSdk'),
     msg = require('./msg'),
     user = require('./user'),
     jsonProcess = require('./jsonProcess'),
@@ -10,10 +11,10 @@ exports.msgTextHandle = function (event) {
     //推播權限申請驗證
     if (event.message.text.toUpperCase().startsWith("V") && (event.message.text.length === 5)) {
         msg.getMsgFromJsonFile("msg", "authApply").then(function (msgData) {
-            msg.replyMessage(event.replyToken, msgData).then(function () {
-                user.getDisplayName(event.source.userId).then(function (displayName) {
+            lineBotSdk.replyMessage(event.replyToken, msgData).then(function () {
+                lineBotSdk.getDisplayName(event.source.userId).then(function (displayName) {
                     //發送驗證資訊給管理員
-                    msg.pushMessage(process.env.AdminLineUserId, {
+                    lineBotSdk.pushMessage(process.env.AdminLineUserId, {
                         type: 'text', text: '*****Line推播權限申請*****\nLine暱稱：' + displayName
                         + '\n驗證碼：' + event.message.text + '\nID：' + event.source.userId
                     });
@@ -37,13 +38,13 @@ exports.msgTextHandle = function (event) {
     //群組管理功能選單
     else if (event.message.text === 'gm' && event.source.type === 'group') {
         msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
-            msg.replyMessage(event.replyToken, msgData);
+            lineBotSdk.replyMessage(event.replyToken, msgData);
         });
     }
     //RichMenu管理功能選單
     else if (event.message.text === 'rm' && event.source.type === 'user') {
         msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
-            msg.replyMessage(event.replyToken, msgData);
+            lineBotSdk.replyMessage(event.replyToken, msgData);
         });
     }
     else if (event.message.text.toUpperCase().startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
@@ -68,12 +69,12 @@ exports.msgTextHandle = function (event) {
     else if (event.message.text === 'adminMenu') {
         if (event.source.userId === process.env.AdminLineUserId) {
             msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
-                msg.replyMessage(event.replyToken, msgData);
+                lineBotSdk.replyMessage(event.replyToken, msgData);
             });
         }
         else {
             msg.getMsgFromJsonFile("msg", "adminMenuReject").then(function (msgData) {
-                msg.replyMessage(event.replyToken, msgData);
+                lineBotSdk.replyMessage(event.replyToken, msgData);
             });
         }
     }
