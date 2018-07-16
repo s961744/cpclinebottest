@@ -1,10 +1,10 @@
-﻿'use strict' // 嚴謹模式
+﻿'use strict' //strict mode
 
 const
     fs = require('fs'),
     path = require('path');
 
-//get json file data
+//從JSON檔案取得資料
 exports.getJsonFileArrayData = function (fileName) {
     return new Promise(function (resolve, reject) {
         var fs = require('fs');

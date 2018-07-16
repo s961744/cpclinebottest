@@ -1,4 +1,4 @@
-﻿'use strict' // 嚴謹模式
+﻿'use strict' //strict mode
 
 const
     line = require('@line/bot-sdk'),
@@ -13,8 +13,9 @@ const config = {
 
 // create LINE SDK client
 const client = new line.Client(config);
+
 /**
- * 建立RichMenu
+ * 建立richMenu
  * @param {String} rmName RichMenu名稱(richMenu.json的rmName)
  */
 exports.createRichMenu = function (rmName) {
@@ -31,20 +32,10 @@ exports.createRichMenu = function (rmName) {
     });
 }
 
-// 刪除RichMenu
-//var deleteRichMenuId = "richmenu-74238990b4985dfb260debb006116b6e";
-//client.deleteRichMenu(deleteRichMenuId).then(function () {
-//    console.log("Rich Menu deleted:" + deleteRichMenuId);
-//}).catch(function (e) {
-//    console.log("deleteRichMenu error:" + e);
-//});
-
-//var RichMenuId = "richmenu-19a8c423f8e9a8bd55a6ac24754cb02c";
-
-// 綁定RichMenu圖片
-exports.setRichMenuImage = function (richMenuId) {
+//綁定rmName.png圖片給richMenuId
+exports.setRichMenuImage = function (richMenuId, rmName) {
     return new Promise(function (resolve, reject) {
-        const filepath = path.join("img", "RMenuCPC.png");
+        const filepath = path.join("img", rmName + ".png");
         const buffer = fs.readFileSync(filepath);
         client.setRichMenuImage(richMenuId, buffer).then(function () {
             console.log("setRichMenuImage seccess:" + richMenuId);
@@ -56,16 +47,8 @@ exports.setRichMenuImage = function (richMenuId) {
     });
 }
 
-// 取得Rich Menu List
-//client.getRichMenuList().then(function (arr)
-//{
-//    console.log("RichMenuLists=" + JSON.stringify(arr))
-//}).catch(function (e) {
-//    console.log("getRichMenuList error:" + e);
-//});
-
-// 綁定RichMenuId給UserId
-exports.linkRichMenuToUser = function (userId, richMenuId) {
+//綁定richMenuId給UserId
+exports.linkRichMenuToUser = function (richMenuId, userId) {
     return new Promise(function (resolve, reject) {
         client.linkRichMenuToUser(userId, richMenuId).then(function () {
             console.log("linkRichMenuToUser seccess");
@@ -83,7 +66,7 @@ exports.linkRichMenuToUser = function (userId, richMenuId) {
     });
 }
 
-
+//依rmName取得richMenu選單內容
 function getRichMenuData(rmName) {
     return new Promise(function (resolve, reject) {
         var objsArray = [];
@@ -99,3 +82,21 @@ function getRichMenuData(rmName) {
         reject(e);
     });
 }
+
+// 取得Rich Menu List
+//client.getRichMenuList().then(function (arr)
+//{
+//    console.log("RichMenuLists=" + JSON.stringify(arr))
+//}).catch(function (e) {
+//    console.log("getRichMenuList error:" + e);
+//});
+
+// 刪除RichMenu
+//var deleteRichMenuId = "richmenu-74238990b4985dfb260debb006116b6e";
+//client.deleteRichMenu(deleteRichMenuId).then(function () {
+//    console.log("Rich Menu deleted:" + deleteRichMenuId);
+//}).catch(function (e) {
+//    console.log("deleteRichMenu error:" + e);
+//});
+
+//var RichMenuId = "richmenu-19a8c423f8e9a8bd55a6ac24754cb02c";

@@ -1,7 +1,7 @@
-﻿'use strict' // 嚴謹模式
+﻿'use strict' //strict mode
 
 const
-    urltil = require('url'),// url模組
+    urltil = require('url'),
     http = require('http'),
     https = require('https');
 

@@ -11,7 +11,8 @@ const
     moment = require('moment'),
     rm = require('./js/richMenu'),
     msg = require('./js/msg'),
-    postback = require('./js/postback');
+    postback = require('./js/postback'),
+    request = require('./js/request');
 
 AWS.config.region = 'chinpoon';
 var s3 = new AWS.S3({ region: 'ap-northeast-1' });
@@ -67,34 +68,10 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
     // 取得line_message_send中的待發訊息並發送
     try
     {
-        http.request(optionsGet, function (resGET) {
-            //console.log('STATUS: ' + res.statusCode);
-            //console.log('HEADERS: ' + JSON.stringify(res.headers));
-            var chunks = [];  
-            var size = 0;  
-            //resGET.setEncoding('utf8');
-            resGET.on('data', function (chunk) {
-                chunks.push(chunk);
-                size += chunk.length;
-            });
-            resGET.on('end', function () {
-                var data = null;
-                switch (chunks.length) {
-                    case 0: data = new Buffer(0);
-                        break;
-                    case 1: data = chunks[0];
-                        break;
-                    default:
-                        data = new Buffer(size);
-                        for (var i = 0, pos = 0, l = chunks.length; i < l; i++) {
-                            var chunk = chunks[i];
-                            chunk.copy(data, pos);
-                            pos += chunk.length;
-                        }
-                        break;
-                }
+        request.getUrlFromJsonFile('lineRESTfulTest').then(function (url) {
+            http.requestHttpGet(url).then(function (data) {
                 if (data.length < 3) {
-                    console.log("No messages need to be sent.");
+                    console.log('No messages need to be sent.');
                 }
                 else {
                     console.log(JSON.stringify(data));
@@ -117,8 +94,7 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
                                         path: '/LineRESTful/resources/LineRESTfulTest' + paraPut,
                                         method: 'PUT'
                                     };
-                                    try
-                                    {
+                                    try {
                                         // 發送後寫入actual_send_time
                                         http.request(optionsPut, function (resPUT) {
                                             resPUT.setEncoding('utf8');
@@ -127,8 +103,7 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
                                             });
                                         }).end();
                                     }
-                                    catch(e)
-                                    {
+                                    catch (e) {
                                         return console.log("http request fail:" + JSON.stringify(optionsPut));
                                     }
                                 }).catch(function (error) {
@@ -144,8 +119,8 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
                         return console.log(e);
                     }
                 }
-            });
-        }).end();
+            }).end();
+        });
     }
     catch(e)
     {

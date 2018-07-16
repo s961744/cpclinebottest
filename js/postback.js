@@ -1,9 +1,10 @@
-﻿'use strict' // 嚴謹模式
+﻿'use strict' //strict mode
 
 const
-    msg = require('./msg');
+    msg = require('./msg'),
+    gm = require('./gm');
 
-//postback handle
+//postback處理
 exports.postbackHandle = function (event) {
     return new Promise(function (resolve, reject) {
         var data = JSON.parse(event.postback.data);
@@ -15,7 +16,7 @@ exports.postbackHandle = function (event) {
                 });
                 break;
             case "gm":
-
+                gm.gmHandle(event, data.gmName);
                 break;
             case "rm":
 

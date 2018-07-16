@@ -1,20 +1,20 @@
-﻿'use strict' // 嚴謹模式
+﻿'use strict' //strict mode
 
 const
     line = require('@line/bot-sdk'),
     jsonProcess = require('./jsonProcess'),
     msgTextHandler = require('./msgTextHandler');
 
-// create LINE SDK config from env variables
+//create LINE SDK config from env variables
 const config = {
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
     channelSecret: process.env.CHANNEL_SECRET,
 };
 
-// create LINE SDK client
+//create LINE SDK client
 const client = new line.Client(config);
 
-//message handle
+//訊息處理
 exports.messageHandle = function (event) {
     switch (event.message.type) {
         case "text":
@@ -25,17 +25,17 @@ exports.messageHandle = function (event) {
     }
 }
 
-//reply message
+//回應訊息
 exports.replyMessage = function (replyToken, msg) {
     client.replyMessage(replyToken, msg);
 }
 
-//push message
+//發送訊息
 exports.pushMessage = function (lineId, msg) {
     client.pushMessage(lineId, msg);
 }
 
-//get message from json file
+//依msgName從json檔案取得訊息
 exports.getMsgFromJsonFile = function (fileName, msgName) {
     return new Promise(function (resolve, reject) {
         var objsArray = [];

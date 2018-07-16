@@ -1,4 +1,4 @@
-﻿'use strict' // 嚴謹模式
+﻿'use strict' //strict mode
 
 const
     line = require('@line/bot-sdk');
