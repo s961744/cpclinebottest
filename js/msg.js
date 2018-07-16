@@ -27,7 +27,7 @@ exports.messageHandle = function (event) {
 
 //reply message
 exports.replyMessage = function (replyToken, msg) {
-    client.pushMessage(replyToken, msg);
+    client.replyMessage(replyToken, msg);
 }
 
 //push message
