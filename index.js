@@ -119,12 +119,12 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
                         return console.log(e);
                     }
                 }
-            }).end();
+            })
         });
     }
     catch(e)
     {
-        return console.log("http request fail:" + JSON.stringify(optionsGet));
+        return console.log("get line_message_send request fail:" + e);
     }
 });
 
