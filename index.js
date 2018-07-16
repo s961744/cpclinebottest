@@ -10,7 +10,8 @@ const
     AWS = require('aws-sdk'),
     moment = require('moment'),
     rm = require('./js/richMenu'),
-    msgText = require('./js/msgText');
+    msg = require('./js/msg'),
+    postback = require('./js/postback');
 
 AWS.config.region = 'chinpoon';
 var s3 = new AWS.S3({ region: 'ap-northeast-1' });
@@ -157,10 +158,11 @@ function handleEvent(event) {
 
     switch (event.type) {
         case 'message':
-            message(event);
+            msg.messageHandle(event);
+            //message(event);
             break;
         case 'postback':
-            postback(event);
+            postback.postbackHandle(event);
             break;
         case 'follow':
             follow(event);
@@ -369,9 +371,10 @@ function message(event) {
                 var msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
                 client.replyMessage(event.replyToken, msg);
             }
+            //建立RichMenu
             else if (event.message.text.toUpperCase().startsWith('RM_CR')) {
-                //var rmo = event.message.text.substring(6);
-                rm.createRichMenu().then((richMenuID) => {
+                var rmName = event.message.text.substring(6);
+                rm.createRichMenu(rmName).then((richMenuID) => {
                     rm.setRichMenuImage(richMenuID).then((richMenuID) => {
                         rm.linkRichMenuToUser(process.env.AdminLineUserId, richMenuID);
                     }).catch((err) => {
@@ -919,15 +922,20 @@ function postback(event) {
         client.pushMessage(event.source.userId, msg);
         console.log(JSON.stringify(msg));
     }
-    else if (event.postback.data === "RM_DESC") {
-        msgText.getMsgFromJsonFile("msgText","rm_desc").then(function (msg) {
+    else if (event.postback.data === "rm_desc") {
+        msg.getMsgFromJsonFile("msgRm","rm_desc").then(function (msg) {
             client.pushMessage(event.source.userId, msg);
         });
     }
-    else if (event.postback.data === "部門管理") {
-        msg = { "type": "text", "text": "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
-        console.log(JSON.stringify(msg));
-        client.pushMessage(event.source.userId, msg);
+    else if (event.postback.data === "rm_attendance") {
+        msg.getMsgFromJsonFile("msgRm", "rm_attendance").then(function (msg) {
+            client.pushMessage(event.source.userId, msg);
+        });
+    }
+    else if (event.postback.data === "rm_attendance") {
+        msg.getMsgFromJsonFile("msgRm", "rm_attendance").then(function (msg) {
+            client.pushMessage(event.source.userId, msg);
+        });
     }
 }
 

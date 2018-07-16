@@ -1,0 +1,144 @@
+[
+  {
+    "msgName": "rmDesc",
+    "msgType": "rm",
+    "msg": {
+      "type": "text",
+      "text": "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409"
+    }
+  },
+  {
+    "msgName": "rmAttendance",
+    "msgType": "rm",
+    "msg": {
+      "type": "text",
+      "text": "出勤管理"
+    }
+  },
+  {
+    "msgName": "rmConstructing",
+    "msgType": "rm",
+    "msg": {
+      "type": "text",
+      "text": "此功能尚在建置中"
+    }
+  },
+  {
+    "msgName": "authApply",
+    "msgType": "auth",
+    "msg": {
+      "type": "text",
+      "text": "已收到您輸入的驗證碼!\n請將表單送出，\n並等待權限審核流程完成，\n謝謝!"
+    }
+  },
+  {
+    "msgName": "gmAdminOnly",
+    "msgType": "gm",
+    "msg": {
+      "type": "text",
+      "text": "此功能僅限群組管理員操作"
+    }
+  },
+  {
+    "msgName": "gm",
+    "msgType": "gm",
+    "msg": {
+      "type": "template",
+      "altText": "群組管理選單",
+      "template": {
+        "type": "buttons",
+        "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/groupMenuV3.png",
+        "title": "群組管理選單",
+        "text": "僅限群組管理員使用",
+        "actions": [
+          {
+            "type": "postback",
+            "label": "代號設定",
+            "data": {
+              "responseType": "msg",
+              "msgName": "gmCodeSetting"
+            }
+          },
+          {
+            "type": "postback",
+            "label": "人員清單",
+            "data": {
+              "responseType": "gm",
+              "msgName": "gmMemberList"
+            }
+          },
+          {
+            "type": "postback",
+            "label": "人員比對",
+            "data": {
+              "responseType": "gm",
+              "msgName": "gmMemberCheck"
+            }
+          },
+          {
+            "type": "postback",
+            "label": "敬鵬LineBot功能解除",
+            "data": {
+              "responseType": "msg",
+              "msgName": "gmBreak"
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "msgName": "gmCodeSetting",
+    "msgType": "gm",
+    "msg": {
+      "type": "text",
+      "text": "請輸入於EB申請取得的群組代號\n(ex:GP001)"
+    }
+  },
+  {
+    "msgName": "gmMemberCheckTrue",
+    "msgType": "gm",
+    "msg": {
+      "type": "text",
+      "text": "群組中成員與EB系統中維護之成員比對吻合"
+    }
+  },
+  {
+    "msgName": "gmMemberCheckFalse",
+    "msgType": "gm",
+    "msg": {
+      "type": "text",
+      "text": "群組中成員與EB系統中維護之成員比對不吻合"
+    }
+  },
+  {
+    "msgName": "gmBreak",
+    "msgType": "gm",
+    "msg": {
+      "type": "template",
+      "altText": "群組功能解除確認",
+      "template": {
+        "type": "confirm",
+        "text": "注意：敬鵬LineBot將離開群組，\n是否確定解除?",
+        "actions": [
+          {
+            "type": "postback",
+            "label": "確定",
+            "data": {
+              "responseType": "gm",
+              "responseName": "gmBreakConfirm"
+            }
+          },
+          {
+            "type": "postback",
+            "label": "取消",
+            "data": {
+              "responseType": "gm",
+              "responseName": "gmBreakCancel"
+            }
+          }
+        ]
+      }
+    }
+  }
+]

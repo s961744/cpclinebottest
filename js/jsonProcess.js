@@ -11,8 +11,6 @@ exports.getJsonFileArrayData = function (fileName) {
         var arr = [];
         fs.readFile('json/' + fileName + '.json', 'utf8', function (err, data) {
             if (err) reject(err);
-            arr = JSON.parse(data);
-            console.log("arr=" + JSON.stringify(arr));
             resolve(data);
         });
     });
