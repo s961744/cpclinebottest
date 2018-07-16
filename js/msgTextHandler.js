@@ -37,14 +37,14 @@ exports.msgTextHandle = function (event) {
     // 群組管理功能選單
     else if (event.message.text === 'gm') {
         msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
-            console.log('token=' + event.replyToken + ',msg=' + msgData);
+            console.log('token=' + event.replyToken + ',msg=' + JSON.stringify(msgData));
             msg.replyMessage(event.replyToken, msgData);
         });
     }
     // 群組管理功能選單測試
     else if (event.message.text === 'gmTest') {
         msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
-            console.log('token=' + event.replyToken + ',msg=' + msgData);
+            console.log('token=' + event.replyToken + ',msg=' + JSON.stringify(msgData));
             msg.replyMessage(event.replyToken, msgData);
         });
     }
