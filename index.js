@@ -69,7 +69,7 @@ var job = schedule.scheduleJob('5,35 * * * * *', function () {
     try
     {
         request.getUrlFromJsonFile('lineRESTfulTest').then(function (url) {
-            http.requestHttpGet(url).then(function (data) {
+            request.requestHttpGet(url).then(function (data) {
                 if (data.length < 3) {
                     console.log('No messages need to be sent.');
                 }
