@@ -48,7 +48,7 @@ var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
     // 取得line_message_send中的待發訊息並發送
     try
     {
-        request.getUrlFromJsonFile('lineRESTfulTest').then(function (url) {
+        request.getUrlFromJsonFile('lineRESTful').then(function (url) {
             request.requestHttpGet(url).then(function (data) {
                 if (data.length < 3) {
                     //console.log('No messages need to be sent.');

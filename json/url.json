@@ -1,10 +1,6 @@
 [
   {
     "urlName": "lineRESTful",
-    "url": "http://116.50.39.201:7102/LineRESTful/resources/LineRESTful"
-  },
-  {
-    "urlName": "lineRESTfulTest",
     "url": "http://116.50.39.201:7102/LineRESTful/resources/LineRESTfulTest"
   },
   {
