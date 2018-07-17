@@ -1,5 +1,6 @@
 'use strict';
 const
+    line = require('@line/bot-sdk'),
     lineBotSdk = require('./js/lineBotSdk'),
     express = require('express'),
     schedule = require('node-schedule'),
@@ -13,22 +14,28 @@ const
 //    http.get("http://cpclinebottest.herokuapp.com");
 //}, 1500000); // every 25 minutes (1500000)
 
+//create LINE SDK config from env variables
+const config = {
+    channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+    channelSecret: process.env.CHANNEL_SECRET,
+};
+
 const app = express();
 
-//app.post('/', line.middleware(config), (req, res) => {
-//    // req.body.events should be an array of events
-//    if (!Array.isArray(req.body.events)) {
-//        return res.status(500).end();
-//    }
+app.post('/', line.middleware(config), (req, res) => {
+    // req.body.events should be an array of events
+    if (!Array.isArray(req.body.events)) {
+        return res.status(500).end();
+    }
 
-//    // handle events separately
-//    Promise.all(req.body.events.map(handleEvent))
-//        .then(() => res.end())
-//        .catch((err) => {
-//            console.error(err);
-//            res.status(500).end();
-//        });
-//});
+    // handle events separately
+    Promise.all(req.body.events.map(handleEvent))
+        .then(() => res.end())
+        .catch((err) => {
+            console.error(err);
+            res.status(500).end();
+        });
+});
 
 // 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
 var server = app.listen(process.env.PORT || 8080, function () {
