@@ -24,6 +24,7 @@ exports.msgTextHandle = function (event) {
                     var functionName = 'LineUserAuth'
                     var query = '?strUserInfo=' + formData;
                     request.getUrlFromJsonFile(urlName).then(function (url) {
+                        console.log(url + functionName + query);
                         request.requestHttpPost(url + functionName + query, '');
                     });
                 }).catch(function (error) {
