@@ -117,6 +117,18 @@ exports.getRichMenuIdOfUser = function (userId) {
     });
 }
 
+//取得帳號的richMenuId清單
+exports.getRichMenuList = function () {
+    return new Promise(function (resolve, reject) {
+        client.getRichMenuList().then(function (ids) {
+            resolve(ids);
+        });
+    }).catch(function (e) {
+        console.log('getRichMenuList error:' + e);
+        reject('getRichMenuList error:' + e);
+    });
+}
+
 //取得群組中成員
 exports.getGroupMemberIds = function (groupId) {
     return new Promise(function (resolve, reject) {
