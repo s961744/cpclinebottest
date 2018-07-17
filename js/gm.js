@@ -29,7 +29,7 @@ function gmMemberList(event) {
             }
         });
         console.log(allId);
-        msg.replyMessage(event.replyToken, { type: 'text', text: '群組人員(待轉為工號+姓名)：' + allId });
+        lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員(待轉為工號+姓名)：' + allId });
     })
     .catch((err) => {
         console.log(err);

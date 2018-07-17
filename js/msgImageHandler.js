@@ -70,8 +70,8 @@ exports.msgImageHandle = function (event) {
                             });
                         });
                     });
-                })
-            })
+                });
+            });
             // success 
             console.log(event.message);
 
