@@ -2,7 +2,8 @@
 
 const
     msg = require('./msg'),
-    gm = require('./gm');
+    gm = require('./gm'),
+    rm = require('./rm');
 
 //postback處理
 exports.postbackHandle = function (event) {
