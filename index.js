@@ -15,20 +15,20 @@ const
 
 const app = express();
 
-app.post('/', line.middleware(config), (req, res) => {
-    // req.body.events should be an array of events
-    if (!Array.isArray(req.body.events)) {
-        return res.status(500).end();
-    }
+//app.post('/', line.middleware(config), (req, res) => {
+//    // req.body.events should be an array of events
+//    if (!Array.isArray(req.body.events)) {
+//        return res.status(500).end();
+//    }
 
-    // handle events separately
-    Promise.all(req.body.events.map(handleEvent))
-        .then(() => res.end())
-        .catch((err) => {
-            console.error(err);
-            res.status(500).end();
-        });
-});
+//    // handle events separately
+//    Promise.all(req.body.events.map(handleEvent))
+//        .then(() => res.end())
+//        .catch((err) => {
+//            console.error(err);
+//            res.status(500).end();
+//        });
+//});
 
 // 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
 var server = app.listen(process.env.PORT || 8080, function () {
