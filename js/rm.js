@@ -94,7 +94,7 @@ function rmGetList(event) {
                 }
             });
             console.log(allId);
-            msg.replyMessage(event.replyToken, { type: 'text', text: 'RichMenu清單：' + allId });
+            lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'RichMenu清單：' + allId });
             resolve(200);
         }).catch(function (e) {
             console.log("getRichMenuList error:" + e);
