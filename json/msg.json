@@ -201,6 +201,11 @@
             "type": "postback",
             "label": "確定",
             "data": "{\"responseType\":\"gm\",\"gmName\":\"gmBreakConfirm\"}"
+          },
+          {
+            "type": "postback",
+            "label": "取消",
+            "data": "{\"responseType\":\"gm\",\"gmName\":\"gmBreakCancel\"}"
           }
         ]
       }
