@@ -21,11 +21,11 @@ exports.msgTextHandle = function (event) {
                     var userInfo = { userId: event.source.userId, verifyCode: event.message.text };
                     var formData = JSON.stringify(userInfo);
                     var urlName = 'lineRESTful';
-                    var functionName = 'LineUserAuth'
+                    var path = '/LineUserAuth'
                     var query = '?strUserInfo=' + formData;
                     request.getUrlFromJsonFile(urlName).then(function (url) {
-                        console.log(url + functionName + query);
-                        request.requestHttpPost(url + functionName + query, '');
+                        console.log(url + path + query);
+                        request.requestHttpPost(url + path + query, '');
                     });
                 }).catch(function (error) {
                     console.log(error);
