@@ -86,10 +86,10 @@ function getRichMenuData(rmName) {
 // 取得Rich Menu List
 function rmGetList(event) {
     return new Promise(function (resolve, reject) {
-        lineBotSdk.getRichMenuList().then(function (ids) {
+        lineBotSdk.getRichMenuList().then(function (richMenuArray) {
             var allId = '';
-            ids.forEach((id) => {
-                allId += '\n' + JSON.stringify(id);
+            richMenuArray.forEach((richMenuObject) => {
+                allId += '\n' + richMenuObject.richMenuId;
             });
             console.log(allId);
             lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'RichMenu清單：' + allId });
