@@ -13,7 +13,7 @@ exports.postbackHandle = function (event) {
         switch (data.responseType) {
             case "msg":
                 msg.getMsgFromJsonFile(data.responseType, data.msgName).then(function (msgData) {
-                    lineBotSdk.pushMessage(event.source.userId, msgData);
+                    lineBotSdk.replyMessage(event.replyToken, msgData);
                     resolve('postbackHandle msg done')
                 });
                 break;
