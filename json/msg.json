@@ -135,7 +135,7 @@
       "altText": "群組管理選單",
       "template": {
         "type": "buttons",
-        "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/groupMenuV3.png",
+        "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/msgCenter.png",
         "title": "群組管理選單",
         "text": "僅限群組管理員使用",
         "actions": [
