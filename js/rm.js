@@ -8,10 +8,10 @@ const
 //richMenu功能處理
 exports.rmHandle = function (event, data) {
     switch (data.rmName) {
-        case "rmCreate":
+        case 'rmCreate':
             rmCreate(data.rm);
             break;
-        case "rmGetList":
+        case 'rmGetList':
             rmGetList(event);
             break;
     }
@@ -22,10 +22,10 @@ function rmCreate(rmName) {
     return new Promise(function (resolve, reject) {
         getRichMenuData(rmName).then(function (rm) {
             lineBotSdk.createRichMenu(rm).then(function (richMenuID) {
-                console.log("Rich Menu created:" + JSON.stringify(richMenuID));
+                console.log('Rich Menu created:' + JSON.stringify(richMenuID));
                 resolve(richMenuID);
             }).catch(function (e) {
-                console.log("createRichMenu error:" + e);
+                console.log('createRichMenu error:' + e);
                 reject(e);
             });
         });
@@ -35,13 +35,13 @@ function rmCreate(rmName) {
 //綁定rmName.png圖片給richMenuId
 function rmSetImage (richMenuId, rmName) {
     return new Promise(function (resolve, reject) {
-        const filepath = path.join("img", rmName + ".png");
+        const filepath = path.join('img', rmName + '.png');
         const buffer = fs.readFileSync(filepath);
         lineBotSdk.setRichMenuImage(richMenuId, buffer).then(function () {
-            console.log("setRichMenuImage seccess:" + richMenuId);
+            console.log('setRichMenuImage seccess:' + richMenuId);
             resolve(richMenuId);
         }).catch(function (e) {
-            console.log("setRichMenuImage error:" + e);
+            console.log('setRichMenuImage error:' + e);
             reject(e);
         });
     });
@@ -51,16 +51,16 @@ function rmSetImage (richMenuId, rmName) {
 function rmLinkToUser (userId, richMenuId) {
     return new Promise(function (resolve, reject) {
         lineBotSdk.linkRichMenuToUser(userId, richMenuId).then(function () {
-            console.log("linkRichMenuToUser seccess");
+            console.log('linkRichMenuToUser seccess');
             lineBotSdk.getRichMenuIdOfUser(userId).then(function (richMenuId) {
-                console.log(userId + ".RichMenuID=" + richMenuId);
+                console.log(userId + '.RichMenuID=' + richMenuId);
                 resolve(richMenuId);
             }).catch(function (e) {
-                console.log("getRichMenuIdOfUser(" + userId + ")error:" + e);
+                console.log('getRichMenuIdOfUser(' + userId + ')error:' + e);
                 reject(e);
             });
         }).catch(function (e) {
-            console.log("linkRichMenuToUser(" + userId + ")error:" + e);
+            console.log('linkRichMenuToUser(' + userId + ')error:' + e);
             reject(e);
         });
     });
@@ -70,7 +70,7 @@ function rmLinkToUser (userId, richMenuId) {
 function getRichMenuData(rmName) {
     return new Promise(function (resolve, reject) {
         var objsArray = [];
-        jsonProcess.getJsonFileArrayData("richMenu").then(function (data) {
+        jsonProcess.getJsonFileArrayData('richMenu').then(function (data) {
             objsArray = JSON.parse(data)
             var obj = objsArray.filter(function (rm) {
                 return rm.rmName == rmName;
@@ -78,7 +78,7 @@ function getRichMenuData(rmName) {
             resolve(obj[0].rm);
         });
     }).catch(function (e) {
-        console.log("getRichMenuData error:" + e);
+        console.log('getRichMenuData error:' + e);
         reject(e);
     });
 }
@@ -87,7 +87,7 @@ function getRichMenuData(rmName) {
 function rmGetList(event) {
     return new Promise(function (resolve, reject) {
         lineBotSdk.getRichMenuList().then(function (ids) {
-            var allId = "";
+            var allId = '';
             ids.forEach((id) => {
                 allId += '\n' + JSON.stringify(id);
             });
@@ -95,24 +95,24 @@ function rmGetList(event) {
             lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'RichMenu清單：' + allId });
             resolve(200);
         }).catch(function (e) {
-            console.log("getRichMenuList error:" + e);
+            console.log('getRichMenuList error:' + e);
             reject(e);
         });
     });
 }
 //lineBotSdk.getRichMenuList().then(function (arr)
 //{
-//    console.log("RichMenuLists=" + JSON.stringify(arr))
+//    console.log('RichMenuLists=' + JSON.stringify(arr))
 //}).catch(function (e) {
-//    console.log("getRichMenuList error:" + e);
+//    console.log('getRichMenuList error:' + e);
 //});
 
 // 刪除RichMenu
-//var deleteRichMenuId = "richmenu-74238990b4985dfb260debb006116b6e";
+//var deleteRichMenuId = 'richmenu-74238990b4985dfb260debb006116b6e';
 //lineBotSdk.deleteRichMenu(deleteRichMenuId).then(function () {
-//    console.log("Rich Menu deleted:" + deleteRichMenuId);
+//    console.log('Rich Menu deleted:' + deleteRichMenuId);
 //}).catch(function (e) {
-//    console.log("deleteRichMenu error:" + e);
+//    console.log('deleteRichMenu error:' + e);
 //});
 
-//var RichMenuId = "richmenu-19a8c423f8e9a8bd55a6ac24754cb02c";
+//var RichMenuId = 'richmenu-19a8c423f8e9a8bd55a6ac24754cb02c';
