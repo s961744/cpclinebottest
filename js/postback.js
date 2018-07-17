@@ -1,6 +1,7 @@
 ﻿'use strict' //strict mode
 
 const
+    lineBotSdk = require('./lineBotSdk'),
     msg = require('./msg'),
     gm = require('./gm'),
     rm = require('./rm');
@@ -12,7 +13,7 @@ exports.postbackHandle = function (event) {
         switch (data.responseType) {
             case "msg":
                 msg.getMsgFromJsonFile(data.responseType, data.msgName).then(function (msgData) {
-                    msg.pushMessage(event.source.userId, msgData);
+                    lineBotSdk.pushMessage(event.source.userId, msgData);
                     resolve('postbackHandle msg done')
                 });
                 break;
