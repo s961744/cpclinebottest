@@ -89,9 +89,7 @@ function rmGetList(event) {
         lineBotSdk.getRichMenuList().then(function (ids) {
             var allId = "";
             ids.forEach((id) => {
-                if (id != 'undefined') {
-                    allId += '\n' + id
-                }
+                allId += '\n' + JSON.stringify(id);
             });
             console.log(allId);
             lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: 'RichMenu清單：' + allId });
