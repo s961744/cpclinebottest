@@ -8,8 +8,8 @@ const
 
 exports.msgTextHandle = function (event) {
     //推播權限申請驗證
-    if (event.message.text.toUpperCase().startsWith("V") && (event.message.text.length === 5)) {
-        msg.getMsgFromJsonFile("msg", "authApply").then(function (msgData) {
+    if (event.message.text.toUpperCase().startsWith('V') && (event.message.text.length === 5)) {
+        msg.getMsgFromJsonFile('msg', 'authApply').then(function (msgData) {
             lineBotSdk.replyMessage(event.replyToken, msgData).then(function () {
                 lineBotSdk.getDisplayName(event.source.userId).then(function (displayName) {
                     //發送驗證資訊給管理員
@@ -37,13 +37,13 @@ exports.msgTextHandle = function (event) {
     }
     //群組管理功能選單
     else if (event.message.text === 'gm' && event.source.type === 'group') {
-        msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
+        msg.getMsgFromJsonFile('msg', event.message.text).then(function (msgData) {
             lineBotSdk.replyMessage(event.replyToken, msgData);
         });
     }
     else if (event.message.text.toUpperCase().startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
         //if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
-        //    var msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
+        //    var msg = { type: 'text', text: '歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409' };
         //    client.replyMessage(event.replyToken, msg);
         //}
         // 建立RichMenu
@@ -63,12 +63,12 @@ exports.msgTextHandle = function (event) {
     //系統管理員選單
     else if (event.message.text === 'adminMenu') {
         if (event.source.userId === process.env.AdminLineUserId) {
-            msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
+            msg.getMsgFromJsonFile('msg', event.message.text).then(function (msgData) {
                 lineBotSdk.replyMessage(event.replyToken, msgData);
             });
         }
         else {
-            msg.getMsgFromJsonFile("msg", "adminMenuReject").then(function (msgData) {
+            msg.getMsgFromJsonFile('msg', 'adminMenuReject').then(function (msgData) {
                 lineBotSdk.replyMessage(event.replyToken, msgData);
             });
         }

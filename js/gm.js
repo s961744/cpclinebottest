@@ -7,22 +7,22 @@ const
 //群組功能處理
 exports.gmHandle = function (event, data) {
     switch (data.gmName) {
-        case "gmMemberList":
+        case 'gmMemberList':
             gmMemberList(event);
             break;
-        case "gmMemberCheck":
+        case 'gmMemberCheck':
             gmMemberCheck(event);
             break;
-        case "gmBreakConfirm":
+        case 'gmBreakConfirm':
             gmBreakConfirm(event);
             break;
     }
 }
 
-//取得群組成員名單
+//取得群組成員名單(測試帳號無法使用)
 function gmMemberList(event) {
     lineBotSdk.getGroupMemberIds(event.source.groupId).then((ids) => {
-        var allId = "";
+        var allId = '';
         ids.forEach((id) => {
             if (id != 'undefined') {
                 allId += '\n' + id
@@ -44,8 +44,8 @@ function gmMemberCheck(event) {
 //確認將Line Bot移出群組
 function gmBreakConfirm(event) {
     lineBotSdk.leaveGroup(event.source.groupId).then(() => {
-        console.log("leaveGroup:" + event.source.groupId);
+        console.log('leaveGroup:' + event.source.groupId);
     }).catch(function (e) {
-        console.log("leaveGroup error:" + e);
+        console.log('leaveGroup error:' + e);
     });
 }

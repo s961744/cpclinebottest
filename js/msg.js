@@ -9,15 +9,15 @@ const
 //訊息處理
 exports.messageHandle = function (event) {
     switch (event.message.type) {
-        case "text":
+        case 'text':
             msgTextHandler.msgTextHandle(event);
             break;
-        case "image":
+        case 'image':
             msgImageHandler.msgImageHandle(event);
             break;
-        case "video":
+        case 'video':
             break;
-        case "file":
+        case 'file':
             break;
     }
 }
@@ -34,7 +34,7 @@ exports.getMsgFromJsonFile = function (fileName, msgName) {
             resolve(obj[0].msg);
         });
     }).catch(function (e) {
-        console.log("getMsgFromJsonFile error:" + e);
+        console.log('getMsgFromJsonFile error:' + e);
         reject(e);
     });
 }

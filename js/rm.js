@@ -100,12 +100,6 @@ function rmGetList(event) {
         });
     });
 }
-//lineBotSdk.getRichMenuList().then(function (arr)
-//{
-//    console.log('RichMenuLists=' + JSON.stringify(arr))
-//}).catch(function (e) {
-//    console.log('getRichMenuList error:' + e);
-//});
 
 // 刪除RichMenu
 //var deleteRichMenuId = 'richmenu-74238990b4985dfb260debb006116b6e';

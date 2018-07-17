@@ -49,18 +49,18 @@ exports.msgImageHandle = function (event) {
                     //};
                     //s3.putObject(params, function (err, data) {
                     //    if (err) {
-                    //        console.log("Error uploading image: ", err);
+                    //        console.log('Error uploading image: ', err);
                     //    } else {
-                    //        console.log("Successfully uploaded image on S3", data);
+                    //        console.log('Successfully uploaded image on S3', data);
                     //    }
                     //})
 
                     //save file to Server
                     request.getUrlFromJsonFile('fileRESTful').then(function (url) {
                         var now = new Date().toISOString().
-                            replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '').replace(/\s+/g, "");
+                            replace(/T/, ' ').replace(/\..+/, '').replace(/-/g, '').replace(/:/g, '').replace(/\s+/g, '');
                         var random = Math.floor(Math.random() * 9999) + 1;
-                        var fileName = now + random + ".png";
+                        var fileName = now + random + '.png';
                         var path = '/LINE/Image/';
                         console.log('uploading image:' + FileName);
                         request.requestHttpPost(url + path + fileName, data).then(function (result) {

@@ -13,7 +13,7 @@ const
 exports.requestHttpGet = function (url) {
     return new Promise(function (resolve, reject) {
         http.get(url, function (res) {
-            var chunks = [], result = "", size = 0;
+            var chunks = [], result = '', size = 0;
             res.on('data', function (chunk) {
                 chunks.push(chunk);
                 size += chunk.length;
@@ -35,7 +35,7 @@ exports.requestHttpGet = function (url) {
                         break;
                 }
                 if (data === '[]') {
-                    console.log("Empty result.");
+                    console.log('Empty result.');
                 }
                 else {
                     resolve(data);
@@ -138,7 +138,7 @@ exports.requestHttpPut = function (url, data) {
 exports.requestHttpsGet = function (url) {  
     return new Promise(function (resolve, reject) {
         https.get(url, function (res) {
-            var chunks = [], result = "", size = 0;
+            var chunks = [], result = '', size = 0;
             res.on('data', function (chunk) {
                 chunks.push(chunk);
                 size += chunk.length;
@@ -160,7 +160,7 @@ exports.requestHttpsGet = function (url) {
                         break;
                 }
                 if (data === '[]') {
-                    console.log("Empty result.");
+                    console.log('Empty result.');
                 }
                 else {
                     resolve(data);
@@ -231,7 +231,7 @@ exports.getUrlFromJsonFile = function (urlName) {
             resolve(obj[0].url);
         });
     }).catch(function (e) {
-        console.log("getUrlFromJsonFile error:" + e);
+        console.log('getUrlFromJsonFile error:' + e);
         reject(e);
     });
 }
