@@ -1,6 +1,6 @@
 'use strict';
 const
-    lineBotSdk = require('./lineBotSdk'),
+    lineBotSdk = require('./js/lineBotSdk'),
     express = require('express'),
     schedule = require('node-schedule'),
     cp = require('child_process'),
