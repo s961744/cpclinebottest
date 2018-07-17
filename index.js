@@ -1,8 +1,7 @@
 'use strict';
 const
-    lineBotSdk = ('./lineBotSdk'),
+    lineBotSdk = require('./lineBotSdk'),
     express = require('express'),
-    line = require('@line/bot-sdk'),
     schedule = require('node-schedule'),
     cp = require('child_process'),
     msg = require('./js/msg'),
@@ -13,15 +12,6 @@ const
 //setInterval(function () {
 //    http.get("http://cpclinebottest.herokuapp.com");
 //}, 1500000); // every 25 minutes (1500000)
-
-// create LINE SDK config from env variables
-const config = {
-    channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-    channelSecret: process.env.CHANNEL_SECRET,
-};
-
-// create LINE SDK client
-const client = new line.Client(config);
 
 const app = express();
 

@@ -1,7 +1,7 @@
 ﻿'use strict' //strict mode
 
 const
-    lineBotSdk = ('./lineBotSdk'),
+    lineBotSdk = require('./lineBotSdk'),
     msg = require('./msg'),
     request = require('./request'),
     AWS = require('aws-sdk');

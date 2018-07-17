@@ -1,9 +1,8 @@
 ﻿'use strict' //strict mode
 
 const
-    lineBotSdk = ('./lineBotSdk'),
+    lineBotSdk = require('./lineBotSdk'),
     msg = require('./msg'),
-    user = require('./user'),
     jsonProcess = require('./jsonProcess'),
     request = require('./request');
 
