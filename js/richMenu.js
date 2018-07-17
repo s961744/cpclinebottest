@@ -5,11 +5,20 @@ const
     fs = require('fs'),
     path = require('path');
 
-/**
- * 建立richMenu
- * @param {String} rmName RichMenu名稱(richMenu.json的rmName)
- */
-exports.createRichMenu = function (rmName) {
+//richMenu功能處理
+exports.rmHandle = function (event, data) {
+    switch (data.rmName) {
+        case "rmCreate":
+            rmCreate(data.rm);
+            break;
+        case "rmGetList":
+            rmGetList(event);
+            break;
+    }
+}
+
+//建立richMenu
+function rmCreate(rmName) {
     return new Promise(function (resolve, reject) {
         getRichMenuData(rmName).then(function (rm) {
             lineBotSdk.createRichMenu(rm).then(function (richMenuID) {
@@ -24,7 +33,7 @@ exports.createRichMenu = function (rmName) {
 }
 
 //綁定rmName.png圖片給richMenuId
-exports.setRichMenuImage = function (richMenuId, rmName) {
+function rmSetImage (richMenuId, rmName) {
     return new Promise(function (resolve, reject) {
         const filepath = path.join("img", rmName + ".png");
         const buffer = fs.readFileSync(filepath);
@@ -39,7 +48,7 @@ exports.setRichMenuImage = function (richMenuId, rmName) {
 }
 
 //綁定richMenuId給UserId
-exports.linkRichMenuToUser = function (userId, richMenuId) {
+function rmLinkToUser (userId, richMenuId) {
     return new Promise(function (resolve, reject) {
         lineBotSdk.linkRichMenuToUser(userId, richMenuId).then(function () {
             console.log("linkRichMenuToUser seccess");
@@ -75,6 +84,24 @@ function getRichMenuData(rmName) {
 }
 
 // 取得Rich Menu List
+function rmGetList(event) {
+    return new Promise(function (resolve, reject) {
+        lineBotSdk.getRichMenuList().then(function (ids) {
+            var allId = "";
+            ids.forEach((id) => {
+                if (id != 'undefined') {
+                    allId += '\n' + id
+                }
+            });
+            console.log(allId);
+            msg.replyMessage(event.replyToken, { type: 'text', text: 'RichMenu清單：' + allId });
+            resolve(200);
+        }).catch(function (e) {
+            console.log("getRichMenuList error:" + e);
+            reject(e);
+        });
+    });
+}
 //lineBotSdk.getRichMenuList().then(function (arr)
 //{
 //    console.log("RichMenuLists=" + JSON.stringify(arr))

@@ -47,7 +47,7 @@
               },
               {
                 "type": "uri",
-                "label": "開發中",
+                "label": "連結",
                 "uri": "https://www.google.com.tw/"
               }
             ]
@@ -55,24 +55,23 @@
           {
             "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/difficult.png",
             "title": "管理員選單3",
-            "text": "開發中",
+            "text": "RichMenu管理",
             "actions": [
               {
                 "type": "postback",
-                "label": "開發中",
-                "data": "action=buy&itemid=123",
-                "text": "這是代發訊息3"
+                "label": "建立RichMenu",
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmCreate\",\"rm\":\"rmCenter\"}"
+              },
+              {
+                "type": "postback",
+                "label": "查看RichMenu清單",
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmGetList\"}"
               },
               {
                 "type": "datetimepicker",
                 "label": "開發中",
                 "data": "datestring",
                 "mode": "date"
-              },
-              {
-                "type": "uri",
-                "label": "開發中",
-                "uri": "https://www.google.com.tw/"
               }
             ]
           }

@@ -41,12 +41,6 @@ exports.msgTextHandle = function (event) {
             lineBotSdk.replyMessage(event.replyToken, msgData);
         });
     }
-    //RichMenu管理功能選單
-    else if (event.message.text === 'rm' && event.source.type === 'user') {
-        msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {
-            lineBotSdk.replyMessage(event.replyToken, msgData);
-        });
-    }
     else if (event.message.text.toUpperCase().startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
         //if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
         //    var msg = { type: 'text', text: "歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409" };
@@ -66,6 +60,7 @@ exports.msgTextHandle = function (event) {
         //    });
         //}
     }
+    //系統管理員選單
     else if (event.message.text === 'adminMenu') {
         if (event.source.userId === process.env.AdminLineUserId) {
             msg.getMsgFromJsonFile("msg", event.message.text).then(function (msgData) {

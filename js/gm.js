@@ -5,8 +5,8 @@ const
     msg = require('./msg');
 
 //群組功能處理
-exports.gmHandle = function (event, gmName) {
-    switch (gmName) {
+exports.gmHandle = function (event, data) {
+    switch (data.gmName) {
         case "gmMemberList":
             gmMemberList(event);
             break;

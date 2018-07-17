@@ -16,10 +16,10 @@ exports.postbackHandle = function (event) {
                 });
                 break;
             case "gm":
-                gm.gmHandle(event, data.gmName);
+                gm.gmHandle(event, data);
                 break;
             case "rm":
-
+                rm.rmHandle(event, data);
                 break;
         }
     });
