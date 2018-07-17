@@ -46,49 +46,44 @@ var server = app.listen(process.env.PORT || 8080, function () {
 // 排程 1次/15sec
 var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
     // 取得line_message_send中的待發訊息並發送
-    try
-    {
-        request.getUrlFromJsonFile('lineRESTful').then(function (url) {
-            request.requestHttpGet(url).then(function (data) {
-                if (data.length < 3) {
-                    //console.log('No messages need to be sent.');
+    request.getUrlFromJsonFile('lineRESTful').then(function (url) {
+        request.requestHttpGet(url).then(function (data) {
+            if (data.length < 3) {
+                //console.log('No messages need to be sent.');
+            }
+            else {
+                console.log(JSON.stringify(data));
+                try {
+                    var jdata = JSON.parse(data);
+                    jdata.forEach(function (row) {
+                        var message_id = row.message_id;
+                        var line_id = row.line_id;
+                        var message = row.message;
+                        try {
+                            var messageSend = JSON.parse(message);
+                            var ids = line_id.split(',');
+                            console.log('message_id:' + message_id + ',ids:' + ids);
+                            lineBotSdk.multicast(ids, messageSend).then(function () {
+                                // 更新line_message_send的actual_send_time
+                                var query = '?strMessageId=' + message_id;
+                                request.requestHttpPut(url + query);
+                            }).catch(function (error) {
+                                console.log(error);
+                            });
+                        }
+                        catch (e) {
+                            return console.log(e);
+                        }
+                    });
                 }
-                else {
-                    console.log(JSON.stringify(data));
-                    try {
-                        var jdata = JSON.parse(data);
-                        jdata.forEach(function (row) {
-                            var message_id = row.message_id;
-                            var line_id = row.line_id;
-                            var message = row.message;
-                            try {
-                                var messageSend = JSON.parse(message);
-                                var ids = line_id.split(',');
-                                console.log('message_id:' + message_id + ',ids:' + ids);
-                                lineBotSdk.multicast(ids, messageSend).then(function () {
-                                    // 更新line_message_send的actual_send_time
-                                    var query = '?strMessageId=' + message_id;
-                                    request.requestHttpPut(url + query);
-                                }).catch(function (error) {
-                                    console.log(error);
-                                });
-                            }
-                            catch (e) {
-                                return console.log(e);
-                            }
-                        });
-                    }
-                    catch (e) {
-                        return console.log(e);
-                    }
+                catch (e) {
+                    return console.log(e);
                 }
-            })
+            }
         });
-    }
-    catch(e)
-    {
+    }).catch(function(e) {
         return console.log("line_message_send request get fail:" + e);
-    }
+    });
 });
 
 // event handler
@@ -122,9 +117,9 @@ function follow(event) {
             type: 'text', text: '*****加入好友通知*****\nLine暱稱：' + displayName
             + '\nID：' + event.source.userId
         });
-    }).catch(function (error) {
+    }).catch(function (e) {
         // error 
-        console.log(error);
+        console.log(e);
     });
 }
 
