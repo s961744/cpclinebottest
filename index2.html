@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>test LIFF</title>
+    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" 
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" 
+            crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" 
+          crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css" />
+    <script>
+        //init LIFF
+        function initializeApp(data) {
+            //取得QueryString
+            let urlParams = new URLSearchParams(window.location.search);
+            //顯示QueryString
+            $('#QueryString').val(urlParams.toString());
+            //顯示UserId
+            $('#userid').val(data.context.userId);
+        }
+        //ready
+        $(function () {
+            //init LIFF
+            liff.init(function (data) {
+                initializeApp(data);
+            });
+            //ButtonGetProfile
+            $('#ButtonGetProfile').click(function () {
+                //取得User Proile
+                liff.getProfile().then(
+                    profile=> {
+                        //顯示在text box中
+                        $('#UserInfo').val(profile.displayName);
+                        //可以alert
+                        //alert('done');
+                    }
+                );
+            });
+            //ButtonSendMsg
+            $('#ButtonSendMsg').click(function () {
+                liff.sendMessages([
+                 {
+                     type: 'text',
+                     text: $('#msg').val()
+                 }
+                ])
+               .then(() => {
+                   //alert('done');
+               })
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6" style="margin:5px">
+            <label>user id:</label>
+            <input class="form-control" type="text" id="userid" />   <br />
+            <label>QueryString:</label>
+            <input class="form-control" type="text" id="QueryString" /><br />
+            <button class="btn btn-primary" id="ButtonGetProfile">Get Profile</button>
+            <input class="form-control" type="text" id="UserInfo" /><br />
+            <label>要傳送的訊息:</label>
+            <input class="form-control" type="text" id="msg" value="測試" /><br />
+            <button class="btn btn-primary" id="ButtonSendMsg">傳送</button>
+        </div>
+    </div>
+    <div>
+        <table id="table"
+               data-search="false"
+               data-show-refresh="false"
+               data-show-toggle="false"
+               data-show-columns="false"
+               data-show-export="false"
+               data-minimum-count-columns="2"
+               data-show-pagination-switch="false"
+               data-pagination="false"
+               data-id-field="id"
+               data-show-footer="false"
+               data-side-pagination="client"
+               data-response-handler="responseHandler"
+               data-check-on-init="true"></table>
+    </div>
+    <script>
+        var $table = $('#table');
+        initTable();
+        var data = getData();
+        bind(data);
+        //取得資料
+        function getData() {
+            return [
+                {
+                    "employee_no": "A0012272",
+                    "employee_name": "張耀元",
+                    "dept_no": "1360",
+                    "dept_name": "行動開發課",
+                    "class_no": "M2",
+                    "class_name": "行政單位M2"
+                },
+                {
+                    "employee_no": "A0011342",
+                    "employee_name": "徐耀宗",
+                    "dept_no": "1350",
+                    "dept_name": "FAM開發課",
+                    "class_no": "M1",
+                    "class_name": "行政單位M1"
+                }
+            ];
+        }
+
+        //繫結資料
+        function bind(data) {
+            $table.bootstrapTable('load', data);
+        }
+
+        //初始化Table
+        function initTable() {
+            $table.bootstrapTable({
+                height: getHeight(),
+                columns: [
+                    [
+                        {
+                            field: 'employee_no',
+                            title: '工號',
+                            align: 'left',
+                            valign: 'middle',
+                            sortable: true
+                        }, {
+                            field: 'employee_name',
+                            title: '姓名',
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true
+                        },
+                        {
+                            field: 'dept_no',
+                            title: '部門',
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true
+                        },
+                        {
+                            field: 'dept_name',
+                            title: '部門名稱',
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true
+                        }
+                    ]
+                ],
+                search: false
+            });
+            // sometimes footer render error.
+            setTimeout(function () {
+                document.getElementById("hideAll").style.display = "none";
+                $table.bootstrapTable('resetView', {
+                    height: getHeight()
+                });
+            }, 500);
+
+            //點選明細時Highlight
+            $table.on('click-row.bs.table', function (e, row, $element) {
+                $('.success').removeClass('success');
+                $($element).addClass('success');
+            });
+        }
+
+        //取得高度
+        function getHeight() {
+            return $(window).height() - 100;
+        }
+    </script>
+</body>
+</html>
