@@ -51,41 +51,19 @@ exports.requestHttpGet = function (url) {
 * 處理http GET with req
 * @param {String} url
 */
-exports.requestHttpGetWithReqData = function (url, reqData) {
+exports.requestHttpGetWithReqData = function (url) {
     return new Promise(function (resolve, reject) {
-        //解析 url 地址
-        var urlData = urltil.parse(url);
-        //設定 http.request options 傳入的參數
-        var options = {
-            //目標主機地址
-            hostname: urlData.hostname,
-            //目標地址
-            path: urlData.path,
-            //目標PORT
-            port: urlData.port,
-            //請求方法
-            method: 'GET'
-        };
-        var req = http.request(options, function (res) {
-            var buffer = [], result = '';
-            //監聽data事件 接收資料
-            res.on('data', function (data) {
-                buffer.push(data);
+        http.get(url, function (res) {
+            var body = '';
+            res.on('data', function (chunk) {
+                body += chunk;
             });
-            //監聽end事件 完成資料的接收
             res.on('end', function () {
-                result = Buffer.concat(buffer).toString('utf-8');
-                resolve(result);
-            })
-        })
-            //監聽error事件
-            .on('error', function (err) {
-                console.log(err);
-                reject(err);
+                resolve(body);
             });
-        //傳入資料
-        req.write(reqData);
-        req.end();
+        }).on('error', function (e) {
+            console.log("requestHttpGetWithReqData error: ", e);
+        });
     });
 }
 
