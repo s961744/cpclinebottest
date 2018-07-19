@@ -67,7 +67,8 @@
         //取得資料
         function getData(deptNo) {
             $.getJSON("json/url.json").done(function (url) {
-                console.log("JSON Data: " + url)
+                alert("JSON Data: " + url);
+                //console.log("JSON Data: " + url)
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ", " + error;
