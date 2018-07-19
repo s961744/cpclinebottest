@@ -118,12 +118,6 @@
                 search: false
             });
             // sometimes footer render error.
-            setTimeout(function () {
-                document.getElementById("hideAll").style.display = "none";
-                $table.bootstrapTable('resetView', {
-                    height: getHeight()
-                });
-            }, 500);
 
             //點選明細時Highlight
             $table.on('click-row.bs.table', function (e, row, $element) {

@@ -26,6 +26,10 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/json/url.json', function (req, res) {
+    res.sendFile(__dirname + '/json/url.json');
+});
+
 app.post('/', line.middleware(config), (req, res) => {
     // req.body.events should be an array of events
     if (!Array.isArray(req.body.events)) {
