@@ -52,6 +52,7 @@ exports.requestHttpGet = function (url) {
 * @param {String} url
 */
 exports.requestHttpGetWithReqData = function (url) {
+    console.log(url);
     return new Promise(function (resolve, reject) {
         http.get(url, function (res) {
             var body = '';
