@@ -62,19 +62,13 @@
         var $table = $('#table');
         initTable();
         var data = getData('{"date":"2018-07-05", "deptNo":"1300"}');
-        alert(JSON.stringify(data));
         //bind(data);
 
         //取得資料
         function getData(condition) {
-            $.getJSON('json/url.json').done(function (urlData) {
-                var obj = urlData.filter(function (url) {
-                    return url.urlName == 'attendanceAPI';
-                });
-                alert(JSON.stringify(obj));
-                $.getJSON(obj[0].url, condition).done(function (data) {
-                    return data;
-                });
+            $.getJSON('json/url.json').done(function (data) {
+                alert(JSON.stringify(data));
+                return data;
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ', ' + error;

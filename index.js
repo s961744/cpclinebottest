@@ -34,7 +34,8 @@ app.get('/json/url.json', function (req, res) {
             //console.log('No messages need to be sent.');
         }
         else {
-            console.log(JSON.stringify(data));
+            console.log('data=' + JSON.stringify(data));
+            res.send(data);
             //res.sendFile(__dirname + '/json/url.json');
         }
     });
