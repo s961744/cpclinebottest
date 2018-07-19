@@ -29,7 +29,7 @@ app.get('/', function (req, res) {
 app.get('/json/url.json', function (req, res) {
     //res.sendFile(__dirname + '/json/url.json');
     var url = 'http://116.50.39.201:7102/LineRESTful/resources/AttendanceAPI';
-    request.requestHttpGetWithReqData(url, 'strCondition={"date":"2018-07-05","deptNo":"1300"}').then(function (data) {
+    request.requestHttpGet(url + '?strCondition={"date":"2018-07-05","deptNo":"1300"}').then(function (data) {
         if (data.length < 3) {
             //console.log('No messages need to be sent.');
         }
