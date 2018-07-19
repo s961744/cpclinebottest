@@ -66,9 +66,8 @@
 
         //取得資料
         function getData(deptNo) {
-            $.getJSON("json/url.json").done(function (url) {
-                alert("JSON Data: " + url);
-                //console.log("JSON Data: " + url)
+            $.getJSON("json/url.json", { urlName: "attendanceAPI" }).done(function (url) {
+                alert("JSON Data: " + JSON.stringify(url));
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ", " + error;
@@ -117,7 +116,6 @@
                 ],
                 search: false
             });
-            // sometimes footer render error.
 
             //點選明細時Highlight
             $table.on('click-row.bs.table', function (e, row, $element) {
