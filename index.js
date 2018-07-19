@@ -27,7 +27,17 @@ app.get('/', function (req, res) {
 });
 
 app.get('/json/url.json', function (req, res) {
-    res.sendFile(__dirname + '/json/url.json');
+    //res.sendFile(__dirname + '/json/url.json');
+    var url = 'http://116.50.39.201:7102/LineRESTful/resources/LineRESTfulTest/LineUserAuth?strVerifyCode={\"verifyCode\":\"V1234\"}';
+    request.requestHttpGet(url).then(function (data) {
+        if (data.length < 3) {
+            //console.log('No messages need to be sent.');
+        }
+        else {
+            alert(data);
+            //res.sendFile(__dirname + '/json/url.json');
+        }
+    });
 });
 
 app.post('/', line.middleware(config), (req, res) => {
