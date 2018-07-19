@@ -31,7 +31,7 @@ app.get('/json/url.json', function (req, res) {
     var url = 'http://116.50.39.201:7102/LineRESTful/resources/AttendanceAPI';
     var path = "/2018-07-05/1300";
     request.requestHttpGetWithReqData(url + path).then(function (data) {
-        console.log('data=' + JSON.stringify(data));
+        //console.log('data=' + JSON.stringify(data));
         res.send(data);
     });
 });
