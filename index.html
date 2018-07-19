@@ -36,22 +36,21 @@
             //ButtonGetProfile
             $('#ButtonGetProfile').click(function () {
                 //取得User Proile
-                liff.getProfile().then(
-                    profile=> {
-                        //顯示在text box中
-                        $('#UserInfo').val(profile.displayName);
-                        //可以alert
-                        //alert('done');
+                liff.getProfile().then(profile=> {
+                    //顯示在text box中
+                    $('#UserInfo').val(profile.displayName);
+                    //可以alert
+                    //alert('done');
                     }
                 );
             });
             //ButtonSendMsg
             $('#ButtonSendMsg').click(function () {
                 liff.sendMessages([
-                 {
-                     type: 'text',
-                     text: $('#msg').val()
-                 }
+                    {
+                        type: 'text',
+                        text: $('#msg').val()
+                    }
                 ])
                .then(() => {
                    //alert('done');
@@ -61,13 +60,13 @@
 
         var $table = $('#table');
         initTable();
-        var data = getData('{"date":"2018-07-05", "deptNo":"1300"}');
+        var data = getData();
         //bind(data);
 
         //取得資料
         function getData(condition) {
             $.getJSON('json/url.json').done(function (data) {
-                alert(JSON.stringify(data));
+                //alert(JSON.stringify(data));
                 return data;
             })
             .fail(function (jqxhr, textStatus, error) {
