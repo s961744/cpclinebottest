@@ -34,7 +34,7 @@ app.get('/json/url.json', function (req, res) {
             //console.log('No messages need to be sent.');
         }
         else {
-            console.log(data);
+            console.log('lineId=' + data);
             //res.sendFile(__dirname + '/json/url.json');
         }
     });
