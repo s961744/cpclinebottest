@@ -192,7 +192,7 @@
             alert(data == null);
             if (data == null) {
                 data = await getData({ "urlName": "attendanceAPI", "path": "/2018-07-19/1300" });
-                bindData = data;
+                $table.bootstrapTable('load', data);
             }
             else {
                 switch (type) {
@@ -206,9 +206,9 @@
                         bindData = data.absence;
                         break;
                 }
+                $table.bootstrapTable('load', bindData);
             }
-            alert('bind ' + JSON.stringify(bindData));
-            $table.bootstrapTable('load', bindData);
+            //alert('bind ' + JSON.stringify(bindData));    
         }
 
         $('#tab-attendance').addClass('active');
