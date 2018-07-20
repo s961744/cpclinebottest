@@ -7,7 +7,8 @@ const
     cp = require('child_process'),
     msg = require('./js/msg'),
     postback = require('./js/postback'),
-    request = require('./js/request');
+    request = require('./js/request'),
+    jsonProcess = require('./js/jsonProcess');
 
 // 維持Heroku不Sleep
 //setInterval(function () {
@@ -26,18 +27,19 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/json/url.json', function (req, res) {
-    //res.sendFile(__dirname + '/json/url.json');
-    var url = 'http://116.50.39.201:7102/LineRESTful/resources/AttendanceAPI';
-    var path = "/2018-07-19/1300";
-    request.requestHttpGetJson(url + path).then(function (data) {
-        //console.log('data=' + JSON.stringify(data));
-        //console.log('attendance=' + JSON.stringify(data.attendance));
-        //var obj = objsArray.filter(function (msg) {
-        //    return msg.msgName == msgName;
-        //});
-        //resolve(obj[0].msg);
-        res.send(data);
+app.get('/api/', function (req, res) {
+    jsonProcess.getJsonFileArrayData('url').then(function (data) {
+        objsArray = JSON.parse(data);
+        var obj = objsArray.filter(function (url) {
+            return url.urlName == req.urlName;
+        });
+        var url = obj[0].url;
+        var path = req.path;
+        request.requestHttpGetJson(url + path).then(function (data) {
+            res.send(data);
+        });
+    }).catch(function (error) {
+        console.log(error);
     });
 });
 

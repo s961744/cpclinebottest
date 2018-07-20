@@ -93,13 +93,13 @@
     <script>
         var $table = $('#table');
         initTable();
-        //var data = getData();
-        var data = [{ "employee_no": "A0012272", "employee_name": "張耀元", "dept_no": "1360", "dept_name": "行動開發課", "class_no": "M2", "class_name": "行政單位M2" }, { "employee_no": "A0011342", "employee_name": "徐耀宗", "dept_no": "1350", "dept_name": "FAM開發課", "class_no": "M1", "class_name": "行政單位M1" }];
+        var data = getData();
+        //var data = [{ "employee_no": "A0012272", "employee_name": "張耀元", "dept_no": "1360", "dept_name": "行動開發課", "class_no": "M2", "class_name": "行政單位M2" }, { "employee_no": "A0011342", "employee_name": "徐耀宗", "dept_no": "1350", "dept_name": "FAM開發課", "class_no": "M1", "class_name": "行政單位M1" }];
         bind(data);
 
         //取得資料
         function getData() {
-            $.getJSON('json/url.json').done(function (data) {
+            $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
                 alert(JSON.stringify(data.attendance));
                 return data.attendance;
             }).fail(function (jqxhr, textStatus, error) {
@@ -155,6 +155,14 @@
             $table.on('click-row.bs.table', function (e, row, $element) {
                 $('.success').removeClass('success');
                 $($element).addClass('success');
+            });
+
+            //無用，點選時顯示LOG
+            $table.on('bs.table', function (e, name, args) {
+                console.log(name, args);
+            });
+            $table.on('all.bs.table', function (e, name, args) {
+                console.log(name, args);
             });
         }
     </script>
