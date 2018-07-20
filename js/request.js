@@ -61,7 +61,7 @@ exports.requestHttpGetWithReqData = function (url) {
             });
             res.on('end', function () {
                 console.log('http get ' + url + ' result:' + body);
-                resolve(body);
+                resolve(JSON.parse(body));
             });
         }).on('error', function (e) {
             console.log("requestHttpGetWithReqData error: ", e);
