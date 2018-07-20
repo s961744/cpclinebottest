@@ -94,26 +94,6 @@
             await bind()
         })()
 
-        //取得資料
-        const getData = new Promise((resolve, reject) => {
-            $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
-                alert('getData Result=' + JSON.stringify(data.attendance));
-                resolve(data.attendance);
-            }).fail(function (jqxhr, textStatus, error) {
-                var err = textStatus + ', ' + error;
-                alert('發生錯誤:' + err);
-                reject(err);
-            });
-        });
-
-        //繫結資料
-        async function bind() {
-            await init;
-            var data = await getData;
-            alert('bind ' + JSON.stringify(data));
-            $table.bootstrapTable('load', data);
-        }
-
         //初始化Table
         const init = new Promise((resolve, reject) => {
             try {
@@ -172,6 +152,26 @@
                 reject(e);
             }
         });
+
+        //取得資料
+        const getData = new Promise((resolve, reject) => {
+            $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
+                alert('getData Result=' + JSON.stringify(data.attendance));
+                resolve(data.attendance);
+            }).fail(function (jqxhr, textStatus, error) {
+                var err = textStatus + ', ' + error;
+                alert('發生錯誤:' + err);
+                reject(err);
+            });
+        });
+
+        //繫結資料
+        async function bind() {
+            await init;
+            var data = await getData;
+            alert('bind ' + JSON.stringify(data));
+            $table.bootstrapTable('load', data);
+        }
     </script>
 </body>
 </html>
