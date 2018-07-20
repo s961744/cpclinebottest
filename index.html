@@ -65,8 +65,8 @@
         //取得資料
         function getData(condition) {
             $.getJSON('json/url.json').done(function (data) {
-                alert(JSON.stringify(data));
-                return data;
+                alert(JSON.stringify(data.attendance));
+                return data.attendance;
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ', ' + error;
