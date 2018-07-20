@@ -48,11 +48,11 @@ exports.requestHttpGet = function (url) {
 }
 
 /**
-* 處理http GET with req
+* 處理http GET JSON 
 * @param {String} url
 */
-exports.requestHttpGetWithReqData = function (url) {
-    console.log('http get ' + url);
+exports.requestHttpGetJson = function (url) {
+    console.log('requestHttpGetJson ' + url);
     return new Promise(function (resolve, reject) {
         http.get(url, function (res) {
             var body = '';
@@ -60,11 +60,10 @@ exports.requestHttpGetWithReqData = function (url) {
                 body += chunk;
             });
             res.on('end', function () {
-                console.log('http get ' + url + ' result:' + body);
                 resolve(JSON.parse(body));
             });
         }).on('error', function (e) {
-            console.log("requestHttpGetWithReqData error: ", e);
+            console.log("requestHttpGetJson error: ", e);
         });
     });
 }
