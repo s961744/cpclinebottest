@@ -56,7 +56,39 @@
                 });
             });
         });
-
+    </script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6" style="margin:5px">
+            <label>user id:</label>
+            <input class="form-control" type="text" id="userid" />   <br />
+            <label>QueryString:</label>
+            <input class="form-control" type="text" id="QueryString" /><br />
+            <button class="btn btn-primary" id="ButtonGetProfile">Get Profile</button>
+            <input class="form-control" type="text" id="UserInfo" /><br />
+            <label>要傳送的訊息:</label>
+            <input class="form-control" type="text" id="msg" value="測試" /><br />
+            <button class="btn btn-primary" id="ButtonSendMsg">傳送</button>
+        </div>
+    </div>
+    <div>
+        <table id="table"
+               data-search="false"
+               data-show-refresh="false"
+               data-show-toggle="false"
+               data-show-columns="false"
+               data-show-export="false"
+               data-minimum-count-columns="2"
+               data-show-pagination-switch="false"
+               data-pagination="false"
+               data-id-field="id"
+               data-show-footer="false"
+               data-side-pagination="client"
+               data-response-handler="responseHandler"
+               data-check-on-init="true"></table>
+    </div>
+    <script>
         var $table = $('#table');
         //初始化Table
         const init = new Promise((resolve, reject) => {
@@ -140,40 +172,6 @@
         (async () => {
             await bind()
         })()
-    </script>
-</head>
-<body>
-    <div class="row">
-        <div class="col-md-6" style="margin:5px">
-            <label>user id:</label>
-            <input class="form-control" type="text" id="userid" />   <br />
-            <label>QueryString:</label>
-            <input class="form-control" type="text" id="QueryString" /><br />
-            <button class="btn btn-primary" id="ButtonGetProfile">Get Profile</button>
-            <input class="form-control" type="text" id="UserInfo" /><br />
-            <label>要傳送的訊息:</label>
-            <input class="form-control" type="text" id="msg" value="測試" /><br />
-            <button class="btn btn-primary" id="ButtonSendMsg">傳送</button>
-        </div>
-    </div>
-    <div>
-        <table id="table"
-               data-search="false"
-               data-show-refresh="false"
-               data-show-toggle="false"
-               data-show-columns="false"
-               data-show-export="false"
-               data-minimum-count-columns="2"
-               data-show-pagination-switch="false"
-               data-pagination="false"
-               data-id-field="id"
-               data-show-footer="false"
-               data-side-pagination="client"
-               data-response-handler="responseHandler"
-               data-check-on-init="true"></table>
-    </div>
-    <script>
-        
     </script>
 </body>
 </html>
