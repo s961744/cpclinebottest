@@ -190,7 +190,7 @@
             var initDone = await init;
             alert(data == null);
             if (data == null) {
-                data = await getData({ "urlName": "attendanceAPI", "path": "/2018-07-19/1300" });
+                bindData = await getData({ "urlName": "attendanceAPI", "path": "/2018-07-19/1300" });
             }
             else {
                 switch (type) {
