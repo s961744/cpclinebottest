@@ -30,80 +30,14 @@ app.get('/json/url.json', function (req, res) {
     //res.sendFile(__dirname + '/json/url.json');
     var url = 'http://116.50.39.201:7102/LineRESTful/resources/AttendanceAPI';
     var path = "/2018-07-19/1300";
-    var test = {
-        "date": "2018-07-05 09:45:23",
-        "dept_no": "1300",
-        "employee_no": ["A6252", "A1925"],
-        "total_count": 52,
-        "expected_attendence": 43,
-        "attendance_count": 42,
-        "attendance": [
-            {
-                "employee_no": "A0012272",
-                "employee_name": "張耀元",
-                "dept_no": "1360",
-                "dept_name": "行動開發課",
-                "class_no": "M2",
-                "class_name": "行政單位M2"
-            },
-            {
-                "employee_no": "A0011342",
-                "employee_name": "徐耀宗",
-                "dept_no": "1350",
-                "dept_name": "FAM開發課",
-                "class_no": "M1",
-                "class_name": "行政單位M1"
-            }
-        ],
-        "leave_count": 9,
-        "leave": [
-            {
-                "employee_no": "A0012272",
-                "employee_name": "張耀元",
-                "dept_no": "1360",
-                "dept_name": "行動開發課",
-                "class_no": "M2",
-                "class_name": "行政單位M2"
-            },
-            {
-                "employee_no": "A0011342",
-                "employee_name": "徐耀宗",
-                "dept_no": "1350",
-                "dept_name": "FAM開發課",
-                "class_no": "M1",
-                "class_name": "行政單位M1"
-            }
-        ],
-        "absence_count": 1,
-        "absence": [
-            {
-                "employee_no": "A0012272",
-                "employee_name": "張耀元",
-                "dept_no": "1360",
-                "dept_name": "行動開發課",
-                "class_no": "M2",
-                "class_name": "行政單位M2"
-            },
-            {
-                "employee_no": "A0011342",
-                "employee_name": "徐耀宗",
-                "dept_no": "1350",
-                "dept_name": "FAM開發課",
-                "class_no": "M1",
-                "class_name": "行政單位M1"
-            }
-        ]
-    }
-    request.requestHttpGetWithReqData(url + path).then(function (data) {
+    request.requestHttpGetJson(url + path).then(function (data) {
         console.log('data=' + JSON.stringify(data));
-        console.log('test=' + JSON.stringify(test));
-        objsArray = JSON.parse(data)
-        console.log('objsArray=' + JSON.stringify(objsArray));
+        console.log('attendance=' + JSON.stringify(data.attendance));
         //var obj = objsArray.filter(function (msg) {
         //    return msg.msgName == msgName;
         //});
         //resolve(obj[0].msg);
-        res.send(objsArray);
+        res.send(data.attendance);
     });
 });
 
