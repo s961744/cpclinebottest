@@ -92,7 +92,7 @@
         </div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" id="tab-attendance" href="#">出勤</a>
+                <a class="nav-link" id="tab-attendance" href="#">出勤</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="tab-leave" href="#">請假</a>
@@ -217,6 +217,9 @@
             $table.bootstrapTable('load', data);
         }
 
+        $('#tab-attendance').addClass('active');
+        bind("attendance");
+
         $('#attendance').click(function () {
             bind("attendance");
         });
@@ -228,13 +231,21 @@
         });
 
         $('#tab-attendance').click(function () {
+            $('#tab-attendance').addClass('active');
+            $('#tab-leave').removeClass('active');
+            $('#tab-leave').removeClass('active');
             bind("attendance");
         });
         $('#tab-leave').click(function () {
+            $('#tab-attendance').removeClass('active');
             $('#tab-leave').addClass('active');
+            $('#tab-leave').removeClass('active');
             bind("leave");
         });
         $('#tab-absence').click(function () {
+            $('#tab-attendance').removeClass('active');
+            $('#tab-leave').removeClass('active');
+            $('#tab-leave').addClass('active');
             bind("absence");
         });
 
