@@ -77,9 +77,9 @@
     </div>
     <div>
         <div id="selector" class="btn-group" role="group" aria-label="Button group with nested dropdown">
-            <button type="button" class="btn btn-secondary">出勤</button>
-            <button type="button" class="btn btn-secondary">請假</button>
-            <button type="button" class="btn btn-secondary">缺勤</button>
+            <button type="button" id="attendance" class="btn btn-secondary">出勤</button>
+            <button type="button" id="leave" class="btn btn-secondary">請假</button>
+            <button type="button" id="absence" class="btn btn-secondary">缺勤</button>
             <div class="btn-group" role="group">
                 <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     部門
@@ -191,12 +191,17 @@
             $table.bootstrapTable('load', data);
         }
 
-        $('#selector button').click(function () {
-            $(this).addClass('active').siblings().removeClass('active');
-            (async () => {
-                await bind("attendance")
-            })()
+        $('#attendance').click(function () {
+            await bind("attendance")
         });
+
+        //$('#selector button').click(function () {
+        //    $(this).addClass('active').siblings().removeClass('active');
+
+        //    (async () => {
+        //        await bind("attendance")
+        //    })()
+        //});
     </script>
 </body>
 </html>
