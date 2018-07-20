@@ -28,14 +28,14 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/', function (req, res) {
-    console.log(JSON.stringify(req));
+    console.log(JSON.stringify(req.body));
     jsonProcess.getJsonFileArrayData('url').then(function (data) {
         objsArray = JSON.parse(data);
         var obj = objsArray.filter(function (url) {
-            return url.urlName == req.urlName;
+            return url.urlName == req.body.urlName;
         });
         var url = obj[0].url;
-        var path = req.path;
+        var path = req.body.path;
         request.requestHttpGetJson(url + path).then(function (data) {
             res.send(data);
         });
