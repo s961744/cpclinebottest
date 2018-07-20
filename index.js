@@ -97,7 +97,7 @@ app.get('/json/url.json', function (req, res) {
     request.requestHttpGetWithReqData(url + path).then(function (data) {
         console.log('data=' + JSON.stringify(data));
         console.log('test=' + JSON.stringify(test));
-        objsArray = JSON.parse(data.attendance)
+        objsArray = JSON.parse(data)
         console.log('objsArray=' + JSON.stringify(objsArray));
         //var obj = objsArray.filter(function (msg) {
         //    return msg.msgName == msgName;
