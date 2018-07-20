@@ -89,11 +89,6 @@
                data-check-on-init="true"></table>
     </div>
     <script>
-        var $table = $('#table');
-        (async () => {
-            await bind()
-        })()
-
         //初始化Table
         const init = new Promise((resolve, reject) => {
             try {
@@ -172,6 +167,11 @@
             alert('bind ' + JSON.stringify(data));
             $table.bootstrapTable('load', data);
         }
+
+        var $table = $('#table');
+        (async () => {
+            await bind()
+        })()
     </script>
 </body>
 </html>
