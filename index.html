@@ -51,10 +51,9 @@
                         type: 'text',
                         text: $('#msg').val()
                     }
-                ])
-               .then(() => {
-                   //alert('done');
-               })
+                ]).then(() => {
+                    //alert('done');
+                });
             });
         });
 
@@ -66,7 +65,7 @@
         //取得資料
         function getData(condition) {
             $.getJSON('json/url.json').done(function (data) {
-                //alert(JSON.stringify(data));
+                alert(JSON.stringify(data));
                 return data;
             })
             .fail(function (jqxhr, textStatus, error) {
