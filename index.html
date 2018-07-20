@@ -93,7 +93,7 @@
         init().then(getData(data).then(bind(data)));
 
         //取得資料
-        var getData = function (resolve, reject) {
+        function getData(resolve, reject) {
             $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
                 alert('getData Result=' + JSON.stringify(data.attendance));
                 resolve(data.attendance);
@@ -105,13 +105,13 @@
         }
 
         //繫結資料
-        var bind = function (data) {
+        function bind(data) {
             alert('bind ' + JSON.stringify(data));
             $table.bootstrapTable('load', data);
         }
 
         //初始化Table
-        var init = function (resolve, reject) {
+        function init(resolve, reject) {
             try {
                 $table.bootstrapTable({
                     columns: [
