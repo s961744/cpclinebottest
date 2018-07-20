@@ -190,7 +190,8 @@
             var initDone = await init;
             alert(data == null);
             if (data == null) {
-                bindData = await getData({ "urlName": "attendanceAPI", "path": "/2018-07-19/1300" });
+                data = await getData({ "urlName": "attendanceAPI", "path": "/2018-07-19/1300" });
+                bindData = data;
             }
             else {
                 switch (type) {
@@ -205,7 +206,7 @@
                         break;
                 }
             }
-            //alert('bind ' + JSON.stringify(data));
+            //alert('bind ' + JSON.stringify(bindData));
             $table.bootstrapTable('load', bindData);
         }
 
