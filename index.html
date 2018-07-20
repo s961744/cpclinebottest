@@ -90,10 +90,13 @@
     </div>
     <script>
         var $table = $('#table');
+        (async () => {
+            await askMom()
+        })()
         init().then(getData(data).then(bind(data)));
 
         //取得資料
-        function getData(resolve, reject) {
+        const getData = new Promise((resolve, reject) => {
             $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
                 alert('getData Result=' + JSON.stringify(data.attendance));
                 resolve(data.attendance);
@@ -102,16 +105,18 @@
                 alert('發生錯誤:' + err);
                 reject(err);
             });
-        }
+        });
 
         //繫結資料
-        function bind(data) {
+        async function bind() {
+            await init;
+            var data = await getData;
             alert('bind ' + JSON.stringify(data));
             $table.bootstrapTable('load', data);
         }
 
         //初始化Table
-        function init(resolve, reject) {
+        const init = new Promise((resolve, reject) => {
             try {
                 $table.bootstrapTable({
                     columns: [
@@ -164,11 +169,10 @@
 
                 resolve();
             }
-            catch(e)
-            {
+            catch (e) {
                 reject(e);
             }
-        }
+        });
     </script>
 </body>
 </html>
