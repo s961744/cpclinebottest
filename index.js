@@ -28,7 +28,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/', function (req, res) {
-    console.log(req.query);
+    //console.log(req.query);
     var objsArray = [];
     jsonProcess.getJsonFileArrayData('url').then(function (data) {
         objsArray = JSON.parse(data);
