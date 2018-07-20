@@ -60,20 +60,6 @@
         var $table = $('#table');
         initTable();
         //var data = getData();
-        var data = [{ "employee_no": "A0012272", "employee_name": "張耀元", "dept_no": "1360", "dept_name": "行動開發課", "class_no": "M2", "class_name": "行政單位M2" }, { "employee_no": "A0011342", "employee_name": "徐耀宗", "dept_no": "1350", "dept_name": "FAM開發課", "class_no": "M1", "class_name": "行政單位M1" }];
-        bind(data);
-
-        //取得資料
-        function getData() {
-            $.getJSON('json/url.json').done(function (data) {
-                alert(JSON.stringify(data.attendance));
-                return data.attendance;
-            })
-            .fail(function (jqxhr, textStatus, error) {
-                var err = textStatus + ', ' + error;
-                alert('發生錯誤:' + err);
-            });
-        }
 
         //初始化Table
         function initTable() {
@@ -151,6 +137,20 @@
                data-check-on-init="true"></table>
     </div>
     <script>
+        var data = [{ "employee_no": "A0012272", "employee_name": "張耀元", "dept_no": "1360", "dept_name": "行動開發課", "class_no": "M2", "class_name": "行政單位M2" }, { "employee_no": "A0011342", "employee_name": "徐耀宗", "dept_no": "1350", "dept_name": "FAM開發課", "class_no": "M1", "class_name": "行政單位M1" }];
+        bind(data);
+
+        //取得資料
+        function getData() {
+            $.getJSON('json/url.json').done(function (data) {
+                alert(JSON.stringify(data.attendance));
+                return data.attendance;
+            }).fail(function (jqxhr, textStatus, error) {
+                var err = textStatus + ', ' + error;
+                alert('發生錯誤:' + err);
+            });
+        }
+
         //繫結資料
         function bind(data) {
             alert('bind ' + JSON.stringify(data));
