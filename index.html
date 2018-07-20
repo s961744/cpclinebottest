@@ -91,9 +91,8 @@
     <script>
         var $table = $('#table');
         (async () => {
-            await askMom()
+            await bind()
         })()
-        init().then(getData(data).then(bind(data)));
 
         //取得資料
         const getData = new Promise((resolve, reject) => {
