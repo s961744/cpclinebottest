@@ -76,7 +76,7 @@
         </div>
     </div>
     <div>
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <div id="selector" class="btn-group" role="group" aria-label="Button group with nested dropdown">
             <button type="button" class="btn btn-secondary">出勤</button>
             <button type="button" class="btn btn-secondary">請假</button>
             <button type="button" class="btn btn-secondary">缺勤</button>
@@ -167,28 +167,36 @@
         });
 
         //取得資料
-        const getData = new Promise((resolve, reject) => {
-            $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
-                //alert('getData Result=' + JSON.stringify(data.attendance));
-                resolve(data.attendance);
-            }).fail(function (jqxhr, textStatus, error) {
-                var err = textStatus + ', ' + error;
-                alert('發生錯誤:' + err);
-                reject(err);
+        async function getData(type) {
+            return Promise((resolve, reject) => {
+                $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
+                    //alert('getData Result=' + JSON.stringify(data.attendance));
+                    if (type == "attendance")
+                    {
+                        resolve(data.attendance);
+                    }
+                }).fail(function (jqxhr, textStatus, error) {
+                    var err = textStatus + ', ' + error;
+                    alert('發生錯誤:' + err);
+                    reject(err);
+                });
             });
-        });
+        }
 
         //繫結資料
-        async function bind() {
+        async function bind(type) {
             var initDone = await init;
-            var data = await getData;
+            var data = await getData(type);
             //alert('bind ' + JSON.stringify(data));
             $table.bootstrapTable('load', data);
         }
 
-        (async () => {
-            await bind()
-        })()
+        $('#selector button').click(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+            (async () => {
+                await bind("attendance")
+            })()
+        });
     </script>
 </body>
 </html>
