@@ -36,48 +36,57 @@
             //ButtonGetProfile
             $('#ButtonGetProfile').click(function () {
                 //取得User Proile
-                liff.getProfile().then(profile=> {
-                    //顯示在text box中
-                    $('#UserInfo').val(profile.displayName);
-                    //可以alert
-                    //alert('done');
+                liff.getProfile().then(
+                    profile=> {
+                        //顯示在text box中
+                        $('#UserInfo').val(profile.displayName);
+                        //可以alert
+                        //alert('done');
                     }
                 );
             });
             //ButtonSendMsg
             $('#ButtonSendMsg').click(function () {
                 liff.sendMessages([
-                    {
-                        type: 'text',
-                        text: $('#msg').val()
-                    }
-                ]).then(() => {
-                    //alert('done');
-                });
+                 {
+                     type: 'text',
+                     text: $('#msg').val()
+                 }
+                ])
+               .then(() => {
+                   //alert('done');
+               })
             });
         });
 
         var $table = $('#table');
         initTable();
-        //var data = getData();
-        var data = [{ "employee_no": "A0012272", "employee_name": "張耀元", "dept_no": "1360", "dept_name": "行動開發課", "class_no": "M2", "class_name": "行政單位M2" }, { "employee_no": "A0011342", "employee_name": "徐耀宗", "dept_no": "1350", "dept_name": "FAM開發課", "class_no": "M1", "class_name": "行政單位M1" }];
+        var data = getData();
         bind(data);
-
         //取得資料
         function getData() {
-            $.getJSON('json/url.json').done(function (data) {
-                alert(JSON.stringify(data.attendance));
-                return data.attendance;
-            })
-            .fail(function (jqxhr, textStatus, error) {
-                var err = textStatus + ', ' + error;
-                alert('發生錯誤:' + err);
-            });
+            return [
+                {
+                    "employee_no": "A0012272",
+                    "employee_name": "張耀元",
+                    "dept_no": "1360",
+                    "dept_name": "行動開發課",
+                    "class_no": "M2",
+                    "class_name": "行政單位M2"
+                },
+                {
+                    "employee_no": "A0011342",
+                    "employee_name": "徐耀宗",
+                    "dept_no": "1350",
+                    "dept_name": "FAM開發課",
+                    "class_no": "M1",
+                    "class_name": "行政單位M1"
+                }
+            ];
         }
 
         //繫結資料
         function bind(data) {
-            alert('bind ' + JSON.stringify(data));
             $table.bootstrapTable('load', data);
         }
 
@@ -117,6 +126,12 @@
                 ],
                 search: false
             });
+            // sometimes footer render error.
+            setTimeout(function () {
+                $table.bootstrapTable('resetView', {
+                    height: getHeight()
+                });
+            }, 500);
 
             //點選明細時Highlight
             $table.on('click-row.bs.table', function (e, row, $element) {
