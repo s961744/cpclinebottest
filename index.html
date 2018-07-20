@@ -63,7 +63,7 @@
         //bind(data);
 
         //取得資料
-        function getData(condition) {
+        function getData() {
             $.getJSON('json/url.json').done(function (data) {
                 alert(JSON.stringify(data.attendance));
                 return data.attendance;
