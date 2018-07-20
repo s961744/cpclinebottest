@@ -23,7 +23,7 @@ const config = {
 const app = express();
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/index2.html');
 });
 
 app.get('/json/url.json', function (req, res) {
