@@ -146,7 +146,7 @@
                     console.log(name, args);
                 });
 
-                resolve();
+                resolve('done');
             }
             catch (e) {
                 reject(e);
@@ -167,7 +167,7 @@
 
         //繫結資料
         async function bind() {
-            await init;
+            var initDone = await init;
             var data = await getData;
             alert('bind ' + JSON.stringify(data));
             $table.bootstrapTable('load', data);
