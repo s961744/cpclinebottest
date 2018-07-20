@@ -31,13 +31,13 @@ app.get('/json/url.json', function (req, res) {
     var url = 'http://116.50.39.201:7102/LineRESTful/resources/AttendanceAPI';
     var path = "/2018-07-19/1300";
     request.requestHttpGetJson(url + path).then(function (data) {
-        console.log('data=' + JSON.stringify(data));
-        console.log('attendance=' + JSON.stringify(data.attendance));
+        //console.log('data=' + JSON.stringify(data));
+        //console.log('attendance=' + JSON.stringify(data.attendance));
         //var obj = objsArray.filter(function (msg) {
         //    return msg.msgName == msgName;
         //});
         //resolve(obj[0].msg);
-        res.send(data.attendance);
+        res.send(data);
     });
 });
 
