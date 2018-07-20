@@ -93,13 +93,14 @@
         bind(getData(initTable()));
 
         //取得資料
-        function getData() {
+        function getData(callback) {
             $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
-                alert(JSON.stringify(data.attendance));
-                return data.attendance;
+                alert('getData Result=' + JSON.stringify(data.attendance));
+                callback(data.attendance);
             }).fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ', ' + error;
                 alert('發生錯誤:' + err);
+                callback(err);
             });
         }
 
@@ -110,7 +111,7 @@
         }
 
         //初始化Table
-        function initTable() {
+        function initTable(callback) {
             $table.bootstrapTable({
                 columns: [
                     [
@@ -159,6 +160,8 @@
             $table.on('all.bs.table', function (e, name, args) {
                 console.log(name, args);
             });
+
+            callback();
         }
     </script>
 </body>
