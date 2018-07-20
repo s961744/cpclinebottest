@@ -89,7 +89,6 @@
                     <a class="dropdown-item" href="#">1380</a>
                 </div>
             </div>
-            
         </div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -232,6 +231,7 @@
             bind("attendance");
         });
         $('#tab-leave').click(function () {
+            $('#tab-leave').addClass('active');
             bind("leave");
         });
         $('#tab-absence').click(function () {
