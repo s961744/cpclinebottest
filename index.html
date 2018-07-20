@@ -73,6 +73,20 @@
         </div>
     </div>
     <div>
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <button type="button" class="btn btn-secondary">出勤</button>
+            <button type="button" class="btn btn-secondary">請假</button>
+            <button type="button" class="btn btn-secondary">缺勤</button>
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    部門
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <a class="dropdown-item" href="#">1360</a>
+                    <a class="dropdown-item" href="#">1380</a>
+                </div>
+            </div>
+        </div>
         <table id="table"
                data-search="false"
                data-show-refresh="false"
@@ -128,19 +142,19 @@
                     search: false
                 });
 
-                ////點選明細時Highlight
-                //$table.on('click-row.bs.table', function (e, row, $element) {
-                //    $('.success').removeClass('success');
-                //    $($element).addClass('success');
-                //});
+                //點選明細時Highlight
+                $table.on('click-row.bs.table', function (e, row, $element) {
+                    $('.success').removeClass('success');
+                    $($element).addClass('success');
+                });
 
-                ////無用，點選時顯示LOG
-                //$table.on('bs.table', function (e, name, args) {
-                //    console.log(name, args);
-                //});
-                //$table.on('all.bs.table', function (e, name, args) {
-                //    console.log(name, args);
-                //});
+                //無用，點選時顯示LOG
+                $table.on('bs.table', function (e, name, args) {
+                    console.log(name, args);
+                });
+                $table.on('all.bs.table', function (e, name, args) {
+                    console.log(name, args);
+                });
 
                 resolve('done');
             }
