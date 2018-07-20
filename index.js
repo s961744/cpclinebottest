@@ -33,10 +33,10 @@ app.get('/api/', function (req, res) {
     jsonProcess.getJsonFileArrayData('url').then(function (data) {
         objsArray = JSON.parse(data);
         var obj = objsArray.filter(function (url) {
-            return url.urlName == req.body.urlName;
+            return url.urlName == req.query.urlName;
         });
         var url = obj[0].url;
-        var path = req.body.path;
+        var path = req.query.path;
         request.requestHttpGetJson(url + path).then(function (data) {
             res.send(data);
         });
