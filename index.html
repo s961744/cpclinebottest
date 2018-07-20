@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>test LIFF</title>
+    <title>出缺勤名單查詢</title>
     <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -89,7 +89,26 @@
                     <a class="dropdown-item" href="#">1380</a>
                 </div>
             </div>
+            
         </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="tab-attendance" href="#">出勤</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab-leave" href="#">請假</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab-absence" href="#">缺勤</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">部門</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">1350</a>
+                    <a class="dropdown-item" href="#">1360</a>
+                </div>
+            </li>
+        </ul>
         <table id="table"
                data-search="false"
                data-show-refresh="false"
@@ -206,6 +225,16 @@
             bind("leave");
         });
         $('#absence').click(function () {
+            bind("absence");
+        });
+
+        $('#tab-attendance').click(function () {
+            bind("attendance");
+        });
+        $('#tab-leave').click(function () {
+            bind("leave");
+        });
+        $('#tab-absence').click(function () {
             bind("absence");
         });
 
