@@ -90,7 +90,7 @@
     </div>
     <script>
         var $table = $('#table');
-        bind(getData(initTable()));
+        bind(getData(initTable(callback), callback));
 
         //取得資料
         function getData(callback) {
