@@ -90,78 +90,84 @@
     </div>
     <script>
         var $table = $('#table');
-        bind(getData(initTable(callback)));
+        init().then(getData(data).then(bind(data)));
 
         //取得資料
-        function getData(callback) {
+        var getData = function (resolve, reject) {
             $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
                 alert('getData Result=' + JSON.stringify(data.attendance));
-                callback(data.attendance);
+                resolve(data.attendance);
             }).fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ', ' + error;
                 alert('發生錯誤:' + err);
-                callback(err);
+                reject(err);
             });
         }
 
         //繫結資料
-        function bind(data) {
+        var bind = function (data) {
             alert('bind ' + JSON.stringify(data));
             $table.bootstrapTable('load', data);
         }
 
         //初始化Table
-        function initTable(callback) {
-            $table.bootstrapTable({
-                columns: [
-                    [
-                        {
-                            field: 'employee_no',
-                            title: '工號',
-                            align: 'left',
-                            valign: 'middle',
-                            sortable: true
-                        }, {
-                            field: 'employee_name',
-                            title: '姓名',
-                            align: 'center',
-                            valign: 'middle',
-                            sortable: true
-                        },
-                        {
-                            field: 'dept_no',
-                            title: '部門',
-                            align: 'center',
-                            valign: 'middle',
-                            sortable: true
-                        },
-                        {
-                            field: 'dept_name',
-                            title: '部門名稱',
-                            align: 'center',
-                            valign: 'middle',
-                            sortable: true
-                        }
-                    ]
-                ],
-                search: false
-            });
+        var init = function (resolve, reject) {
+            try {
+                $table.bootstrapTable({
+                    columns: [
+                        [
+                            {
+                                field: 'employee_no',
+                                title: '工號',
+                                align: 'left',
+                                valign: 'middle',
+                                sortable: true
+                            }, {
+                                field: 'employee_name',
+                                title: '姓名',
+                                align: 'center',
+                                valign: 'middle',
+                                sortable: true
+                            },
+                            {
+                                field: 'dept_no',
+                                title: '部門',
+                                align: 'center',
+                                valign: 'middle',
+                                sortable: true
+                            },
+                            {
+                                field: 'dept_name',
+                                title: '部門名稱',
+                                align: 'center',
+                                valign: 'middle',
+                                sortable: true
+                            }
+                        ]
+                    ],
+                    search: false
+                });
 
-            //點選明細時Highlight
-            $table.on('click-row.bs.table', function (e, row, $element) {
-                $('.success').removeClass('success');
-                $($element).addClass('success');
-            });
+                //點選明細時Highlight
+                $table.on('click-row.bs.table', function (e, row, $element) {
+                    $('.success').removeClass('success');
+                    $($element).addClass('success');
+                });
 
-            //無用，點選時顯示LOG
-            $table.on('bs.table', function (e, name, args) {
-                console.log(name, args);
-            });
-            $table.on('all.bs.table', function (e, name, args) {
-                console.log(name, args);
-            });
+                //無用，點選時顯示LOG
+                $table.on('bs.table', function (e, name, args) {
+                    console.log(name, args);
+                });
+                $table.on('all.bs.table', function (e, name, args) {
+                    console.log(name, args);
+                });
 
-            callback();
+                resolve();
+            }
+            catch(e)
+            {
+                reject(e);
+            }
         }
     </script>
 </body>
