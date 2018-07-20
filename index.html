@@ -168,7 +168,7 @@
 
         //取得資料
         async function getData(type) {
-            return Promise((resolve, reject) => {
+            return new Promise((resolve, reject) => {
                 $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
                     //alert('getData Result=' + JSON.stringify(data.attendance));
                     if (type == "attendance")
