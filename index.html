@@ -56,39 +56,7 @@
                 });
             });
         });
-    </script>
-</head>
-<body>
-    <div class="row">
-        <div class="col-md-6" style="margin:5px">
-            <label>user id:</label>
-            <input class="form-control" type="text" id="userid" />   <br />
-            <label>QueryString:</label>
-            <input class="form-control" type="text" id="QueryString" /><br />
-            <button class="btn btn-primary" id="ButtonGetProfile">Get Profile</button>
-            <input class="form-control" type="text" id="UserInfo" /><br />
-            <label>要傳送的訊息:</label>
-            <input class="form-control" type="text" id="msg" value="測試" /><br />
-            <button class="btn btn-primary" id="ButtonSendMsg">傳送</button>
-        </div>
-    </div>
-    <div>
-        <table id="table"
-               data-search="false"
-               data-show-refresh="false"
-               data-show-toggle="false"
-               data-show-columns="false"
-               data-show-export="false"
-               data-minimum-count-columns="2"
-               data-show-pagination-switch="false"
-               data-pagination="false"
-               data-id-field="id"
-               data-show-footer="false"
-               data-side-pagination="client"
-               data-response-handler="responseHandler"
-               data-check-on-init="true"></table>
-    </div>
-    <script>
+
         var $table = $('#table');
         //初始化Table
         const init = new Promise((resolve, reject) => {
@@ -128,19 +96,19 @@
                     search: false
                 });
 
-                //點選明細時Highlight
-                $table.on('click-row.bs.table', function (e, row, $element) {
-                    $('.success').removeClass('success');
-                    $($element).addClass('success');
-                });
+                ////點選明細時Highlight
+                //$table.on('click-row.bs.table', function (e, row, $element) {
+                //    $('.success').removeClass('success');
+                //    $($element).addClass('success');
+                //});
 
-                //無用，點選時顯示LOG
-                $table.on('bs.table', function (e, name, args) {
-                    console.log(name, args);
-                });
-                $table.on('all.bs.table', function (e, name, args) {
-                    console.log(name, args);
-                });
+                ////無用，點選時顯示LOG
+                //$table.on('bs.table', function (e, name, args) {
+                //    console.log(name, args);
+                //});
+                //$table.on('all.bs.table', function (e, name, args) {
+                //    console.log(name, args);
+                //});
 
                 resolve('done');
             }
@@ -152,7 +120,7 @@
         //取得資料
         const getData = new Promise((resolve, reject) => {
             $.getJSON('api', { "urlName": "attendanceAPI", "path": "/2018-07-19/1300" }).done(function (data) {
-                alert('getData Result=' + JSON.stringify(data.attendance));
+                //alert('getData Result=' + JSON.stringify(data.attendance));
                 resolve(data.attendance);
             }).fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ', ' + error;
@@ -165,13 +133,47 @@
         async function bind() {
             var initDone = await init;
             var data = await getData;
-            alert('bind ' + JSON.stringify(data));
+            //alert('bind ' + JSON.stringify(data));
             $table.bootstrapTable('load', data);
         }
-        
+
         (async () => {
             await bind()
         })()
+    </script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6" style="margin:5px">
+            <label>user id:</label>
+            <input class="form-control" type="text" id="userid" />   <br />
+            <label>QueryString:</label>
+            <input class="form-control" type="text" id="QueryString" /><br />
+            <button class="btn btn-primary" id="ButtonGetProfile">Get Profile</button>
+            <input class="form-control" type="text" id="UserInfo" /><br />
+            <label>要傳送的訊息:</label>
+            <input class="form-control" type="text" id="msg" value="測試" /><br />
+            <button class="btn btn-primary" id="ButtonSendMsg">傳送</button>
+        </div>
+    </div>
+    <div>
+        <table id="table"
+               data-search="false"
+               data-show-refresh="false"
+               data-show-toggle="false"
+               data-show-columns="false"
+               data-show-export="false"
+               data-minimum-count-columns="2"
+               data-show-pagination-switch="false"
+               data-pagination="false"
+               data-id-field="id"
+               data-show-footer="false"
+               data-side-pagination="client"
+               data-response-handler="responseHandler"
+               data-check-on-init="true"></table>
+    </div>
+    <script>
+        
     </script>
 </body>
 </html>
