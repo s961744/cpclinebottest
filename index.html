@@ -92,10 +92,9 @@
             </li>
         </ul>
         <table id="table"
+            class="table table-sm"
             data-group-by="true"
-            data-group-by-field="dept_no"
-            stickyHeader="true"
-            stickyHeaderOffsetY="40px">
+            data-group-by-field="dept_no">
         </table>
     </div>
     <script>
@@ -110,7 +109,7 @@
                             {
                                 field: 'dept_no',
                                 title: '部門',
-                                align: 'center',
+                                align: 'left',
                                 valign: 'middle',
                                 sortable: false
                             },
@@ -137,6 +136,7 @@
                         ]
                     ],
                     search: false,
+                    dataGroupBy: true,
                     stickyHeader: true,
                     stickyHeaderOffsetY: 0+'px'
                 });
