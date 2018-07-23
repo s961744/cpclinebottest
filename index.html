@@ -78,13 +78,13 @@
     <div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" id="tab-attendance" href="#">出勤<span class="badge badge-primary">9</span></a>
+                <a class="nav-link" id="tabAttendance" href="#">出勤 <span id="badgeAttendance" class="badge badge-primary">0</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="tab-leave" href="#">請假</a>
+                <a class="nav-link" id="tabLeave" href="#">請假 <span id="badgeLeave" class="badge badge-primary"></span>0</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="tab-absence" href="#">缺勤</a>
+                <a class="nav-link" id="tabAbsence" href="#">缺勤 <span id="badgeAbsence" class="badge badge-primary"></span>0</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">部門</a>
@@ -191,6 +191,9 @@
             let initDone = await init;
             if (data == null) {
                 data = await getData({ "urlName": "attendanceAPI", "path": "/2018-07-19/1300" });
+                document.getElementById('badgeAttendance').innerHTML = data.attendance_count
+                document.getElementById('badgeLeave').innerHTML = data.leave_count
+                document.getElementById('badgeAbsence').innerHTML = data.absence_count
                 $table.bootstrapTable('load', data.attendance);
             }
             else {
@@ -210,25 +213,25 @@
             //alert('bind ' + JSON.stringify(bindData));    
         }
 
-        $('#tab-attendance').addClass('active');
+        $('#tabAttendance').addClass('active');
         bind("attendance");
 
-        $('#tab-attendance').click(function () {
-            $('#tab-attendance').addClass('active');
-            $('#tab-leave').removeClass('active');
-            $('#tab-absence').removeClass('active');
+        $('#tabAttendance').click(function () {
+            $('#tabAttendance').addClass('active');
+            $('#tabLeave').removeClass('active');
+            $('#tabAbsence').removeClass('active');
             bind("attendance");
         });
-        $('#tab-leave').click(function () {
-            $('#tab-attendance').removeClass('active');
-            $('#tab-leave').addClass('active');
-            $('#tab-absence').removeClass('active');
+        $('#tabLeave').click(function () {
+            $('#tabAttendance').removeClass('active');
+            $('#tabLeave').addClass('active');
+            $('#tabAbsence').removeClass('active');
             bind("leave");
         });
-        $('#tab-absence').click(function () {
-            $('#tab-attendance').removeClass('active');
-            $('#tab-leave').removeClass('active');
-            $('#tab-absence').addClass('active');
+        $('#tabAbsence').click(function () {
+            $('#tabAttendance').removeClass('active');
+            $('#tabLeave').removeClass('active');
+            $('#tabAbsence').addClass('active');
             bind("absence");
         });
 
