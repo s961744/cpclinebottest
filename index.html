@@ -136,24 +136,23 @@
                         ]
                     ],
                     search: false,
-                    dataGroupBy: true,
                     stickyHeader: true,
                     stickyHeaderOffsetY: 0+'px'
                 });
 
-                //點選明細時Highlight
-                $table.on('click-row.bs.table', function (e, row, $element) {
-                    $('.success').removeClass('success');
-                    $($element).addClass('success');
-                });
+                ////點選明細時Highlight
+                //$table.on('click-row.bs.table', function (e, row, $element) {
+                //    $('.success').removeClass('success');
+                //    $($element).addClass('success');
+                //});
 
-                //無用，點選時顯示LOG
-                $table.on('bs.table', function (e, name, args) {
-                    console.log(name, args);
-                });
-                $table.on('all.bs.table', function (e, name, args) {
-                    console.log(name, args);
-                });
+                ////無用，點選時顯示LOG
+                //$table.on('bs.table', function (e, name, args) {
+                //    console.log(name, args);
+                //});
+                //$table.on('all.bs.table', function (e, name, args) {
+                //    console.log(name, args);
+                //});
 
                 resolve('done');
             }
@@ -181,7 +180,7 @@
             let bindData;
             let initDone = await init;
             if (data == null) {
-                data = await getData({ "urlName": "attendanceAPI", "path": "/2018-07-19/1300" });
+                data = await getData({ "urlName": "attendanceAPI", "path": "/2018-07-23/1300" });
                 document.getElementById('badgeAttendance').innerHTML = data.attendance_count
                 document.getElementById('badgeLeave').innerHTML = data.leave_count
                 document.getElementById('badgeAbsence').innerHTML = data.absence_count
