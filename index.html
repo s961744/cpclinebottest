@@ -19,7 +19,9 @@
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" 
           crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/group-by-v2/bootstrap-table-group-by.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/group-by-v2/bootstrap-table-group-by.css">
     <script>
         //init LIFF
         function initializeApp(data) {
@@ -95,19 +97,21 @@
             </li>
         </ul>
         <table id="table"
-               data-search="false"
-               data-show-refresh="false"
-               data-show-toggle="false"
-               data-show-columns="false"
-               data-show-export="false"
-               data-minimum-count-columns="2"
-               data-show-pagination-switch="false"
-               data-pagination="false"
-               data-id-field="id"
-               data-show-footer="false"
-               data-side-pagination="client"
-               data-response-handler="responseHandler"
-               data-check-on-init="true"></table>
+            data-search="false"
+            data-show-refresh="false"
+            data-show-toggle="false"
+            data-show-columns="false"
+            data-show-export="false"
+            data-minimum-count-columns="2"
+            data-show-pagination-switch="false"
+            data-pagination="false"
+            data-id-field="id"
+            data-show-footer="false"
+            data-side-pagination="client"
+            data-response-handler="responseHandler"
+            data-check-on-init="true"
+            data-group-by-field="dept_no">
+        </table>
     </div>
     <script>
         var $table = $('#table');
