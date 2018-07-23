@@ -3,13 +3,14 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>出缺勤名單查詢</title>
+    <title>當班出勤名單查詢</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
           crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/group-by-v2/bootstrap-table-group-by.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/sticky-header/bootstrap-table-sticky-header.css" />
     <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -20,9 +21,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
             integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
             crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/group-by-v2/bootstrap-table-group-by.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
     <script>
         //init LIFF
         function initializeApp(data) {
@@ -89,18 +90,12 @@
             <li class="nav-item">
                 <a class="nav-link" id="tabAbsence" href="#">缺勤 <span id="badgeAbsence" class="badge badge-secondary">0</span></a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">部門</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">1350</a>
-                    <a class="dropdown-item" href="#">1360</a>
-                </div>
-            </li>
         </ul>
         <table id="table"
-            data-toggle="table"
             data-group-by="true"
-            data-group-by-field="dept_no">
+            data-group-by-field="dept_no"
+            stickyHeader="true"
+            stickyHeaderOffsetY="40px">
         </table>
     </div>
     <script>
@@ -115,20 +110,28 @@
                             {
                                 field: 'dept_no',
                                 title: '部門',
+                                align: 'center',
+                                valign: 'middle',
                                 sortable: false
                             },
                             {
                                 field: 'employee_no',
                                 title: '工號',
+                                align: 'left',
+                                valign: 'middle',
                                 sortable: false
                             }, {
                                 field: 'employee_name',
                                 title: '姓名',
+                                align: 'center',
+                                valign: 'middle',
                                 sortable: false
                             },
                             {
                                 field: 'dept_name',
                                 title: '部門名稱',
+                                align: 'center',
+                                valign: 'middle',
                                 sortable: false
                             }
                         ]
