@@ -4,9 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>當班出勤名單查詢</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           rel="stylesheet"
-          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/group-by-v2/bootstrap-table-group-by.css">
@@ -24,7 +24,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/group-by-v2/bootstrap-table-group-by.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
-    <script src="./src/js/ga.js"></script>
     <script>
         //init LIFF
         function initializeApp(data) {
@@ -93,9 +92,15 @@
             </li>
         </ul>
         <table id="table"
-            class="table table-sm"
-            data-group-by="true"
-            data-group-by-field="dept_no">
+            class="table" data-group-by="true" data-group-by-field="dept_no">
+            <thead>
+                <tr>
+                    <th data-field="dept_no" data-sortable="true">部門</th>
+                    <th data-field="employee_no" data-sortable="true">工號</th>
+                    <th data-field="employee_name" data-sortable="true">姓名</th>
+                    <th data-field="dept_name" data-sortable="true">部門名稱</th>
+                </tr>
+            </thead>
         </table>
     </div>
     <script>
@@ -136,7 +141,6 @@
                             }
                         ]
                     ],
-                    search: false,
                     stickyHeader: true,
                     stickyHeaderOffsetY: 0+'px'
                 });
