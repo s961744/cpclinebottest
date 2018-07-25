@@ -47,7 +47,10 @@ exports.msgTextHandle = function (event) {
             lineBotSdk.replyMessage(event.replyToken, msgData).then(function () {
                 lineBotSdk.getDisplayName(event.source.userId).then(function (displayName) {
                     //發送驗證資訊給管理員
-                    var msg = { type: 'text', text: '*****LINE群組權限申請*****\nLine暱稱：' + displayName + '\n驗證碼：' + event.message.text + '\nID：' + event.source.userId };
+                    var msg = {
+                        type: 'text', text: '*****LINE群組權限申請*****\nLine暱稱：' + displayName + '\n驗證碼：'
+                        + event.message.text + '\nUId：' + event.source.userId + '\nGId：' + event.source.groupId
+                    };
                     lineBotSdk.pushMessage(process.env.AdminLineUserId, msg);
                     //將groupId及verifyCode寫入line_group_auth
                     var info = { groupId: event.source.groupId, verifyCode: event.message.text };
@@ -55,7 +58,7 @@ exports.msgTextHandle = function (event) {
                     var urlName = 'lineRESTful';
                     var path = '/LineGroupAuth'
                     request.getUrlFromJsonFile(urlName).then(function (url) {
-                        console.log(url + path + query);
+                        console.log(url + path);
                         request.requestHttpPost(url + path, postData);
                     });
                 }).catch(function (error) {
