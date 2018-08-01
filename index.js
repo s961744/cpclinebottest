@@ -72,15 +72,16 @@ var server = app.listen(process.env.PORT || 8080, function () {
 var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
     // 取得line_message_send中的待發訊息並發送
     request.getUrlFromJsonFile('lineRESTful').then(function (url) {
-        request.requestHttpGet(url).then(function (data) {
+        request.requestHttpGetJson(url).then(function (data) {
             if (data.length < 3) {
                 //console.log('No messages need to be sent.');
             }
             else {
                 console.log(JSON.stringify(data));
                 try {
-                    var jdata = JSON.parse(data);
-                    jdata.forEach(function (row) {
+                    //var jdata = JSON.parse(data);
+                    //jdata.forEach(function (row) {
+                    data.forEach(function (row) {
                         var message_id = row.message_id;
                         var line_id = row.line_id;
                         var message = row.message;
