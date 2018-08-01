@@ -69,7 +69,7 @@ var server = app.listen(process.env.PORT || 8080, function () {
 });
 
 // 排程 1次/15sec
-var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
+var job = schedule.scheduleJob('5,15,15,35,45,55 * * * * *', function () {
     // 取得line_message_send中的待發訊息並發送
     request.getUrlFromJsonFile('lineRESTful').then(function (url) {
         request.requestHttpGetJson(url).then(function (data) {
