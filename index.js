@@ -73,12 +73,8 @@ var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
     // 取得line_message_send中的待發訊息並發送
     request.getUrlFromJsonFile('lineRESTful').then(function (url) {
         request.requestHttpGetJson(url).then(function (data) {
-            console.log(data.length);
-            if (data.length < 3) {
-                //console.log('No messages need to be sent.');
-            }
-            else {
-                console.log(JSON.stringify(data));
+            if (data.length > 0) {
+                //console.log(JSON.stringify(data));
                 try {
                     //var jdata = JSON.parse(data);
                     //jdata.forEach(function (row) {
@@ -106,6 +102,9 @@ var job = schedule.scheduleJob('5,20,35,50 * * * * *', function () {
                 catch (e) {
                     return console.log(e);
                 }
+            }
+            else {
+                //console.log('No messages need to be sent.');
             }
         });
     }).catch(function(e) {
