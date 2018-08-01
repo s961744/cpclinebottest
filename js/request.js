@@ -52,7 +52,7 @@ exports.requestHttpGet = function (url) {
 * @param {String} url
 */
 exports.requestHttpGetJson = function (url) {
-    console.log('requestHttpGetJson ' + url);
+    //console.log('requestHttpGetJson ' + url);
     return new Promise(function (resolve, reject) {
         http.get(url, function (res) {
             var body = '';
@@ -73,6 +73,7 @@ exports.requestHttpGetJson = function (url) {
 * @param {String} url
 */
 exports.requestHttpPost = function (url, data) {
+    console.log('requestHttpPost ' + url);
     return new Promise(function (resolve, reject) {
         //解析 url 地址
         var urlData = urltil.parse(url);
