@@ -149,8 +149,8 @@
         "actions": [
           {
             "type": "postback",
-            "label": "代號設定",
-            "data": "{\"responseType\":\"msg\",\"msgName\":\"gmCodeSetting\"}"
+            "label": "驗證代碼",
+            "data": "{\"responseType\":\"msg\",\"msgName\":\"gmVerify\"}"
           },
           {
             "type": "postback",
@@ -164,7 +164,7 @@
           },
           {
             "type": "postback",
-            "label": "敬鵬LineBot功能解除",
+            "label": "群組停用",
             "data": "{\"responseType\":\"msg\",\"msgName\":\"gmBreak\"}"
           }
         ]
@@ -172,11 +172,11 @@
     }
   },
   {
-    "msgName": "gmCodeSetting",
+    "msgName": "gmVerify",
     "msgType": "gm",
     "msg": {
       "type": "text",
-      "text": "請輸入於EB申請取得的群組代號\n(ex:G1234)"
+      "text": "請輸入驗證代碼(ex:G1234)"
     }
   },
   {
@@ -203,7 +203,7 @@
       "altText": "LineBot功能解除確認",
       "template": {
         "type": "confirm",
-        "text": "注意：敬鵬LineBot將離開群組，\n是否確定?",
+        "text": "注意：敬鵬LINE Bot將離開群組，\n且此群組將停止發送訊息，\n是否確定?",
         "actions": [
           {
             "type": "postback",
