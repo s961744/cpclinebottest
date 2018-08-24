@@ -208,7 +208,12 @@
             //alert('bind ' + JSON.stringify(bindData));    
         }
 
-        bind("attendance");
+        var visited = localStorage['visited'];
+        if (!visited) {
+            bind("attendance");
+            localStorage['visited'] = true;
+        }
+        
 
         $('#tabAttendance').click(function () {
             $('#tabAttendance').addClass('active');
