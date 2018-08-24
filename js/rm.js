@@ -14,6 +14,12 @@ exports.rmHandle = function (event, data) {
         case 'rmGetList':
             rmGetList(event);
             break;
+        case 'rmLinkAll':
+            rmGetList(event);
+            break;
+        case 'rmGetRichMenuIdOfUser':
+            rmGetRichMenuIdOfUser(event.source.userId);
+            break;
     }
 }
 
@@ -61,6 +67,19 @@ function rmLinkToUser (userId, richMenuId) {
             });
         }).catch(function (e) {
             console.log('linkRichMenuToUser(' + userId + ')error:' + e);
+            reject(e);
+        });
+    });
+}
+
+//取得UserId的richMenuId
+function rmGetRichMenuIdOfUser(userId) {
+    return new Promise(function (resolve, reject) {
+        lineBotSdk.getRichMenuIdOfUser(userId).then(function (richMenuId) {
+            console.log(userId + '.RichMenuID=' + richMenuId);
+            resolve(richMenuId);
+        }).catch(function (e) {
+            console.log('getRichMenuIdOfUser(' + userId + ')error:' + e);
             reject(e);
         });
     });

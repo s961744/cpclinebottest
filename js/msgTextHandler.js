@@ -24,7 +24,6 @@ exports.msgTextHandle = function (event) {
                     var path = '/LineUserAuth'
                     var query = '?strUserInfo=' + formData;
                     request.getUrlFromJsonFile(urlName).then(function (url) {
-                        console.log(url + path + query);
                         request.requestHttpPost(url + path + query, '');
                     });
                 }).catch(function (error) {
@@ -39,6 +38,8 @@ exports.msgTextHandle = function (event) {
     else if (event.message.text === 'gm' && event.source.type === 'group') {
         msg.getMsgFromJsonFile('msg', event.message.text).then(function (msgData) {
             lineBotSdk.replyMessage(event.replyToken, msgData);
+        }).catch(function (error) {
+            console.log(error);
         });
     }
     //群組權限申請驗證
@@ -58,7 +59,6 @@ exports.msgTextHandle = function (event) {
                     var urlName = 'lineRESTful';
                     var path = '/LineGroupAuth'
                     request.getUrlFromJsonFile(urlName).then(function (url) {
-                        console.log(url + path);
                         request.requestHttpPost(url + path, postData);
                     });
                 }).catch(function (error) {
@@ -87,6 +87,11 @@ exports.msgTextHandle = function (event) {
         //        console.log(err);
         //    });
         //}
+        msg.getMsgFromJsonFile('msg', event.message.text).then(function (msgData) {
+            lineBotSdk.replyMessage(event.replyToken, msgData);
+            }).catch(function (error) {
+                console.log(error);
+            });
     }
     //系統管理員選單
     else if (event.message.text === 'adminMenu') {

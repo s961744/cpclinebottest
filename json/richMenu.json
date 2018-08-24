@@ -42,8 +42,9 @@
             "height": 500
           },
           "action": {
-            "type": "postback",
-            "data": "rmAttendance"
+            "type": "message",
+            "label": "rmAttendance",
+            "text": "rmAttendance"
           }
         },
         {
