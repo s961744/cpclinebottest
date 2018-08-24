@@ -197,14 +197,18 @@
             $table.bootstrapTable('load', bindData);
         }
 
-        if (data == null) {
-            let initDone = init;
-            data = await getData({ "urlName": "attendanceAPI", "path": "/2018-08-24/1300" });
-            document.getElementById('badgeAttendance').innerHTML = data.attendance_count
-            document.getElementById('badgeLeave').innerHTML = data.leave_count
-            document.getElementById('badgeAbsence').innerHTML = data.absence_count
-            $table.bootstrapTable('load', data.attendance);
+        async function()
+        {
+            if (data == null) {
+                let initDone = await init;
+                data = await getData({ "urlName": "attendanceAPI", "path": "/2018-08-24/1300" });
+                document.getElementById('badgeAttendance').innerHTML = data.attendance_count
+                document.getElementById('badgeLeave').innerHTML = data.leave_count
+                document.getElementById('badgeAbsence').innerHTML = data.absence_count
+                $table.bootstrapTable('load', data.attendance);
+            }
         }
+        
         
 
         $('#tabAttendance').click(function () {
