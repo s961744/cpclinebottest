@@ -69,7 +69,7 @@ exports.msgTextHandle = function (event) {
             });
         });
     }
-    else if (event.message.text.toUpperCase().startsWith('RM') && event.source.userId == process.env.AdminLineUserId) {
+    else if (event.message.text.toUpperCase().startsWith('RM')) {
         //if (event.message.text.toUpperCase().startsWith('RM_DESC')) {
         //    var msg = { type: 'text', text: '歡迎使用敬鵬即時訊息整合服務選單!\n若使用上有任何問題請洽#1409' };
         //    client.replyMessage(event.replyToken, msg);
