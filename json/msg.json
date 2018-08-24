@@ -126,7 +126,7 @@
         "type": "buttons",
         "thumbnailImageUrl": "https://s3-ap-northeast-1.amazonaws.com/chinpoon/msgCenter.png",
         "title": "部門管理選單",
-        "text": "",
+        "text": "請選擇",
         "actions": [
           {
             "type": "uri",
