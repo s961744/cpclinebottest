@@ -28,6 +28,7 @@ exports.rmHandle = function (event, data) {
 function rmCreate(rmName) {
     return new Promise(function (resolve, reject) {
         getRichMenuData(rmName).then(function (rm) {
+            console.log("rm=" + rm);
             lineBotSdk.createRichMenu(rm).then(function (richMenuID) {
                 console.log('Rich Menu created:' + JSON.stringify(richMenuID));
                 resolve(richMenuID);
