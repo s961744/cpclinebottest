@@ -183,33 +183,34 @@
         //繫結資料
         async function bind(type) {
             let bindData;
-            switch (type) {
-                case "attendance":
-                    bindData = data.attendance;
-                    break;
-                case "leave":
-                    bindData = data.leave;
-                    break;
-                case "absence":
-                    bindData = data.absence;
-                    break;
-            }
-            $table.bootstrapTable('load', bindData);
-        }
-
-        async function()
-        {
-            if (data == null) {
-                let initDone = await init;
+            let initDone = await init;
+            if (data == null && type == "firstLoaded") {
                 data = await getData({ "urlName": "attendanceAPI", "path": "/2018-08-24/1300" });
                 document.getElementById('badgeAttendance').innerHTML = data.attendance_count
                 document.getElementById('badgeLeave').innerHTML = data.leave_count
                 document.getElementById('badgeAbsence').innerHTML = data.absence_count
                 $table.bootstrapTable('load', data.attendance);
             }
+            else {
+                switch (type) {
+                    case "attendance":
+                        bindData = data.attendance;
+                        break;
+                    case "leave":
+                        bindData = data.leave;
+                        break;
+                    case "absence":
+                        bindData = data.absence;
+                        break;
+                    case "firstLoaded":
+                        return;
+                }
+                $table.bootstrapTable('load', bindData);
+            }
+            //alert('bind ' + JSON.stringify(bindData));    
         }
-        
-        
+
+        bind("firstLoaded");
 
         $('#tabAttendance').click(function () {
             $('#tabAttendance').addClass('active');
