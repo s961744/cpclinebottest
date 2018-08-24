@@ -63,10 +63,6 @@
                 });
             });
         });
-        $(document).ready(function () {
-            $('#tabAttendance').addClass('active');
-            bind("attendance");
-        });
     </script>
 </head>
 <body>
@@ -212,7 +208,7 @@
             //alert('bind ' + JSON.stringify(bindData));    
         }
 
-        
+        bind("attendance");
 
         $('#tabAttendance').click(function () {
             $('#tabAttendance').addClass('active');
