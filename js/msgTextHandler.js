@@ -87,7 +87,7 @@ exports.msgTextHandle = function (event) {
         //        console.log(err);
         //    });
         //}
-        msg.getMsgFromJsonFile('msg', event.message.text).then(function (msgData) {
+        msg.getMsgFromJsonFile('msg', 'adminMenu').then(function (msgData) {
             lineBotSdk.replyMessage(event.replyToken, msgData);
             }).catch(function (error) {
                 console.log(error);
