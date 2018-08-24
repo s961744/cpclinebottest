@@ -120,14 +120,6 @@
     "msgName": "rmAttendance",
     "msgType": "rm",
     "msg": {
-      "type": "text",
-      "text": "出勤管理"
-    }
-  },
-  {
-    "msgName": "rmAttendance",
-    "msgType": "rm",
-    "msg": {
       "type": "template",
       "altText": "部門管理選單",
       "template": {
