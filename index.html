@@ -198,7 +198,7 @@
         }
 
         if (data == null) {
-            let initDone = await init;
+            let initDone = init;
             data = await getData({ "urlName": "attendanceAPI", "path": "/2018-08-24/1300" });
             document.getElementById('badgeAttendance').innerHTML = data.attendance_count
             document.getElementById('badgeLeave').innerHTML = data.leave_count
