@@ -80,10 +80,7 @@
           },
           "action": {
             "type": "postback",
-            "data": {
-              "responseType": "msg",
-              "msgName": "rmDesc"
-            }
+            "data": "{\"responseType\":\"msg\",\"msgName\":\"rmDesc\"}"
           }
         }
       ]
