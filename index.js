@@ -26,7 +26,7 @@ const app = express();
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/index3.html');
 });
 
 app.get('/api/', function (req, res) {

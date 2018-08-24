@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>當班出勤名單查詢</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/group-by-v2/bootstrap-table-group-by.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/sticky-header/bootstrap-table-sticky-header.css" />
+    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/group-by-v2/bootstrap-table-group-by.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/extensions/sticky-header/bootstrap-table-sticky-header.min.js"></script>
+    <script>
+        //init LIFF
+        function initializeApp(data) {
+            //取得QueryString
+            let urlParams = new URLSearchParams(window.location.search);
+            //顯示QueryString
+            $('#QueryString').val(urlParams.toString());
+            //顯示UserId
+            $('#userid').val(data.context.userId);
+        }
+        //ready
+        $(function () {
+            //init LIFF
+            liff.init(function (data) {
+                initializeApp(data);
+            });
+            //ButtonGetProfile
+            $('#ButtonGetProfile').click(function () {
+                //取得User Proile
+                liff.getProfile().then(profile=> {
+                    //顯示在text box中
+                    $('#UserInfo').val(profile.displayName);
+                    //可以alert
+                    //alert('done');
+                    }
+                );
+            });
+            //ButtonSendMsg
+            $('#ButtonSendMsg').click(function () {
+                liff.sendMessages([
+                    {
+                        type: 'text',
+                        text: $('#msg').val()
+                    }
+                ]).then(() => {
+                    //alert('done');
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="row" style="display:none">
+        <div class="col-md-6" style="margin:5px">
+            <label>user id:</label>
+            <input class="form-control" type="text" id="userid" />   <br />
+            <label>QueryString:</label>
+            <input class="form-control" type="text" id="QueryString" /><br />
+            <button class="btn btn-primary" id="ButtonGetProfile">Get Profile</button>
+            <input class="form-control" type="text" id="UserInfo" /><br />
+            <label>要傳送的訊息:</label>
+            <input class="form-control" type="text" id="msg" value="測試" /><br />
+            <button class="btn btn-primary" id="ButtonSendMsg">傳送</button>
+        </div>
+    </div>
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" id="tabAttendance" href="">出勤 <span id="badgeAttendance" class="badge badge-secondary">0</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tabLeave" href="">請假 <span id="badgeLeave" class="badge badge-secondary">0</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tabAbsence" href="">缺勤 <span id="badgeAbsence" class="badge badge-secondary">0</span></a>
+            </li>
+        </ul>
+        <table id="table"
+            class="table" data-group-by="true" data-group-by-field="dept_no">
+            <thead>
+                <tr>
+                    <th data-field="dept_no" data-sortable="true">部門</th>
+                    <th data-field="employee_no" data-sortable="true">工號</th>
+                    <th data-field="employee_name" data-sortable="true">姓名</th>
+                    <th data-field="dept_name" data-sortable="true">部門名稱</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <script>
+        var $table = $('#table');
+        var data;
+        //初始化Table
+        const init = new Promise((resolve, reject) => {
+            try {
+                $table.bootstrapTable({
+                    columns: [
+                        [
+                            {
+                                field: 'dept_no',
+                                title: '部門',
+                                align: 'left',
+                                valign: 'middle',
+                                sortable: true
+                            },
+                            {
+                                field: 'employee_no',
+                                title: '工號',
+                                align: 'left',
+                                valign: 'middle',
+                                sortable: true
+                            }, {
+                                field: 'employee_name',
+                                title: '姓名',
+                                align: 'center',
+                                valign: 'middle',
+                                sortable: true
+                            },
+                            {
+                                field: 'dept_name',
+                                title: '部門名稱',
+                                align: 'center',
+                                valign: 'middle',
+                                sortable: true
+                            }
+                        ]
+                    ],
+                    stickyHeader: true,
+                    stickyHeaderOffsetY: 0+'px'
+                });
+
+                ////點選明細時Highlight
+                //$table.on('click-row.bs.table', function (e, row, $element) {
+                //    $('.success').removeClass('success');
+                //    $($element).addClass('success');
+                //});
+
+                ////無用，點選時顯示LOG
+                //$table.on('bs.table', function (e, name, args) {
+                //    console.log(name, args);
+                //});
+                //$table.on('all.bs.table', function (e, name, args) {
+                //    console.log(name, args);
+                //});
+
+                resolve('done');
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+
+        //取得資料
+        async function getData(condition) {
+            return new Promise((resolve, reject) => {
+                $.getJSON('api', condition).done(function (data) {
+                    //alert('getData Result=' + JSON.stringify(data));
+                    resolve(data);
+                }).fail(function (jqxhr, textStatus, error) {
+                    var err = textStatus + ', ' + error;
+                    alert('發生錯誤:' + err);
+                    reject(err);
+                });
+            });
+        }
+
+        //繫結資料
+        async function bind(type) {
+            let bindData;
+            let initDone = await init;
+            if (data == null && type == "firstLoaded") {
+                data = await getData({ "urlName": "attendanceAPI", "path": "/2018-08-24/1300" });
+                document.getElementById('badgeAttendance').innerHTML = data.attendance_count
+                document.getElementById('badgeLeave').innerHTML = data.leave_count
+                document.getElementById('badgeAbsence').innerHTML = data.absence_count
+                $table.bootstrapTable('load', data.attendance);
+            }
+            else {
+                switch (type) {
+                    case "attendance":
+                        bindData = data.attendance;
+                        break;
+                    case "leave":
+                        bindData = data.leave;
+                        break;
+                    case "absence":
+                        bindData = data.absence;
+                        break;
+                    case "firstLoaded":
+                        return;
+                }
+                $table.bootstrapTable('load', bindData);
+            }
+            //alert('bind ' + JSON.stringify(bindData));    
+        }
+
+        bind("firstLoaded");
+
+        $('#tabAttendance').click(function () {
+            $('#tabAttendance').addClass('active');
+            $('#tabLeave').removeClass('active');
+            $('#tabAbsence').removeClass('active');
+            bind("attendance");
+        });
+        $('#tabLeave').click(function () {
+            $('#tabAttendance').removeClass('active');
+            $('#tabLeave').addClass('active');
+            $('#tabAbsence').removeClass('active');
+            bind("leave");
+        });
+        $('#tabAbsence').click(function () {
+            $('#tabAttendance').removeClass('active');
+            $('#tabLeave').removeClass('active');
+            $('#tabAbsence').addClass('active');
+            bind("absence");
+        });
+
+        //$('#selector button').click(function () {
+        //    $(this).addClass('active').siblings().removeClass('active');
+
+        //    (async () => {
+        //        await bind("attendance")
+        //    })()
+        //});
+    </script>
+</body>
+</html>
