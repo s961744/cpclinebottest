@@ -86,8 +86,8 @@
               },
               {
                 "type": "postback",
-                "label": "查看RichMenu清單",
-                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmGetList\"}"
+                "label": "設定RichMenu圖片",
+                "data": "{\"responseType\":\"rm\",\"rmName\":\"rmSetImage\"}"
               },
               {
                 "type": "postback",

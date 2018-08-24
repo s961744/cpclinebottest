@@ -15,8 +15,8 @@ exports.rmHandle = function (event, data) {
         case 'rmGetList':
             rmGetList(event);
             break;
-        case 'rmLinkAll':
-            rmGetList(event);
+        case 'rmSetImage':
+            rmSetImage("richmenu-61ac313353749c6bb33e48bc8937d3d9","RMenuCPC");
             break;
         case 'rmGetRichMenuIdOfUser':
             rmGetRichMenuIdOfUser(event.source.userId);
