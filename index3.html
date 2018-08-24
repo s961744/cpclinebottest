@@ -93,7 +93,7 @@
 
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="Attendance" role="tabpanel" aria-labelledby="tabAttendance">
-                <table id="table"
+                <table id="tableAttendance"
                        class="table" data-group-by="true" data-group-by-field="dept_no">
                     <thead>
                         <tr>
@@ -106,15 +106,37 @@
                 </table>
             </div>
             <div class="tab-pane fade" id="Leave" role="tabpanel" aria-labelledby="profile-tab">
-
+                <table id="tableLeave"
+                       class="table" data-group-by="true" data-group-by-field="dept_no">
+                    <thead>
+                        <tr>
+                            <th data-field="dept_no" data-sortable="true">部門</th>
+                            <th data-field="employee_no" data-sortable="true">工號</th>
+                            <th data-field="employee_name" data-sortable="true">姓名</th>
+                            <th data-field="dept_name" data-sortable="true">部門名稱</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
             <div class="tab-pane fade" id="Absence" role="tabpanel" aria-labelledby="contact-tab">
-
+                <table id="tableAbsence"
+                       class="table" data-group-by="true" data-group-by-field="dept_no">
+                    <thead>
+                        <tr>
+                            <th data-field="dept_no" data-sortable="true">部門</th>
+                            <th data-field="employee_no" data-sortable="true">工號</th>
+                            <th data-field="employee_name" data-sortable="true">姓名</th>
+                            <th data-field="dept_name" data-sortable="true">部門名稱</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
     <script>
-        var $table = $('#table');
+        var $tableAttendance = $('#tableAttendance');
+        var $tableLeave = $('#tableLeave');
+        var $tableAbsence = $('#tableAbsence');
         var data;
         //初始化Table
         const init = new Promise((resolve, reject) => {
@@ -199,8 +221,9 @@
                 document.getElementById('badgeAttendance').innerHTML = data.attendance_count
                 document.getElementById('badgeLeave').innerHTML = data.leave_count
                 document.getElementById('badgeAbsence').innerHTML = data.absence_count
-                $table.bootstrapTable('load', data.attendance);
-                $('#tabAttendance').addClass('active');
+                $tableAttendance.bootstrapTable('load', data.attendance);
+                $tableLeave.bootstrapTable('load', data.leave);
+                $tableAbsence.bootstrapTable('load', data.absence);
             }
             else {
                 switch (type) {
@@ -216,31 +239,31 @@
                     case "firstLoaded":
                         return;
                 }
-                $table.bootstrapTable('load', bindData);
+                //$table.bootstrapTable('load', bindData);
             }
             //alert('bind ' + JSON.stringify(bindData));    
         }
 
         bind("firstLoaded");
 
-        $('#tabAttendance').click(function () {
-            $('#tabAttendance').addClass('active');
-            $('#tabLeave').removeClass('active');
-            $('#tabAbsence').removeClass('active');
-            bind("attendance");
-        });
-        $('#tabLeave').click(function () {
-            $('#tabAttendance').removeClass('active');
-            $('#tabLeave').addClass('active');
-            $('#tabAbsence').removeClass('active');
-            bind("leave");
-        });
-        $('#tabAbsence').click(function () {
-            $('#tabAttendance').removeClass('active');
-            $('#tabLeave').removeClass('active');
-            $('#tabAbsence').addClass('active');
-            bind("absence");
-        });
+        //$('#tabAttendance').click(function () {
+        //    $('#tabAttendance').addClass('active');
+        //    $('#tabLeave').removeClass('active');
+        //    $('#tabAbsence').removeClass('active');
+        //    bind("attendance");
+        //});
+        //$('#tabLeave').click(function () {
+        //    $('#tabAttendance').removeClass('active');
+        //    $('#tabLeave').addClass('active');
+        //    $('#tabAbsence').removeClass('active');
+        //    bind("leave");
+        //});
+        //$('#tabAbsence').click(function () {
+        //    $('#tabAttendance').removeClass('active');
+        //    $('#tabLeave').removeClass('active');
+        //    $('#tabAbsence').addClass('active');
+        //    bind("absence");
+        //});
 
         //$('#selector button').click(function () {
         //    $(this).addClass('active').siblings().removeClass('active');
