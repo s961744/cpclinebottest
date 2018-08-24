@@ -81,26 +81,37 @@
     <div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" id="tabAttendance" href="">出勤 <span id="badgeAttendance" class="badge badge-secondary">0</span></a>
+                <a class="nav-link" id="tabAttendance" href="">出勤 <span id="badgeAttendance" class="badge badge-secondary" aria-controls="Attendance" aria-selected="true">0</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="tabLeave" href="">請假 <span id="badgeLeave" class="badge badge-secondary">0</span></a>
+                <a class="nav-link" id="tabLeave" href="">請假 <span id="badgeLeave" class="badge badge-secondary" aria-controls="Leave" aria-selected="false">0</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="tabAbsence" href="">缺勤 <span id="badgeAbsence" class="badge badge-secondary">0</span></a>
+                <a class="nav-link" id="tabAbsence" href="">缺勤 <span id="badgeAbsence" class="badge badge-secondary" aria-controls="Absence" aria-selected="false">0</span></a>
             </li>
         </ul>
-        <table id="table"
-            class="table" data-group-by="true" data-group-by-field="dept_no">
-            <thead>
-                <tr>
-                    <th data-field="dept_no" data-sortable="true">部門</th>
-                    <th data-field="employee_no" data-sortable="true">工號</th>
-                    <th data-field="employee_name" data-sortable="true">姓名</th>
-                    <th data-field="dept_name" data-sortable="true">部門名稱</th>
-                </tr>
-            </thead>
-        </table>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="Attendance" role="tabpanel" aria-labelledby="tabAttendance">
+                <table id="table"
+                       class="table" data-group-by="true" data-group-by-field="dept_no">
+                    <thead>
+                        <tr>
+                            <th data-field="dept_no" data-sortable="true">部門</th>
+                            <th data-field="employee_no" data-sortable="true">工號</th>
+                            <th data-field="employee_name" data-sortable="true">姓名</th>
+                            <th data-field="dept_name" data-sortable="true">部門名稱</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="Leave" role="tabpanel" aria-labelledby="profile-tab">
+
+            </div>
+            <div class="tab-pane fade" id="Absence" role="tabpanel" aria-labelledby="contact-tab">
+
+            </div>
+        </div>
     </div>
     <script>
         var $table = $('#table');
@@ -189,6 +200,7 @@
                 document.getElementById('badgeLeave').innerHTML = data.leave_count
                 document.getElementById('badgeAbsence').innerHTML = data.absence_count
                 $table.bootstrapTable('load', data.attendance);
+                $('#tabAttendance').addClass('active');
             }
             else {
                 switch (type) {
