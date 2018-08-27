@@ -92,16 +92,6 @@
             <li class="nav-item">
                 <a class="nav-link" id="tabAbsence" data-toggle="tab" href="#Absence" aria-controls="Absence" aria-selected="false">缺勤 <span id="badgeAbsence" class="badge badge-secondary">0</span></a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">部門過濾</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
-                </div>
-            </li>
         </ul>
 
         <div class="tab-content" id="myTabContent">
@@ -233,7 +223,13 @@
                         ]
                     ],
                     stickyHeader: true,
-                    stickyHeaderOffsetY: 0 + 'px'
+                    stickyHeaderOffsetY: 0 + 'px',
+                    filter: true,
+                    filterTemplate: {
+                        input: function (bootstrapTable, column, isVisible) {
+                            return '<input type="text" class="form-control input-sm" data-filter-field="' + column.field + '" style="width: 100%; visibility:' + isVisible + '">';
+                        }
+                    }
                 });
 
                 $tableAbsence.bootstrapTable({
@@ -269,7 +265,13 @@
                         ]
                     ],
                     stickyHeader: true,
-                    stickyHeaderOffsetY: 0 + 'px'
+                    stickyHeaderOffsetY: 0 + 'px',
+                    filter: true,
+                    filterTemplate: {
+                        input: function (bootstrapTable, column, isVisible) {
+                            return '<input type="text" class="form-control input-sm" data-filter-field="' + column.field + '" style="width: 100%; visibility:' + isVisible + '">';
+                        }
+                    }
                 });
 
                 ////點選明細時Highlight
@@ -317,7 +319,7 @@
                 document.getElementById('badgeLeave').innerHTML = data.leave_count
                 document.getElementById('badgeAbsence').innerHTML = data.absence_count
                 $tableAttendance.bootstrapTable('load', data.attendance);
-                $tableAttendance.bootstrapTable("setSelect2Data", "dept_no", ["", "1330", "1360", "1380"]);
+                $tableAttendance.bootstrapTable("setSelect2Data", "dept_no", await getDept(data.attendance));
                 $tableLeave.bootstrapTable('load', data.leave);
                 $tableAbsence.bootstrapTable('load', data.absence);
             }
@@ -338,6 +340,22 @@
                 //$table.bootstrapTable('load', bindData);
             }
             //alert('bind ' + JSON.stringify(bindData));    
+        }
+
+        async function getDept(data) {
+            var lookup = {};
+            var result = [];
+            result.push("");
+
+            for (var item, i = 0; item = data[i++];) {
+                var name = item.dept_no;
+
+                if (!(name in lookup)) {
+                    lookup[name] = 1;
+                    result.push(name);
+                }
+            }
+            return result;
         }
 
         bind("firstLoaded");
