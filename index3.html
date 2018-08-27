@@ -141,6 +141,7 @@
         var $tableLeave = $('#tableLeave');
         var $tableAbsence = $('#tableAbsence');
         var data;
+
         //初始化Table
         const init = new Promise((resolve, reject) => {
             try {
@@ -198,7 +199,11 @@
                                 title: '部門',
                                 align: 'left',
                                 valign: 'middle',
-                                sortable: true
+                                sortable: true,
+                                filter: {
+                                    type: "select",
+                                    data: []
+                                }
                             },
                             {
                                 field: 'employee_no',
@@ -240,7 +245,11 @@
                                 title: '部門',
                                 align: 'left',
                                 valign: 'middle',
-                                sortable: true
+                                sortable: true,
+                                filter: {
+                                    type: "select",
+                                    data: []
+                                }
                             },
                             {
                                 field: 'employee_no',
@@ -273,21 +282,6 @@
                         }
                     }
                 });
-
-                ////點選明細時Highlight
-                //$table.on('click-row.bs.table', function (e, row, $element) {
-                //    $('.success').removeClass('success');
-                //    $($element).addClass('success');
-                //});
-
-                ////無用，點選時顯示LOG
-                //$table.on('bs.table', function (e, name, args) {
-                //    console.log(name, args);
-                //});
-                //$table.on('all.bs.table', function (e, name, args) {
-                //    console.log(name, args);
-                //});
-
                 resolve('done');
             }
             catch (e) {
@@ -325,23 +319,6 @@
                 $tableAbsence.bootstrapTable('load', data.absence);
                 $tableAbsence.bootstrapTable("setSelect2Data", "dept_no", await getDept(data.absence));
             }
-            else {
-                switch (type) {
-                    case "attendance":
-                        bindData = data.attendance;
-                        break;
-                    case "leave":
-                        bindData = data.leave;
-                        break;
-                    case "absence":
-                        bindData = data.absence;
-                        break;
-                    case "firstLoaded":
-                        return;
-                }
-                //$table.bootstrapTable('load', bindData);
-            }
-            //alert('bind ' + JSON.stringify(bindData));    
         }
 
         async function getDept(data) {
@@ -359,34 +336,8 @@
             return result;
         }
 
+        //載入資料
         bind("firstLoaded");
-
-        //$('#tabAttendance').click(function () {
-        //    $('#tabAttendance').addClass('active');
-        //    $('#tabLeave').removeClass('active');
-        //    $('#tabAbsence').removeClass('active');
-        //    bind("attendance");
-        //});
-        //$('#tabLeave').click(function () {
-        //    $('#tabAttendance').removeClass('active');
-        //    $('#tabLeave').addClass('active');
-        //    $('#tabAbsence').removeClass('active');
-        //    bind("leave");
-        //});
-        //$('#tabAbsence').click(function () {
-        //    $('#tabAttendance').removeClass('active');
-        //    $('#tabLeave').removeClass('active');
-        //    $('#tabAbsence').addClass('active');
-        //    bind("absence");
-        //});
-
-        //$('#selector button').click(function () {
-        //    $(this).addClass('active').siblings().removeClass('active');
-
-        //    (async () => {
-        //        await bind("attendance")
-        //    })()
-        //});
     </script>
 </body>
 </html>
