@@ -321,7 +321,9 @@
                 $tableAttendance.bootstrapTable('load', data.attendance);
                 $tableAttendance.bootstrapTable("setSelect2Data", "dept_no", await getDept(data.attendance));
                 $tableLeave.bootstrapTable('load', data.leave);
+                $tableLeave.bootstrapTable("setSelect2Data", "dept_no", await getDept(data.leave));
                 $tableAbsence.bootstrapTable('load', data.absence);
+                $tableAbsence.bootstrapTable("setSelect2Data", "dept_no", await getDept(data.absence));
             }
             else {
                 switch (type) {
@@ -345,7 +347,6 @@
         async function getDept(data) {
             var lookup = {};
             var result = [];
-            result.push("");
 
             for (var item, i = 0; item = data[i++];) {
                 var name = item.dept_no;
