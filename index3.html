@@ -182,7 +182,7 @@
                         ]
                     ],
                     stickyHeader: true,
-                    stickyHeaderOffsetY: 0 + 'px',
+                    stickyHeaderOffsetY: 25 + 'px',
                     filter: true,
                     filterTemplate: {
                         input: function (bootstrapTable, column, isVisible) {
@@ -324,7 +324,7 @@
         async function getDept(data) {
             var lookup = {};
             var result = [];
-
+            result.push("");
             for (var item, i = 0; item = data[i++];) {
                 var name = item.dept_no;
 
