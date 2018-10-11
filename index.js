@@ -82,7 +82,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                         var message_id = row.message_id;
                         var line_id = row.line_id;
                         var message = row.message;
-                        var old = JSON.stringify(message).replace(/~n/g, '"\n"'); //convert to JSON string
+                        var old = JSON.stringify(message).replace(/~n/g, '"\\n"'); //convert to JSON string
                         console.log('old:' + old);
                         //var newArray = JSON.parse(old);
                         try {
