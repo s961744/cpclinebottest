@@ -82,9 +82,12 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                         var message_id = row.message_id;
                         var line_id = row.line_id;
                         var message = row.message;
+                        var old = JSON.stringify(message).replace(/~n/g, '"\n"'); //convert to JSON string
+                        var newArray = JSON.parse(old);
                         try {
                             var messageSend = JSON.parse(message);
                             var ids = line_id.split(',');
+                            console.log('newArray:' + newArray);
                             console.log('message_id:' + message_id + ',ids:' + ids);
                             lineBotSdk.multicast(ids, messageSend).then(function () {
                                 // 更新line_message_send的actual_send_time
