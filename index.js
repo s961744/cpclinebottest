@@ -84,7 +84,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                         var message = row.message;
                         var old = JSON.stringify(message).replace(/~n/g, '"\\n"'); //convert to JSON string
                         try {
-                            var messageSend = JSON.parse(old);
+                            var messageSend = JSON.parse(jsonEscape(message));
                             var ids = line_id.split(',');
                             console.log('message_id:' + message_id + ',ids:' + ids);
                             lineBotSdk.multicast(ids, messageSend).then(function () {
@@ -160,3 +160,7 @@ process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
     // application specific logging, throwing an error, or other logic here
 });
+
+function jsonEscape(str) {
+    return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
+}
