@@ -163,5 +163,5 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 function jsonEscape(str) {
-    return str.replace(/\n/g, "\\\n").replace(/~n/g, "\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
+    return str.replace(/\n/g, "\\n").replace(/~n/g, "\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
 }
