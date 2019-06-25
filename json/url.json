@@ -12,6 +12,10 @@
     "url": "http://116.50.39.201:7102/LineRESTful/resources/AttendanceAPI"
   },
   {
+    "urlName": "node-RED30",
+    "url": "https://iot.chinpoon.com"
+  },
+  {
     "urlName": "liffTest",
     "url": "line://app/1526104413-827QnRa7"
   }
