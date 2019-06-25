@@ -1,9 +1,9 @@
 ﻿'use strict' //strict mode
-
+var rootCas = require('ssl-root-cas/latest').create();
 const
     urltil = require('url'),
     http = require('http'),
-    https = require('https'),
+    https = require('https').globalAgent.options.ca = rootCas,
     jsonProcess = require('./jsonProcess');
 
 /**
@@ -198,8 +198,9 @@ exports.requestHttpsGet = function (url) {
 * 處理https POST
 * @param {String} url
 * @param {String} data
+* @param {Int} port
 */
-exports.requestHttpsPost = function (url, data) {
+exports.requestHttpsPost = function (url, data, port) {
     return new Promise(function (resolve, reject) {
         //解析 url 地址
         var urlData = urltil.parse(url);
@@ -211,11 +212,8 @@ exports.requestHttpsPost = function (url, data) {
             path: urlData.path,
             //请求方法
             method: 'POST',
-            //头部协议
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Length': Buffer.byteLength(data, 'utf-8')
-            }
+            //PORT
+            port: port
         };
         var req = https.request(options, function (res) {
             var buffer = [], result = '';
