@@ -78,7 +78,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                 console.log(JSON.stringify(data));
                 try {
                     var jdata = JSON.parse(data);
-                    if (jdata != null)
+                    if (jdata.sqlResult != null)
                     {
                         jdata.sqlResult.forEach(function (row) {
                         //data.sqlResult.forEach(function (row) {
@@ -115,7 +115,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                                 {
                                                     lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
                                                         // 更新line_message_send的actual_send_time
-                                                        request.requestHttpsPut(url + '/actualSendTimeTest/' + message_id, '', 21880);
+                                                        request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
                                                     }).catch(function (error) {
                                                         console.log(error);
                                                     });
@@ -133,7 +133,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                                 {
                                     lineBotSdk.multicast(ids, messageSend).then(function () {
                                         // 更新line_message_send的actual_send_time
-                                        request.requestHttpsPut(url + '/actualSendTimeTest/' + message_id, '', 21880);
+                                        request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
                                     }).catch(function (error) {
                                         console.log(error);
                                     });
