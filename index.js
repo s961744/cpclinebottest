@@ -70,9 +70,10 @@ var server = app.listen(process.env.PORT || 8080, function () {
 
 // 排程 1次/10sec
 var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
-    // 取得line_message_send中的待發訊息並發送
-    request.getUrlFromJsonFile('lineRESTful').then(function (url) {
-        request.requestHttpGetJson(url).then(function (data) {
+    // 取得外部Node-RED主機入口網址
+    request.getUrlFromJsonFile('node-RED30').then(function (url) {
+        // 取得line_message_send中的待發訊息
+        request.requestHttpGetJson(url + '/getMessageToSend').then(function (data) {
             if (data.length > 0) {
                 //console.log(JSON.stringify(data));
                 try {
@@ -83,40 +84,51 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
                         var line_id = row.line_id;
                         var message = row.message;
                         try {
+                            // 更新狀態為發送中(PR)
+                            request.requestHttpsPut(url + '/processingMessage/' + message_id, '', 21880);
+                            // 將發送對象拆解
                             var messageSend = JSON.parse(jsonEscape(message));
                             var ids = line_id.split(',');
-                            console.log('message_id:' + message_id + ',ids:' + ids);
-                            if (ids[0].startsWith('C')) {
+                            //console.log('message_id:' + message_id + ',ids:' + ids);
+                            // 群組訊息
+                            if (ids[0].startsWith('C'))
+                            {
                                 lineBotSdk.getGroupMemberIds(ids[0]).then((memberIds) => {
-                                    console.log('memberIds:' + memberIds);
+                                    //console.log('memberIds:' + memberIds);
                                     request.getUrlFromJsonFile('node-RED30').then(function (url) {
                                         request.requestHttpsPost(url + '/checkUserInGroup/' + ids[0], memberIds.join(), 21880).then(function (result) {
-                                            console.log('checkUserInGroup result:' + result);
+                                            //console.log('checkUserInGroup result:' + result);
+                                            var checkUserInGroupResult = JSON.parse(result);
+                                            if (checkUserInGroupResult.noPermission.length > 0)
+                                            {
+                                                lineBotSdk.pushMessage(ids[0], { type: 'text', text: '訊息發送失敗\n因有' + checkUserInGroupResult.noPermission.length +
+                                                    '位人員不在權限名單中\n本訊息將延後十分鐘發送，請群組管理員儘快處理' }).then(function () {
+                                                    // 延後訊息的發送時間
+                                                    request.requestHttpsPut(url + '/extendSendTime/' + message_id, '', 21880);
+                                                }).catch(function (error) {
+                                                    console.log(error);
+                                                });
+                                            }
+                                            else
+                                            {
+                                                lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
+                                                    // 更新line_message_send的actual_send_time
+                                                    request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
+                                                }).catch(function (error) {
+                                                    console.log(error);
+                                                });
+                                            }
                                         });
                                     }).catch(function (e) {
                                         return console.log('checkUserInGroup fail:' + e);
                                     });
-                                    //var allId = '';
-                                    //ids.forEach((id) => {
-                                    //    if (id != 'undefined') {
-                                    //        allId += '\n' + id
-                                    //    }
-                                    //});
-                                    //console.log(allId);
-                                    //lineBotSdk.replyMessage(event.replyToken, { type: 'text', text: '群組人員(待轉為工號+姓名)：' + allId });
                                 }).catch((err) => {
                                     console.log(err);
                                 });
-
-                                lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                                    // 更新line_message_send的actual_send_time
-                                    var query = '?strMessageId=' + message_id;
-                                    request.requestHttpPut(url + query, '');
-                                }).catch(function (error) {
-                                    console.log(error);
-                                });
                             }
-                            else {
+                            //個人訊息
+                            else
+                            {
                                 lineBotSdk.multicast(ids, messageSend).then(function () {
                                     // 更新line_message_send的actual_send_time
                                     var query = '?strMessageId=' + message_id;
