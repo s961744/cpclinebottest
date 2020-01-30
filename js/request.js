@@ -1,9 +1,10 @@
 ﻿'use strict' //strict mode
-var rootCas = require('ssl-root-cas/latest').create();
+//var rootCas = require('ssl-root-cas/latest').create();
 const
     urltil = require('url'),
     http = require('http'),
-    https = require('https').globalAgent.options.ca = rootCas,
+    //https = require('https').globalAgent.options.ca = rootCas,
+    https = require('https'),
     jsonProcess = require('./jsonProcess');
 
 /**
