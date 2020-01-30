@@ -73,7 +73,7 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
     // 取得外部Node-RED主機入口網址
     request.getUrlFromJsonFile('node-RED30').then(function (url) {
         // 取得line_message_send中的待發訊息
-        request.requestHttpsGetJson(url + '/getMessageToSend').then(function (data) {
+        request.requestHttpsGet(url + '/getMessageToSend').then(function (data) {
             if (data.length > 0) {
                 //console.log(JSON.stringify(data));
                 try {
