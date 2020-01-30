@@ -77,8 +77,8 @@ var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
             if (data.length > 0) {
                 console.log(JSON.stringify(data));
                 try {
-                    var jdata = JSON.parse(data.sqlResult);
-                    jdata.forEach(function (row) {
+                    var jdata = JSON.parse(data);
+                    jdata.sqlResult.forEach(function (row) {
                     //data.sqlResult.forEach(function (row) {
                         var message_id = row.message_id;
                         var line_id = row.line_id;
