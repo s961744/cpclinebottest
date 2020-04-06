@@ -1,10 +1,7 @@
 'use strict';
 const
-    line = require('@line/bot-sdk'),
     lineBotSdk = require('./js/lineBotSdk'),
     express = require('express'),
-    schedule = require('node-schedule'),
-    cp = require('child_process'),
     msg = require('./js/msg'),
     postback = require('./js/postback'),
     request = require('./js/request'),
@@ -14,12 +11,6 @@ const
 //setInterval(function () {
 //    http.get('http://cpclinebottest.herokuapp.com');
 //}, 1500000); // every 25 minutes (1500000)
-
-//create LINE SDK config from env variables
-const config = {
-    channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-    channelSecret: process.env.CHANNEL_SECRET,
-};
 
 const app = express();
 
@@ -47,115 +38,65 @@ app.get('/api/', function (req, res) {
     });
 });
 
-app.post('/', line.middleware(config), (req, res) => {
-    // req.body.events should be an array of events
-    if (!Array.isArray(req.body.events)) {
-        return res.status(500).end();
+app.post('/sendMsg', (req, res) => {
+    if (req.body.data.length > 0) {
+        //console.log(JSON.stringify(req.body.data));
+        try {
+            var jdata = JSON.parse(req.body.data);
+            if (jdata.msgData != null)
+            {
+                jdata.msgData.forEach(function (msg) {
+                    var message_id = msg.message_id;
+                    var line_id = msg.line_id;
+                    var message = msg.message;
+                    try {
+                        // 將發送對象拆解
+                        var messageSend = JSON.parse(jsonEscape(message));
+                        var ids = line_id.split(',');
+                        console.log('message_id:' + message_id + ',ids:' + ids);
+                        // 群組訊息
+                        if (ids[0].startsWith('C'))
+                        {
+                            lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
+                                res.send({"sendMsgResult":"Send message success"});
+                            }).catch(function (e) {
+                                console.log(e);
+                                res.send({"sendMsgResult":"Send message error:" + e});
+                            });
+                        }
+                        //個人訊息
+                        else
+                        {
+                            lineBotSdk.multicast(ids, messageSend).then(function () {
+                                res.send({"sendMsgResult":"Send message success"});
+                            }).catch(function (e) {
+                                console.log(e);
+                                res.send({"sendMsgResult":"Send message error:" + e});
+                            });
+                        }
+                    }
+                    catch (e) {
+                        console.log(e);
+                        res.send({"sendMsgResult":"Send message error:" + e});
+                    }
+                });
+            }
+        }
+        catch (e) {
+            console.log(e);
+            res.send({"sendMsgResult":"Send message error:" + e});
+        }
     }
-
-    // handle events separately
-    Promise.all(req.body.events.map(handleEvent))
-        .then(() => res.end())
-        .catch((err) => {
-            console.error(err);
-            res.status(500).end();
-        });
+    else {
+        console.log("Message data error");
+        res.send({"sendMsgResult":"Send message error:Message data error"});
+    }
 });
 
 // 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log('App now running on port', port);
-});
-
-// 排程 1次/10sec
-var job = schedule.scheduleJob('5,15,25,35,45,55 * * * * *', function () {
-    // 取得外部Node-RED主機入口網址
-    request.getUrlFromJsonFile('node-RED30').then(function (url) {
-        // 取得line_message_send中的待發訊息
-        request.requestHttpsGet(url + '/getMessageToSend', 21880).then(function (data) {
-            if (data.length > 0) {
-                console.log(JSON.stringify(data));
-                try {
-                    var jdata = JSON.parse(data);
-                    if (jdata.sqlResult != null)
-                    {
-                        jdata.sqlResult.forEach(function (row) {
-                        //data.sqlResult.forEach(function (row) {
-                            var message_id = row.message_id;
-                            var line_id = row.line_id;
-                            var message = row.message;
-                            try {
-                                // 更新狀態為發送中(PR)
-                                //request.requestHttpsPut(url + '/processingMessage/' + message_id, '', 21880);
-                                // 將發送對象拆解
-                                var messageSend = JSON.parse(jsonEscape(message));
-                                var ids = line_id.split(',');
-                                //console.log('message_id:' + message_id + ',ids:' + ids);
-                                // 群組訊息
-                                if (ids[0].startsWith('C'))
-                                {
-                                    lineBotSdk.getGroupMemberIds(ids[0]).then((memberIds) => {
-                                        //console.log('memberIds:' + memberIds);
-                                        request.getUrlFromJsonFile('node-RED30').then(function (url) {
-                                            request.requestHttpsPost(url + '/checkUserInGroup/' + ids[0], memberIds.join(), 21880).then(function (result) {
-                                                //console.log('checkUserInGroup result:' + result);
-                                                var checkUserInGroupResult = JSON.parse(result);
-                                                if (checkUserInGroupResult.noPermission.length > 0)
-                                                {
-                                                    lineBotSdk.pushMessage(ids[0], { type: 'text', text: '訊息發送失敗\n因有' + checkUserInGroupResult.noPermission.length +
-                                                        '位人員不在權限名單中\n本訊息將延後十分鐘發送，請群組管理員儘快處理' }).then(function () {
-                                                        // 延後訊息的發送時間
-                                                        request.requestHttpsPut(url + '/extendSendTime/' + message_id, '', 21880);
-                                                    }).catch(function (error) {
-                                                        console.log(error);
-                                                    });
-                                                }
-                                                else
-                                                {
-                                                    lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                                                        // 更新line_message_send的actual_send_time
-                                                        request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
-                                                    }).catch(function (error) {
-                                                        console.log(error);
-                                                    });
-                                                }
-                                            });
-                                        }).catch(function (e) {
-                                            return console.log('checkUserInGroup fail:' + e);
-                                        });
-                                    }).catch((err) => {
-                                        console.log(err);
-                                    });
-                                }
-                                //個人訊息
-                                else
-                                {
-                                    lineBotSdk.multicast(ids, messageSend).then(function () {
-                                        // 更新line_message_send的actual_send_time
-                                        request.requestHttpsPut(url + '/actualSendTime/' + message_id, '', 21880);
-                                    }).catch(function (error) {
-                                        console.log(error);
-                                    });
-                                }
-                            }
-                            catch (e) {
-                                return console.log(e);
-                            }
-                        });
-                    }
-                }
-                catch (e) {
-                    return console.log(e);
-                }
-            }
-            else {
-                //console.log('No messages need to be sent.');
-            }
-        });
-    }).catch(function(e) {
-        return console.log('line_message_send request get fail:' + e);
-    });
 });
 
 // event handler
