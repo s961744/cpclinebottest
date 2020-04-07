@@ -5,8 +5,6 @@ const
     express = require('express'),
     msg = require('./js/msg'),
     postback = require('./js/postback'),
-    request = require('./js/request'),
-    jsonProcess = require('./js/jsonProcess'),
     bodyParser = require('body-parser');
 
 // keep Heroku not sleep
@@ -24,14 +22,6 @@ const app = express();
 
 // parse application/json
 app.use(bodyParser.json())
-
-app.use(express.static(__dirname + '/public'));
-
-// 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
-var server = app.listen(process.env.PORT || 8080, function () {
-    var port = server.address().port;
-    console.log('App now running on port', port);
-});
 
 // send msg API
 app.post('/sendMsg', (req, res) => {
@@ -89,21 +79,15 @@ app.post('/sendMsg', (req, res) => {
 });
 
 // recieve msg API
-app.post('/', line.middleware(config), (req, res) => {
-    console.log('req=' + JSON.stringify(req));
-    // req.body.events should be an array of events
-    if (!Array.isArray(req.body.events)) {
-        return res.status(500).end();
-    }
-
-    // handle events separately
-    Promise.all(req.body.events.map(handleEvent))
-        .then(() => res.end())
-        .catch((err) => {
-            console.error(err);
-            res.status(500).end();
-        });
-});
+app.post('/callback', line.middleware(config), (req, res) => {
+    Promise
+      .all(req.body.events.map(handleEvent))
+      .then((result) => res.json(result))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).end();
+      });
+  });
 
 // event handler
 function handleEvent(event) {
@@ -158,3 +142,9 @@ process.on('unhandledRejection', (reason, p) => {
 function jsonEscape(str) {
     return str.replace(/\n/g, "\\n").replace(/~n/g, "\\n");
 }
+
+// listen on port
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`listening on ${port}`);
+});
