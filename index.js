@@ -19,6 +19,7 @@ const config = {
 };
 
 const app = express();
+const app2 = express();
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -81,7 +82,7 @@ app.post('/sendMsg', (req, res) => {
 });
 
 // recieve msg API
-app.post('/', line.middleware(config), (req, res) => {
+app2.post('/', line.middleware(config), (req, res) => {
     console.log(req.body.events);
     Promise
       .all(req.body.events.map(handleEvent))
