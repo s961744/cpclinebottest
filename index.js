@@ -20,10 +20,43 @@ const config = {
 
 const app = express();
 
+// recieve msg API
+app.post('/', line.middleware(config), (req, res) => {
+    console.log(req.body.events);
+    Promise
+      .all(req.body.events.map(handleEvent))
+      .then((result) => res.json(result))
+      .catch((err) => {
+        console.error(err);
+        res.status(500).end();
+      });
+  });
+
+// event handler
+function handleEvent(event) {
+    console.log(event.type);
+    switch (event.type) {
+        case 'message':
+            msg.messageHandle(event);
+            break;
+        case 'postback':
+            postback.postbackHandle(event);
+            break;
+        case 'follow':
+            follow(event);
+            break;
+        case 'unfollow':
+            unfollow(event);
+            break;
+        default:
+            return Promise.resolve(null);
+    }
+}
+
 // parse application/x-www-form-urlencoded
-//app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
-//app.use(bodyParser.json())
+app.use(bodyParser.json())
 
 // send msg API
 app.post('/sendMsg', (req, res) => {
@@ -79,39 +112,6 @@ app.post('/sendMsg', (req, res) => {
         res.send({"sendMsgResult":"Send message error:Message data error"});
     }
 });
-
-// recieve msg API
-app.post('/', line.middleware(config), (req, res) => {
-    console.log(req.body.events);
-    Promise
-      .all(req.body.events.map(handleEvent))
-      .then((result) => res.json(result))
-      .catch((err) => {
-        console.error(err);
-        res.status(500).end();
-      });
-  });
-
-// event handler
-function handleEvent(event) {
-    console.log(event.type);
-    switch (event.type) {
-        case 'message':
-            msg.messageHandle(event);
-            break;
-        case 'postback':
-            postback.postbackHandle(event);
-            break;
-        case 'follow':
-            follow(event);
-            break;
-        case 'unfollow':
-            unfollow(event);
-            break;
-        default:
-            return Promise.resolve(null);
-    }
-}
 
 // follow event
 function follow(event) {
