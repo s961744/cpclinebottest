@@ -14,6 +14,12 @@ const
 
 const app = express();
 
+// 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
+var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log('App now running on port', port);
+});
+
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
@@ -93,12 +99,6 @@ app.post('/sendMsg', (req, res) => {
         console.log("Message data error");
         res.send({"sendMsgResult":"Send message error:Message data error"});
     }
-});
-
-// 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
-var server = app.listen(process.env.PORT || 8080, function () {
-    var port = server.address().port;
-    console.log('App now running on port', port);
 });
 
 // event handler
