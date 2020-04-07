@@ -1,7 +1,8 @@
 ﻿'use strict' //strict mode
 
 const
-    lineBotSdk = require('./lineBotSdk');
+    lineBotSdk = require('./lineBotSdk'),
+    msg = require('./msg');
 
 exports.msgTextHandle = function (event) {
     //個人ID
