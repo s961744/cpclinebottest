@@ -25,6 +25,8 @@ const app = express();
 // parse application/json
 app.use(bodyParser.json())
 
+app.use(express.static(__dirname + '/public'));
+
 // 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
@@ -88,6 +90,7 @@ app.post('/sendMsg', (req, res) => {
 
 // recieve msg API
 app.post('/', line.middleware(config), (req, res) => {
+    console.log('req=' + JSON.stringify(req));
     // req.body.events should be an array of events
     if (!Array.isArray(req.body.events)) {
         return res.status(500).end();
@@ -104,7 +107,6 @@ app.post('/', line.middleware(config), (req, res) => {
 
 // event handler
 function handleEvent(event) {
-    console.log('event=' + JSON.stringify(event));
     switch (event.type) {
         case 'message':
             msg.messageHandle(event);
