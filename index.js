@@ -26,13 +26,11 @@ var server = app.listen(process.env.PORT || 8080, function () {
 
 app.post('/sendMsg', (req, res) => {
     console.log(req.body);
-    if (req.body.data.msgData.length > 0) {
+    if (req.body.msgData.length > 0) {
         try {
-            //var jdata = JSON.parse(req.body.data);
-            var jdata = req.body.data;
-            if (jdata.msgData != null)
+            if (req.body.msgData != null)
             {
-                jdata.msgData.forEach(function (msg) {
+                req.body.msgData.forEach(function (msg) {
                     var message_id = msg.message_id;
                     var line_id = msg.line_id;
                     var message = msg.message;
@@ -40,36 +38,33 @@ app.post('/sendMsg', (req, res) => {
                     console.log(line_id);
                     console.log(message);
                     try {
-                        // 將發送對象拆解
+                        // 訊息內容換行處理
                         var messageSend = JSON.parse(jsonEscape(message));
+                        // 將發送對象拆解
                         var ids = line_id.split(',');
                         console.log('message_id:' + message_id + ',ids:' + ids);
                         // 群組訊息
                         if (ids[0].startsWith('C'))
                         {
                             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                                res.send({"sendMsgResult":"Send message success"});
                             }).catch(function (e) {
                                 console.log(e);
-                                res.send({"sendMsgResult":"Send message error:" + e});
                             });
                         }
-                        //個人訊息
+                        // 個人訊息
                         else
                         {
                             lineBotSdk.multicast(ids, messageSend).then(function () {
-                                res.send({"sendMsgResult":"Send message success"});
                             }).catch(function (e) {
                                 console.log(e);
-                                res.send({"sendMsgResult":"Send message error:" + e});
                             });
                         }
                     }
                     catch (e) {
                         console.log(e);
-                        res.send({"sendMsgResult":"Send message error:" + e});
                     }
                 });
+                res.send({"sendMsgResult":"Send message success"});
             }
         }
         catch (e) {
@@ -126,12 +121,13 @@ function unfollow(event) {
     });
 }
 
+// 例外處理
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
     // application specific logging, throwing an error, or other logic here
 });
 
-//換行處理
+// 訊息內容換行處理
 function jsonEscape(str) {
     return str.replace(/\n/g, "\\n").replace(/~n/g, "\\n");
 }
