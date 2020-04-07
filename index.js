@@ -39,7 +39,7 @@ app.post('/sendMsg', (req, res) => {
                     console.log(message);
                     try {
                         // 訊息內容換行處理
-                        var messageSend = JSON.parse(jsonEscape(message));
+                        var messageSend = JSON.parse(jsonEscape(JSON.stringify(message)));
                         // 將發送對象拆解
                         var ids = line_id.split(',');
                         console.log('message_id:' + message_id + ',ids:' + ids);
