@@ -1,5 +1,6 @@
 'use strict';
 const
+    line = require('@line/bot-sdk'),
     lineBotSdk = require('./js/lineBotSdk'),
     express = require('express'),
     msg = require('./js/msg'),
@@ -8,10 +9,16 @@ const
     jsonProcess = require('./js/jsonProcess'),
     bodyParser = require('body-parser');
 
-// 維持Heroku不Sleep
+// keep Heroku not sleep
 //setInterval(function () {
 //    http.get('http://cpclinebottest.herokuapp.com');
 //}, 1500000); // every 25 minutes (1500000)
+
+// 設定LINE BOT SDK環境變數
+const config = {
+    channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+    channelSecret: process.env.CHANNEL_SECRET,
+};
 
 const app = express();
 
@@ -24,6 +31,7 @@ var server = app.listen(process.env.PORT || 8080, function () {
     console.log('App now running on port', port);
 });
 
+// send msg API
 app.post('/sendMsg', (req, res) => {
     console.log(req.body);
     if (req.body.msgData.length > 0) {
@@ -76,6 +84,22 @@ app.post('/sendMsg', (req, res) => {
         console.log("Message data error");
         res.send({"sendMsgResult":"Send message error:Message data error"});
     }
+});
+
+// recieve msg API
+app.post('/', line.middleware(config), (req, res) => {
+    // req.body.events should be an array of events
+    if (!Array.isArray(req.body.events)) {
+        return res.status(500).end();
+    }
+
+    // handle events separately
+    Promise.all(req.body.events.map(handleEvent))
+        .then(() => res.end())
+        .catch((err) => {
+            console.error(err);
+            res.status(500).end();
+        });
 });
 
 // event handler
