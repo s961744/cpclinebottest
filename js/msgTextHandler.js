@@ -6,10 +6,16 @@ const
 exports.msgTextHandle = function (event) {
     //個人ID
     if (event.message.text.toUpperCase() === 'ID' && event.source.type === 'user') {
-        lineBotSdk.replyMessage(event.replyToken, event.source.userId);
+        msg.getMsgFromJsonFile('msg', 'emptyMsg').then(function (msgData) {
+            msgData.text = event.source.userId;
+            lineBotSdk.replyMessage(event.replyToken, msgData);
+        });
     }
     //群組ID
     else if (event.message.text.toUpperCase() === 'ID' && event.source.type === 'group') {
-        lineBotSdk.replyMessage(event.replyToken, event.source.groupId);
+        msg.getMsgFromJsonFile('msg', 'emptyMsg').then(function (msgData) {
+            msgData.text = event.source.groupId;
+            lineBotSdk.replyMessage(event.replyToken, msgData);
+        });
     }
 }
