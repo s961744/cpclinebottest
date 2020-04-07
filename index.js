@@ -5,7 +5,8 @@ const
     msg = require('./js/msg'),
     postback = require('./js/postback'),
     request = require('./js/request'),
-    jsonProcess = require('./js/jsonProcess');
+    jsonProcess = require('./js/jsonProcess'),
+    bodyParser = require('body-parser');
 
 // 維持Heroku不Sleep
 //setInterval(function () {
@@ -13,11 +14,10 @@ const
 //}, 1500000); // every 25 minutes (1500000)
 
 const app = express();
-app.configure(function(){
-    app.use(express.bodyParser());
-    app.use(app.router);
-  });
-  
+
+// parse application/json
+app.use(bodyParser.json())
+
 // 因為 express 預設走 port 3000，而 heroku 上預設卻不是，要透過下列程式轉換
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
