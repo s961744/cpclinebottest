@@ -36,6 +36,9 @@ app.post('/sendMsg', (req, res) => {
                     var message_id = msg.message_id;
                     var line_id = msg.line_id;
                     var message = msg.message;
+                    console.log(message_id);
+                    console.log(line_id);
+                    console.log(message);
                     try {
                         // 將發送對象拆解
                         var messageSend = JSON.parse(jsonEscape(message));
@@ -128,6 +131,7 @@ process.on('unhandledRejection', (reason, p) => {
     // application specific logging, throwing an error, or other logic here
 });
 
+//換行處理
 function jsonEscape(str) {
     return str.replace(/\n/g, "\\n").replace(/~n/g, "\\n");
 }
