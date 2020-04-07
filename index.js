@@ -24,35 +24,12 @@ var server = app.listen(process.env.PORT || 8080, function () {
     console.log('App now running on port', port);
 });
 
-app.use(express.static(__dirname + '/public'));
-
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index3.html');
-});
-
-app.get('/api/', function (req, res) {
-    //console.log(req.query);
-    var objsArray = [];
-    jsonProcess.getJsonFileArrayData('url').then(function (data) {
-        objsArray = JSON.parse(data);
-        var obj = objsArray.filter(function (url) {
-            return url.urlName == req.query.urlName;
-        });
-        var url = obj[0].url;
-        var path = req.query.path;
-        request.requestHttpGetJson(url + path).then(function (data) {
-            res.send(data);
-        });
-    }).catch(function (error) {
-        console.log(error);
-    });
-});
-
 app.post('/sendMsg', (req, res) => {
     console.log(req.body);
     if (req.body.data.msgData.length > 0) {
         try {
-            var jdata = JSON.parse(req.body.data);
+            //var jdata = JSON.parse(req.body.data);
+            var jdata = req.body.data;
             if (jdata.msgData != null)
             {
                 jdata.msgData.forEach(function (msg) {
