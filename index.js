@@ -79,7 +79,8 @@ app.post('/sendMsg', (req, res) => {
 });
 
 // recieve msg API
-app.post('/callback', line.middleware(config), (req, res) => {
+app.post('/', line.middleware(config), (req, res) => {
+    console.log(req.body.events);
     Promise
       .all(req.body.events.map(handleEvent))
       .then((result) => res.json(result))
@@ -91,6 +92,7 @@ app.post('/callback', line.middleware(config), (req, res) => {
 
 // event handler
 function handleEvent(event) {
+    console.log(event.type);
     switch (event.type) {
         case 'message':
             msg.messageHandle(event);
