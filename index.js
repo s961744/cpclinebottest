@@ -104,6 +104,7 @@ app.post('/', line.middleware(config), (req, res) => {
 
 // event handler
 function handleEvent(event) {
+    console.log('event=' + JSON.stringify(event));
     switch (event.type) {
         case 'message':
             msg.messageHandle(event);
