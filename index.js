@@ -21,7 +21,7 @@ const config = {
 const app = express();
 
 // parse application/json
-app.use(bodyParser.json())
+//app.use(bodyParser.json())
 
 // send msg API
 app.post('/sendMsg', (req, res) => {
