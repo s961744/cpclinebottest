@@ -155,7 +155,6 @@ app.listen(port, () => {
 });
 
 // listen on port
-const port = process.env.PORT || 3000;
 app2.listen(port, () => {
   console.log(`listening on ${port}`);
 });
