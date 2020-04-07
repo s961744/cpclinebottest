@@ -68,7 +68,12 @@ app.post('/sendMsg', (req, res) => {
                 req.body.msgData.forEach(function (msg) {
                     var message_id = msg.message_id;
                     var line_id = msg.line_id;
-                    var message = msg.message;
+                    var message;
+                    try {
+                        message = JSON.parse(msg.message);
+                    } catch (e) {
+                        message = msg.message;
+                    }
                     console.log(message_id);
                     console.log(line_id);
                     console.log(message);
