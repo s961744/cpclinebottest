@@ -19,12 +19,11 @@ const config = {
 };
 
 const app = express();
-const app2 = express();
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+//app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
-app.use(bodyParser.json())
+//app.use(bodyParser.json())
 
 // send msg API
 app.post('/sendMsg', (req, res) => {
@@ -82,7 +81,7 @@ app.post('/sendMsg', (req, res) => {
 });
 
 // recieve msg API
-app2.post('/', line.middleware(config), (req, res) => {
+app.post('/', line.middleware(config), (req, res) => {
     console.log(req.body.events);
     Promise
       .all(req.body.events.map(handleEvent))
@@ -151,10 +150,5 @@ function jsonEscape(str) {
 // listen on port
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
-
-// listen on port
-app2.listen(port, () => {
   console.log(`listening on ${port}`);
 });
