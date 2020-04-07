@@ -39,7 +39,7 @@ app.get('/api/', function (req, res) {
 });
 
 app.post('/sendMsg', (req, res) => {
-    console.log(JSON.stringify(req.body));
+    console.log(JSON.stringify(req));
     if (req.body.data.length > 0) {
         try {
             var jdata = JSON.parse(req.body.data);
