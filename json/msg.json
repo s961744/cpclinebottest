@@ -1,5 +1,13 @@
 [
   {
+    "msgName": "emptyMsg",
+    "msgType": "msg",
+    "msg": {
+      "type": "text",
+      "text": ""
+    }
+  },
+  {
     "msgName": "adminMenu",
     "msgType": "admin",
     "msg": {
