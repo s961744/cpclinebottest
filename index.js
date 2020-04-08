@@ -73,7 +73,9 @@ app.post('/sendMsg', (req, res) => {
                 });
                 Promise.all(requests).then((sendMsgResult) => {
                     sendMsgResult.sendMsgResult = "Send message Done";
+                    console.log(sendMsgResult.sendMsgResult);
                     res.send(sendMsgResult);
+                    console.log(sendMsgResult.sendMsgResult);
                 });
             }
             else
