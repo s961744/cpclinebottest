@@ -66,15 +66,15 @@ app.post('/sendMsg', (req, res) => {
         try {
             if (req.body.msgData != null)
             {
-                let result = req.body.msgData.map(function (msg) {
+                let test = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
                         sendMsg(msg, resolve);
                       });
                 });
-                Promise.all(result).then(() => {
-                    console.log(result);
+                Promise.all(test).then(() => {
+                    console.log(test);
                     sendMsgResult.ResultMsg = "Send message Done";
-                    sendMsgResult.Result = result;
+                    sendMsgResult.Result = test;
                     res.send(sendMsgResult);
                 });
             }
