@@ -68,9 +68,9 @@ app.post('/sendMsg', (req, res) => {
             {
                 let requests = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
-                        var test = sendMsg(msg, resolve);
-                        console.log(resolve);
-                        if (sendMsg(msg, resolve))
+                        sendMsg(msg, resolve(result));
+                        console.log(result);
+                        if (result)
                         {
                             sendMsgResult.successMsg.push(msg.message_id);
                         }
