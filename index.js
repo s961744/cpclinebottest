@@ -61,7 +61,7 @@ app.use(bodyParser.json())
 // send msg API
 app.post('/sendMsg', (req, res) => {
     //console.log(req.body);
-    var sendMsgResult = {"ResultMsg":"","Result":""};
+    var sendMsgResult = {"ResultMsg":"","Result":[]};
     if (req.body.msgData.length > 0) {
         try {
             if (req.body.msgData != null)
@@ -71,10 +71,12 @@ app.post('/sendMsg', (req, res) => {
                         sendMsg(msg, resolve);
                       });
                 });
-                Promise.all(test).then(() => {
+                Promise.all(test).then((test2) => {
                     console.log(test);
+                    test2.forEach(function(res) {
+                        sendMsgResult.Result.push(res.value);
+                    });
                     sendMsgResult.ResultMsg = "Send message Done";
-                    sendMsgResult.Result = test;
                     res.send(sendMsgResult);
                 });
             }
