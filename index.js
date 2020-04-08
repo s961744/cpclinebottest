@@ -139,7 +139,7 @@ function sendMsg (msg, callback) {
     catch (e) {
         console.log(e);
     }
-    return callback(result);
+    return callback(1);
   }
 
 // follow event
