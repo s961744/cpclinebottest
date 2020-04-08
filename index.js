@@ -68,14 +68,14 @@ app.post('/sendMsg', (req, res) => {
             {
                 let requests = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
-                        sendMsg(msg, sendMsgResult, resolve);
+                        sendMsg(msg, resolve);
                       });
                 });
-                Promise.all(requests).then((sendMsgResult) => {
+                Promise.all(requests).then((result) => {
                     sendMsgResult.Result = "Send message Done";
-                    console.log(sendMsgResult.Result);
+                    sendMsgResult.successMsg = result.successMsg;
+                    sendMsgResult.failMsg = result.failMsg;
                     res.send(sendMsgResult);
-                    console.log(sendMsgResult.Result);
                 });
             }
             else
@@ -97,7 +97,8 @@ app.post('/sendMsg', (req, res) => {
     }
 });
 
-function sendMsg (msg, sendMsgResult, callback) {
+function sendMsg (msg, callback) {
+    var result = { "successMsg":[], "failMsg":[] };
     var message_id = msg.message_id;
     var line_id = msg.line_id;
     var message;
@@ -120,9 +121,9 @@ function sendMsg (msg, sendMsgResult, callback) {
         if (ids[0].startsWith('C'))
         {
             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                sendMsgResult.successMsg.push(message_id);
+                result.successMsg.push(message_id);
             }).catch(function (e) {
-                sendMsgResult.failMsg.push(message_id);
+                result.failMsg.push(message_id);
                 console.log(e);
             });
         }
@@ -130,18 +131,18 @@ function sendMsg (msg, sendMsgResult, callback) {
         else
         {
             lineBotSdk.multicast(ids, messageSend).then(function () {
-                sendMsgResult.successMsg.push(message_id);
+                result.successMsg.push(message_id);
             }).catch(function (e) {
-                sendMsgResult.failMsg.push(message_id);
+                result.failMsg.push(message_id);
                 console.log(e);
             });
         }
     }
     catch (e) {
-        sendMsgResult.failMsg.push(message_id);
+        result.failMsg.push(message_id);
         console.log(e);
     }
-    callback(sendMsgResult);
+    callback(result);
   }
 
 // follow event
