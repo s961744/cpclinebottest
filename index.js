@@ -60,7 +60,8 @@ app.use(bodyParser.json())
 
 // send msg API
 app.post('/sendMsg', (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
+    var sendMsgResult = {"sendMsgResult":"","successMsg":[], "failMsg":[]};
     if (req.body.msgData.length > 0) {
         try {
             if (req.body.msgData != null)
@@ -71,23 +72,26 @@ app.post('/sendMsg', (req, res) => {
                     var message;
                     try {
                         message = JSON.parse(msg.message);
-                    } catch (e) {
+                    } 
+                    catch (e) {
                         message = msg.message;
                     }
-                    console.log(message_id);
-                    console.log(line_id);
-                    console.log(message);
+                    //console.log(message_id);
+                    //console.log(line_id);
+                    //console.log(message);
                     try {
                         // 訊息內容換行處理
                         var messageSend = JSON.parse(jsonEscape(JSON.stringify(message)));
                         // 將發送對象拆解
                         var ids = line_id.split(',');
-                        console.log('message_id:' + message_id + ',ids:' + ids);
+                        //console.log('message_id:' + message_id + ',ids:' + ids);
                         // 群組訊息
                         if (ids[0].startsWith('C'))
                         {
                             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
+                                sendMsgResult.successMsg.push(message_id);
                             }).catch(function (e) {
+                                sendMsgResult.failMsg.push(message_id);
                                 console.log(e);
                             });
                         }
@@ -95,26 +99,37 @@ app.post('/sendMsg', (req, res) => {
                         else
                         {
                             lineBotSdk.multicast(ids, messageSend).then(function () {
+                                sendMsgResult.successMsg.push(message_id);
                             }).catch(function (e) {
+                                sendMsgResult.failMsg.push(message_id);
                                 console.log(e);
                             });
                         }
                     }
                     catch (e) {
+                        sendMsgResult.failMsg.push(message_id);
                         console.log(e);
                     }
                 });
-                res.send({"sendMsgResult":"Send message success"});
+                sendMsgResult.sendMsgResult = "Send message Done";
+                res.send(sendMsgResult);
+            }
+            else
+            {
+                sendMsgResult.sendMsgResult = "No Message need to send";
+                res.send(sendMsgResult);
             }
         }
         catch (e) {
+            sendMsgResult.sendMsgResult = e;
             console.log(e);
-            res.send({"sendMsgResult":"Send message error:" + e});
+            res.send(sendMsgResult);
         }
     }
     else {
+        sendMsgResult.sendMsgResult = "Message data error";
         console.log("Message data error");
-        res.send({"sendMsgResult":"Send message error:Message data error"});
+        res.send(sendMsgResult);
     }
 });
 
