@@ -61,45 +61,44 @@ app.use(bodyParser.json())
 // send msg API
 app.post('/sendMsg', (req, res) => {
     //console.log(req.body);
-    var sendMsgResult = {"Result":"","successMsg":[], "failMsg":[]};
+    var sendMsgResult = {"ResultMsg":"","Result":""};
     if (req.body.msgData.length > 0) {
         try {
             if (req.body.msgData != null)
             {
-                let requests = req.body.msgData.map(function (msg) {
+                let result = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
                         sendMsg(msg, resolve);
-                        
                       });
                 });
-                Promise.all(requests).then(() => {
-                    console.log(requests);
-                    sendMsgResult.Result = "Send message Done";
+                Promise.all(result).then(() => {
+                    console.log(result);
+                    sendMsgResult.ResultMsg = "Send message Done";
+                    sendMsgResult.Result = result;
                     res.send(sendMsgResult);
                 });
             }
             else
             {
-                sendMsgResult.Result = "No Message need to send";
+                sendMsgResult.ResultMsg = "No Message need to send";
                 res.send(sendMsgResult);
             }
         }
         catch (e) {
-            sendMsgResult.Result = e;
+            sendMsgResult.ResultMsg = e;
             console.log(e);
             res.send(sendMsgResult);
         }
     }
     else {
-        sendMsgResult.Result = "Message data error";
+        sendMsgResult.ResultMsg = "Message data error";
         console.log("Message data error");
         res.send(sendMsgResult);
     }
 });
 
 function sendMsg (msg, callback) {
-    var result = {};
-    var message_id = msg.message_id;
+    var result = { "message_id" : msg.message_id };
     var line_id = msg.line_id;
     var message;
     try {
@@ -121,12 +120,10 @@ function sendMsg (msg, callback) {
         if (ids[0].startsWith('C'))
         {
             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                result.message_id = message_id;
                 result.send = true;
                 return callback(result);
             }).catch(function (e) {
                 console.log(e);
-                result.message_id = message_id;
                 result.send = false;
                 return callback(result);
             });
@@ -135,10 +132,12 @@ function sendMsg (msg, callback) {
         else
         {
             lineBotSdk.multicast(ids, messageSend).then(function () {
-                return callback(message_id, true);
+                result.send = true;
+                return callback(result);
             }).catch(function (e) {
                 console.log(e);
-                return callback(message_id, false);
+                result.send = false;
+                return callback(result);
             });
         }
     }
