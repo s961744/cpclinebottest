@@ -98,6 +98,7 @@ app.post('/sendMsg', (req, res) => {
 });
 
 function sendMsg (msg, callback) {
+    var result = {};
     var message_id = msg.message_id;
     var line_id = msg.line_id;
     var message;
@@ -120,10 +121,14 @@ function sendMsg (msg, callback) {
         if (ids[0].startsWith('C'))
         {
             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                return callback(message_id, true);
+                result.message_id = message_id;
+                result.send = true;
+                return callback(result);
             }).catch(function (e) {
                 console.log(e);
-                return callback(message_id, false);
+                result.message_id = message_id;
+                result.send = false;
+                return callback(result);
             });
         }
         // 個人訊息
