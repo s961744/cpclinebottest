@@ -68,19 +68,12 @@ app.post('/sendMsg', (req, res) => {
             {
                 let requests = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
-                        var result = sendMsg(msg, resolve);
-                        console.log(result);
-                        if (result)
-                        {
-                            sendMsgResult.successMsg.push(msg.message_id);
-                        }
-                        else
-                        {
-                            sendMsgResult.failMsg.push(msg.message_id);
-                        }
+                        sendMsg(msg, resolve);
+                        
                       });
                 });
                 Promise.all(requests).then(() => {
+                    console.log(requests);
                     sendMsgResult.Result = "Send message Done";
                     res.send(sendMsgResult);
                 });
