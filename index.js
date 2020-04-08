@@ -102,7 +102,7 @@ app.post('/sendMsg', (req, res) => {
     }
 });
 
-function sendMsg (msg, callback) {
+function sendMsg (msg) {
     var result = false;
     var message_id = msg.message_id;
     var line_id = msg.line_id;
@@ -144,7 +144,7 @@ function sendMsg (msg, callback) {
     catch (e) {
         console.log(e);
     }
-    callback(result);
+    return result;
   }
 
 // follow event
