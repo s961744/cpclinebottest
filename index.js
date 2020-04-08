@@ -66,7 +66,7 @@ app.post('/sendMsg', (req, res) => {
         try {
             if (req.body.msgData != null)
             {
-                req.body.msgData.forEach(function (msg) {
+                req.body.msgData.asyncForEach(function (msg) {
                     var message_id = msg.message_id;
                     var line_id = msg.line_id;
                     var message;
@@ -89,9 +89,7 @@ app.post('/sendMsg', (req, res) => {
                         if (ids[0].startsWith('C'))
                         {
                             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                                console.log(message_id);
                                 sendMsgResult.successMsg.push(message_id);
-                                console.log(sendMsgResult.successMsg);
                             }).catch(function (e) {
                                 sendMsgResult.failMsg.push(message_id);
                                 console.log(e);
@@ -101,9 +99,7 @@ app.post('/sendMsg', (req, res) => {
                         else
                         {
                             lineBotSdk.multicast(ids, messageSend).then(function () {
-                                console.log(message_id);
                                 sendMsgResult.successMsg.push(message_id);
-                                console.log(sendMsgResult.successMsg);
                             }).catch(function (e) {
                                 sendMsgResult.failMsg.push(message_id);
                                 console.log(e);
@@ -114,11 +110,10 @@ app.post('/sendMsg', (req, res) => {
                         sendMsgResult.failMsg.push(message_id);
                         console.log(e);
                     }
+                }).then(function () {
+                    sendMsgResult.sendMsgResult = "Send message Done";
+                    res.send(sendMsgResult);
                 });
-                console.log(sendMsgResult.successMsg);
-                sendMsgResult.sendMsgResult = "Send message Done";
-                console.log(sendMsgResult.successMsg);
-                res.send(sendMsgResult);
             }
             else
             {
