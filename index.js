@@ -79,6 +79,7 @@ app.post('/sendMsg', (req, res) => {
                         sendMsgResult.Result.push(res.value);
                     });
                     sendMsgResult.ResultMsg = "Send message Done";
+                    sendMsgResult.Result = test2;
                     res.send(sendMsgResult);
                 });
             }
