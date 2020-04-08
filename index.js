@@ -115,7 +115,9 @@ app.post('/sendMsg', (req, res) => {
                         console.log(e);
                     }
                 });
+                console.log(sendMsgResult.successMsg);
                 sendMsgResult.sendMsgResult = "Send message Done";
+                console.log(sendMsgResult.successMsg);
                 res.send(sendMsgResult);
             }
             else
