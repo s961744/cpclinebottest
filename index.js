@@ -89,7 +89,9 @@ app.post('/sendMsg', (req, res) => {
                         if (ids[0].startsWith('C'))
                         {
                             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
+                                console.log(message_id);
                                 sendMsgResult.successMsg.push(message_id);
+                                console.log(sendMsgResult.successMsg);
                             }).catch(function (e) {
                                 sendMsgResult.failMsg.push(message_id);
                                 console.log(e);
@@ -99,7 +101,9 @@ app.post('/sendMsg', (req, res) => {
                         else
                         {
                             lineBotSdk.multicast(ids, messageSend).then(function () {
+                                console.log(message_id);
                                 sendMsgResult.successMsg.push(message_id);
+                                console.log(sendMsgResult.successMsg);
                             }).catch(function (e) {
                                 sendMsgResult.failMsg.push(message_id);
                                 console.log(e);
