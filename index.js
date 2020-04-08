@@ -68,6 +68,8 @@ app.post('/sendMsg', (req, res) => {
             {
                 let requests = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
+                        var test = sendMsg(msg, resolve);
+                        console.log(test);
                         if (sendMsg(msg, resolve))
                         {
                             sendMsgResult.successMsg.push(msg.message_id);
@@ -102,7 +104,7 @@ app.post('/sendMsg', (req, res) => {
     }
 });
 
-function sendMsg (msg) {
+function sendMsg (msg, callback) {
     var result = false;
     var message_id = msg.message_id;
     var line_id = msg.line_id;
@@ -144,7 +146,7 @@ function sendMsg (msg) {
     catch (e) {
         console.log(e);
     }
-    return result;
+    callback(result);
   }
 
 // follow event
