@@ -68,7 +68,7 @@ app.post('/sendMsg', (req, res) => {
             {
                 let requests = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
-                        sendMsg(msg, resolve(result));
+                        sendMsg(msg, resolve);
                         console.log(result);
                         if (result)
                         {
@@ -146,7 +146,7 @@ function sendMsg (msg, callback) {
     catch (e) {
         console.log(e);
     }
-    callback(result);
+    return callback(result);
   }
 
 // follow event
