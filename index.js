@@ -61,43 +61,43 @@ app.use(bodyParser.json())
 // send msg API
 app.post('/sendMsg', (req, res) => {
     //console.log(req.body);
-    var sendMsgResult = {"sendMsgResult":"","successMsg":[], "failMsg":[]};
+    var sendMsgResult = {"Result":"","successMsg":[], "failMsg":[]};
     if (req.body.msgData.length > 0) {
         try {
             if (req.body.msgData != null)
             {
                 let requests = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
-                        asyncFunction(msg, sendMsgResult, resolve);
+                        sendMsg(msg, sendMsgResult, resolve);
                       });
                 });
                 Promise.all(requests).then((sendMsgResult) => {
-                    sendMsgResult.sendMsgResult = "Send message Done";
-                    console.log(sendMsgResult.sendMsgResult);
+                    sendMsgResult.Result = "Send message Done";
+                    console.log(sendMsgResult.Result);
                     res.send(sendMsgResult);
-                    console.log(sendMsgResult.sendMsgResult);
+                    console.log(sendMsgResult.Result);
                 });
             }
             else
             {
-                sendMsgResult.sendMsgResult = "No Message need to send";
+                sendMsgResult.Result = "No Message need to send";
                 res.send(sendMsgResult);
             }
         }
         catch (e) {
-            sendMsgResult.sendMsgResult = e;
+            sendMsgResult.Result = e;
             console.log(e);
             res.send(sendMsgResult);
         }
     }
     else {
-        sendMsgResult.sendMsgResult = "Message data error";
+        sendMsgResult.Result = "Message data error";
         console.log("Message data error");
         res.send(sendMsgResult);
     }
 });
 
-function asyncFunction (msg, sendMsgResult, callback) {
+function sendMsg (msg, sendMsgResult, callback) {
     var message_id = msg.message_id;
     var line_id = msg.line_id;
     var message;
