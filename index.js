@@ -122,20 +122,20 @@ function sendMsg (msg, callback) {
         {
             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
                 result = true;
+                return callback(result);
             }).catch(function (e) {
                 console.log(e);
             });
-            return callback(result);
         }
         // 個人訊息
         else
         {
             lineBotSdk.multicast(ids, messageSend).then(function () {
                 result = true;
+                return callback(result);
             }).catch(function (e) {
                 console.log(e);
             });
-            return callback(result);
         }
     }
     catch (e) {
