@@ -66,51 +66,12 @@ app.post('/sendMsg', (req, res) => {
         try {
             if (req.body.msgData != null)
             {
-                req.body.msgData.asyncForEach(function (msg) {
-                    var message_id = msg.message_id;
-                    var line_id = msg.line_id;
-                    var message;
-                    try {
-                        message = JSON.parse(msg.message);
-                    } 
-                    catch (e) {
-                        message = msg.message;
-                    }
-                    //console.log(message_id);
-                    //console.log(line_id);
-                    //console.log(message);
-                    try {
-                        // 訊息內容換行處理
-                        var messageSend = JSON.parse(jsonEscape(JSON.stringify(message)));
-                        // 將發送對象拆解
-                        var ids = line_id.split(',');
-                        //console.log('message_id:' + message_id + ',ids:' + ids);
-                        // 群組訊息
-                        if (ids[0].startsWith('C'))
-                        {
-                            lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                                sendMsgResult.successMsg.push(message_id);
-                            }).catch(function (e) {
-                                sendMsgResult.failMsg.push(message_id);
-                                console.log(e);
-                            });
-                        }
-                        // 個人訊息
-                        else
-                        {
-                            lineBotSdk.multicast(ids, messageSend).then(function () {
-                                sendMsgResult.successMsg.push(message_id);
-                            }).catch(function (e) {
-                                sendMsgResult.failMsg.push(message_id);
-                                console.log(e);
-                            });
-                        }
-                    }
-                    catch (e) {
-                        sendMsgResult.failMsg.push(message_id);
-                        console.log(e);
-                    }
-                }).then(function () {
+                let requests = req.body.msgData.map(function (msg) {
+                    return new Promise((resolve) => {
+                        asyncFunction(msg, sendMsgResult, resolve);
+                      });
+                });
+                Promise.all(requests).then((sendMsgResult) => {
                     sendMsgResult.sendMsgResult = "Send message Done";
                     res.send(sendMsgResult);
                 });
@@ -133,6 +94,53 @@ app.post('/sendMsg', (req, res) => {
         res.send(sendMsgResult);
     }
 });
+
+function asyncFunction (msg, sendMsgResult, callback) {
+    var message_id = msg.message_id;
+    var line_id = msg.line_id;
+    var message;
+    try {
+        message = JSON.parse(msg.message);
+    } 
+    catch (e) {
+        message = msg.message;
+    }
+    //console.log(message_id);
+    //console.log(line_id);
+    //console.log(message);
+    try {
+        // 訊息內容換行處理
+        var messageSend = JSON.parse(jsonEscape(JSON.stringify(message)));
+        // 將發送對象拆解
+        var ids = line_id.split(',');
+        //console.log('message_id:' + message_id + ',ids:' + ids);
+        // 群組訊息
+        if (ids[0].startsWith('C'))
+        {
+            lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
+                sendMsgResult.successMsg.push(message_id);
+            }).catch(function (e) {
+                sendMsgResult.failMsg.push(message_id);
+                console.log(e);
+            });
+        }
+        // 個人訊息
+        else
+        {
+            lineBotSdk.multicast(ids, messageSend).then(function () {
+                sendMsgResult.successMsg.push(message_id);
+            }).catch(function (e) {
+                sendMsgResult.failMsg.push(message_id);
+                console.log(e);
+            });
+        }
+    }
+    catch (e) {
+        sendMsgResult.failMsg.push(message_id);
+        console.log(e);
+    }
+    callback(sendMsgResult);
+  }
 
 // follow event
 function follow(event) {
