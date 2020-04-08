@@ -69,7 +69,7 @@ app.post('/sendMsg', (req, res) => {
                 let requests = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
                         var test = sendMsg(msg, resolve);
-                        console.log(test);
+                        console.log(resolve);
                         if (sendMsg(msg, resolve))
                         {
                             sendMsgResult.successMsg.push(msg.message_id);
@@ -80,7 +80,7 @@ app.post('/sendMsg', (req, res) => {
                         }
                       });
                 });
-                Promise.all(requests).then((result) => {
+                Promise.all(requests).then(() => {
                     sendMsgResult.Result = "Send message Done";
                     res.send(sendMsgResult);
                 });
