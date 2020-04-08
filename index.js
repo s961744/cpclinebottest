@@ -68,13 +68,18 @@ app.post('/sendMsg', (req, res) => {
             {
                 let requests = req.body.msgData.map(function (msg) {
                     return new Promise((resolve) => {
-                        sendMsg(msg, resolve);
+                        if (sendMsg(msg, resolve))
+                        {
+                            sendMsgResult.successMsg.push(msg.message_id);
+                        }
+                        else
+                        {
+                            sendMsgResult.failMsg.push(msg.message_id);
+                        }
                       });
                 });
                 Promise.all(requests).then((result) => {
                     sendMsgResult.Result = "Send message Done";
-                    sendMsgResult.successMsg = result.successMsg;
-                    sendMsgResult.failMsg = result.failMsg;
                     res.send(sendMsgResult);
                 });
             }
@@ -98,7 +103,7 @@ app.post('/sendMsg', (req, res) => {
 });
 
 function sendMsg (msg, callback) {
-    var result = { "successMsg":[], "failMsg":[] };
+    var result = false;
     var message_id = msg.message_id;
     var line_id = msg.line_id;
     var message;
@@ -121,9 +126,8 @@ function sendMsg (msg, callback) {
         if (ids[0].startsWith('C'))
         {
             lineBotSdk.pushMessage(ids[0], messageSend).then(function () {
-                result.successMsg.push(message_id);
+                result = true;
             }).catch(function (e) {
-                result.failMsg.push(message_id);
                 console.log(e);
             });
         }
@@ -131,15 +135,13 @@ function sendMsg (msg, callback) {
         else
         {
             lineBotSdk.multicast(ids, messageSend).then(function () {
-                result.successMsg.push(message_id);
+                result = true;
             }).catch(function (e) {
-                result.failMsg.push(message_id);
                 console.log(e);
             });
         }
     }
     catch (e) {
-        result.failMsg.push(message_id);
         console.log(e);
     }
     callback(result);
