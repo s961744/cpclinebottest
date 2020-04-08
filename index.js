@@ -125,6 +125,7 @@ function sendMsg (msg, callback) {
             }).catch(function (e) {
                 console.log(e);
             });
+            return callback(result);
         }
         // 個人訊息
         else
@@ -134,12 +135,12 @@ function sendMsg (msg, callback) {
             }).catch(function (e) {
                 console.log(e);
             });
+            return callback(result);
         }
     }
     catch (e) {
         console.log(e);
     }
-    return callback(1);
   }
 
 // follow event
